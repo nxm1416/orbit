@@ -84,11 +84,11 @@ export async function sendPush(sub, payload, vapid, subject, fetchImpl = fetch) 
 
 // ---------- 通知の文面 ----------
 const TEXT = {
-  ja: { like: "{n}さんがあなたの投稿にいいねしました", repost: "{n}さんがあなたの投稿をリポストしました", reply: "{n}さんが返信しました", quote: "{n}さんがあなたの投稿を引用しました", mention: "{n}さんがあなたについて投稿しました", follow: "{n}さんがあなたをフォローしました", freq: "{n}さんからフォローリクエストが届きました", dm: "{n}さんからメッセージが届きました", notice: "運営からのお知らせが届きました", someone: "だれか", image: "画像" },
-  en: { like: "{n} liked your post", repost: "{n} reposted your post", reply: "{n} replied", quote: "{n} quoted your post", mention: "{n} mentioned you", follow: "{n} followed you", freq: "{n} sent you a follow request", dm: "New message from {n}", notice: "You have a notice from Orbit", someone: "Someone", image: "Image" },
-  ko: { like: "{n}님이 게시물을 좋아합니다", repost: "{n}님이 게시물을 리포스트했습니다", reply: "{n}님이 답글을 남겼습니다", quote: "{n}님이 게시물을 인용했습니다", mention: "{n}님이 회원님을 언급했습니다", follow: "{n}님이 회원님을 팔로우했습니다", freq: "{n}님이 팔로우 요청을 보냈습니다", dm: "{n}님의 메시지가 도착했습니다", notice: "운영팀의 알림이 도착했습니다", someone: "누군가", image: "이미지" },
-  "zh-CN": { like: "{n} 赞了你的帖子", repost: "{n} 转发了你的帖子", reply: "{n} 回复了你", quote: "{n} 引用了你的帖子", mention: "{n} 提到了你", follow: "{n} 关注了你", freq: "{n} 向你发送了关注请求", dm: "{n} 给你发来消息", notice: "你收到一条运营通知", someone: "有人", image: "图片" },
-  "zh-TW": { like: "{n} 喜歡你的貼文", repost: "{n} 轉發了你的貼文", reply: "{n} 回覆了你", quote: "{n} 引用了你的貼文", mention: "{n} 提到了你", follow: "{n} 追蹤了你", freq: "{n} 向你發送了追蹤請求", dm: "{n} 傳來訊息", notice: "你收到一則營運通知", someone: "有人", image: "圖片" },
+  ja: { like: "{n}さんがあなたの投稿にいいねしました", repost: "{n}さんがあなたの投稿をリポストしました", reply: "{n}さんが返信しました", quote: "{n}さんがあなたの投稿を引用しました", mention: "{n}さんがあなたについて投稿しました", follow: "{n}さんがあなたをフォローしました", freq: "{n}さんからフォローリクエストが届きました", dm: "{n}さんからメッセージが届きました", wish: "{n}さんがあなたの流れ星に願いをかけました", notice: "運営からのお知らせが届きました", someone: "だれか", image: "画像" },
+  en: { like: "{n} liked your post", repost: "{n} reposted your post", reply: "{n} replied", quote: "{n} quoted your post", mention: "{n} mentioned you", follow: "{n} followed you", freq: "{n} sent you a follow request", dm: "New message from {n}", wish: "{n} made a wish on your shooting star", notice: "You have a notice from Orbit", someone: "Someone", image: "Image" },
+  ko: { like: "{n}님이 게시물을 좋아합니다", repost: "{n}님이 게시물을 리포스트했습니다", reply: "{n}님이 답글을 남겼습니다", quote: "{n}님이 게시물을 인용했습니다", mention: "{n}님이 회원님을 언급했습니다", follow: "{n}님이 회원님을 팔로우했습니다", freq: "{n}님이 팔로우 요청을 보냈습니다", dm: "{n}님의 메시지가 도착했습니다", wish: "{n}님이 회원님의 별똥별에 소원을 빌었습니다", notice: "운영팀의 알림이 도착했습니다", someone: "누군가", image: "이미지" },
+  "zh-CN": { like: "{n} 赞了你的帖子", repost: "{n} 转发了你的帖子", reply: "{n} 回复了你", quote: "{n} 引用了你的帖子", mention: "{n} 提到了你", follow: "{n} 关注了你", freq: "{n} 向你发送了关注请求", dm: "{n} 给你发来消息", wish: "{n} 对你的流星许了愿", notice: "你收到一条运营通知", someone: "有人", image: "图片" },
+  "zh-TW": { like: "{n} 喜歡你的貼文", repost: "{n} 轉發了你的貼文", reply: "{n} 回覆了你", quote: "{n} 引用了你的貼文", mention: "{n} 提到了你", follow: "{n} 追蹤了你", freq: "{n} 向你發送了追蹤請求", dm: "{n} 傳來訊息", wish: "{n} 對你的流星許了願", notice: "你收到一則營運通知", someone: "有人", image: "圖片" },
 };
 const hex = (s) => Array.from(enc.encode(String(s)), (b) => b.toString(16).padStart(2, "0")).join("");
 export function buildMessage(kind, actorName, actorId, ref, snippet, lang = "ja") {
@@ -98,6 +98,7 @@ export function buildMessage(kind, actorName, actorId, ref, snippet, lang = "ja"
   let url = "/#notifications";
   if (kind === "dm" && actorId) url = "/#dm-" + hex(actorId);
   else if (["reply", "quote", "mention", "like", "repost"].includes(kind) && ref) url = "/#post-" + ref;
+  else if (kind === "wish") url = "/#home";
   else if (kind === "follow" || kind === "freq") url = actorId ? "/#u-" + hex(actorId) : "/#notifications";
   return { title, body: snippet || "", url, tag: kind + ":" + (ref || actorId || ""), kind };
 }

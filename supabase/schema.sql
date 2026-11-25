@@ -909,6 +909,110 @@ do $$ declare t text; begin
   end loop;
 end $$;
 
+-- ---------- 投稿の表示回数 ----------
+-- post_views: だれが見たか（本人以外は読めない）／ post_stats: 投稿ごとの表示回数（だれでも読める）
+create table if not exists public.post_views (post text not null references public.posts(id) on delete cascade, uid uuid not null references auth.users(id) on delete cascade, at bigint not null default public.now_ms(), primary key (post, uid));
+create table if not exists public.post_stats (id text primary key references public.posts(id) on delete cascade, views int not null default 0);
+alter table public.post_views enable row level security;
+alter table public.post_stats enable row level security;
+drop policy if exists "read" on public.post_stats;
+create policy "read" on public.post_stats for select to authenticated using (true);
+
+-- 画面に表示された投稿を記録する（1人1回まで・自分の投稿は数えない）
+create or replace function public.record_views(ids text[]) returns void language plpgsql security definer set search_path = public as $$
+begin
+  perform public.need_strong();
+  with ins as (
+    insert into public.post_views (post, uid)
+    select p.id, auth.uid() from public.posts p
+    where p.id = any (ids[1:100]) and p.author <> auth.uid() and public.can_see(p.author, p.aud, p.id)
+    on conflict do nothing returning post)
+  insert into public.post_stats (id, views) select post, count(*) from ins group by post
+  on conflict (id) do update set views = public.post_stats.views + excluded.views;
+end $$;
+
+-- ---------- 流れ星（24時間で消える「いま」のひとこと） ----------
+create table if not exists public.stars (id text primary key, author uuid not null references auth.users(id) on delete cascade, text text not null default '', media jsonb not null default '[]',
+  sky text not null default 'night', at bigint not null default public.now_ms(), expires bigint not null);
+create index if not exists stars_expires on public.stars (expires);
+create table if not exists public.star_views (star text not null references public.stars(id) on delete cascade, uid uuid not null references auth.users(id) on delete cascade,
+  at bigint not null default public.now_ms(), wish boolean not null default false, primary key (star, uid));
+alter table public.stars enable row level security;
+alter table public.star_views enable row level security;
+
+create or replace function public.can_see_star(a uuid) returns boolean language sql stable security definer set search_path = public as $$
+  select a = auth.uid() or public.is_admin() or (
+    not public.is_susp(a) and not public.blocked(a, auth.uid()) and not public.blocked(auth.uid(), a)
+    and (not public.is_locked(a) or public.follows_(auth.uid(), a)))
+$$;
+drop policy if exists "read" on public.stars;
+drop policy if exists "delete" on public.stars;
+create policy "read" on public.stars for select to authenticated using (expires > public.now_ms() and public.can_see_star(author));
+create policy "delete" on public.stars for delete to authenticated using (author = auth.uid() or public.is_admin());
+-- 見た人・願いの記録：自分が見たもの と 自分の流れ星を見た人 だけ読める
+drop policy if exists "read" on public.star_views;
+create policy "read" on public.star_views for select to authenticated using (uid = auth.uid() or exists (select 1 from public.stars s where s.id = star and s.author = auth.uid()));
+
+create or replace function public.star_post(body text, media jsonb default '[]', sky text default 'night') returns text language plpgsql security definer set search_path = public as $$
+declare me uuid := auth.uid(); nid text;
+begin
+  perform public.need_strong();
+  perform public.need_open();
+  body := btrim(coalesce(body, ''));
+  if char_length(body) > 100 then perform public.fail('流れ星のひとことは100文字以内にしてください'); end if;
+  if media is null or jsonb_typeof(media) <> 'array' then media := '[]'; end if;
+  media := (select coalesce(jsonb_agg(jsonb_build_object('id', m->>'id', 'type', 'image', 'alt', left(coalesce(m->>'alt', ''), 400))), '[]')
+            from (select m from jsonb_array_elements(media) m where m->>'id' like me::text || '/%' limit 1) t);
+  if body = '' and jsonb_array_length(media) = 0 then perform public.fail('ひとことか写真を入れてください'); end if;
+  if public.is_susp(me) then perform public.fail('アカウントが凍結中のため投稿できません'); end if;
+  if body <> '' and public.ng_hit(body) and not public.is_admin() then perform public.fail('禁止されている語句が含まれています'); end if;
+  if sky not in ('night', 'dawn', 'dusk', 'aurora') then sky := 'night'; end if;
+  if (select count(*) from public.stars where author = me and at > public.now_ms() - 86400000) >= 20 then perform public.fail('流れ星は1日20回までです'); end if;
+  delete from public.stars where author = me;
+  nid := 'st' || substr(replace(gen_random_uuid()::text, '-', ''), 1, 14);
+  insert into public.stars (id, author, text, media, sky, expires) values (nid, me, body, media, sky, public.now_ms() + 86400000);
+  return nid;
+end $$;
+
+-- 見た・願いをかけた を記録（願いは押すたびに オン／オフ）
+drop function if exists public.star_seen(text, boolean);
+create or replace function public.star_seen(sid text, p_wish boolean default null) returns void language plpgsql security definer set search_path = public as $$
+declare st record;
+begin
+  perform public.need_strong();
+  select * into st from public.stars where id = sid and expires > public.now_ms();
+  if not found or not public.can_see_star(st.author) then perform public.fail('この流れ星はもう消えました'); end if;
+  if st.author = auth.uid() then return; end if;
+  insert into public.star_views as v (star, uid, wish) values (sid, auth.uid(), coalesce(p_wish, false))
+  on conflict (star, uid) do update set wish = coalesce(p_wish, v.wish);
+end $$;
+
+-- 願いをかけられたらプッシュ通知
+create or replace function public.push_on_wish() returns trigger language plpgsql security definer set search_path = public as $$
+declare a uuid;
+begin
+  if new.wish and (tg_op = 'INSERT' or not old.wish) then
+    select author into a from public.stars where id = new.star;
+    perform public.push_send(a, 'wish', new.uid, new.star, null);
+  end if;
+  return null;
+exception when others then return null;
+end $$;
+drop trigger if exists push_wish on public.star_views;
+create trigger push_wish after insert or update on public.star_views for each row execute function public.push_on_wish();
+
+grant select, insert, update, delete on public.post_stats, public.post_views, public.stars, public.star_views to authenticated;
+do $$ declare t text; f text; begin
+  foreach t in array array['post_stats', 'stars', 'star_views'] loop
+    execute format('drop policy if exists "strong" on public.%I', t);
+    execute format('create policy "strong" on public.%I as restrictive for all to authenticated using (public.strong_session()) with check (public.strong_session())', t);
+  end loop;
+  foreach f in array array['record_views(text[])', 'star_post(text,jsonb,text)', 'star_seen(text,boolean)'] loop
+    execute format('revoke all on function public.%s from public, anon', f);
+    execute format('grant execute on function public.%s to authenticated', f);
+  end loop;
+end $$;
+
 -- RPCを呼べるのはログインした人だけ
 do $$ declare f text; begin
   foreach f in array array['me()','handle_available(text)','poll_results()','vote(text,int)','follow_req(uuid)','freq_answer(uuid,boolean)','freq_cancel(uuid)',
@@ -940,7 +1044,7 @@ create policy "orbit media delete" on storage.objects for delete to authenticate
 
 -- ---------- リアルタイム配信 ----------
 do $$ declare t text; begin
-  foreach t in array array['posts','likes','reposts','follows','freqs','profiles','blocks','hidden','suspended','announcements','dms','communities','members','reports','report_status','modlog','private_docs','badges','site_settings','admins'] loop
+  foreach t in array array['posts','likes','reposts','follows','freqs','profiles','blocks','hidden','suspended','announcements','dms','communities','members','reports','report_status','modlog','private_docs','badges','site_settings','admins','stars'] loop
     begin execute format('alter publication supabase_realtime add table public.%I', t);
     exception when duplicate_object then null; when undefined_object then raise notice 'supabase_realtime がありません';
     end;
@@ -952,5 +1056,7 @@ do $$ begin
   create extension if not exists pg_cron;
   perform cron.unschedule(jobid) from cron.job where jobname = 'orbit-scheduled';
   perform cron.schedule('orbit-scheduled', '* * * * *', 'select public.publish_due()');
+  perform cron.unschedule(jobid) from cron.job where jobname = 'orbit-stars-cleanup';
+  perform cron.schedule('orbit-stars-cleanup', '17 * * * *', 'delete from public.stars where expires < public.now_ms() - 3600000');
 exception when others then raise notice '予約投稿の自動実行は設定できませんでした（Database → Extensions で pg_cron を有効にして、もう一度実行してください）: %', sqlerrm;
 end $$;
