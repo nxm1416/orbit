@@ -102,6 +102,18 @@ create or replace function public.is_public_post(p_author uuid, p_aud text) retu
 $$;
 create or replace function public.fail(msg text) returns void language plpgsql as $$ begin raise exception '%', msg using errcode = 'P0001'; end $$;
 
+-- 2段階認証：確認済みのログインかどうか（詳しくは下の「ログインと 2段階認証」）
+create table if not exists public.strong_sessions (session_id text primary key, uid uuid not null references auth.users(id) on delete cascade, at bigint not null default public.now_ms());
+alter table public.strong_sessions enable row level security;
+create or replace function public.strong_session() returns boolean language sql stable security definer set search_path = public as $$
+  select auth.uid() is not null and (
+    exists (select 1 from jsonb_array_elements(case when jsonb_typeof(auth.jwt() -> 'amr') = 'array' then auth.jwt() -> 'amr' else '[]'::jsonb end) x
+            where coalesce(x ->> 'method', '') not in ('', 'password', 'anonymous'))
+    or exists (select 1 from public.strong_sessions s where s.session_id = auth.jwt() ->> 'session_id' and s.uid = auth.uid()))
+$$;
+create or replace function public.need_strong() returns void language plpgsql stable as $$
+begin if not public.strong_session() then raise exception 'もう一度ログインしてください' using errcode = 'P0001'; end if; end $$;
+
 -- ---------- 新規登録時にプロフィールを作る（最初の登録者は管理者） ----------
 create or replace function public.on_new_user() returns trigger language plpgsql security definer set search_path = public as $$
 declare h text; n text;
@@ -346,11 +358,13 @@ create policy "delete" on public.scheduled for delete to authenticated using (au
 -- votes は直接は読めません（だれが何に投票したかは非公開）。集計は poll_results() で取得します。
 
 -- ---------- 画面から呼ぶ処理（RPC） ----------
-create or replace function public.me() returns jsonb language sql stable security definer set search_path = public as $$
-  select jsonb_build_object('uid', auth.uid(), 'role', case when public.is_admin() then 'admin' else 'user' end,
+create or replace function public.me() returns jsonb language plpgsql stable security definer set search_path = public as $$
+begin
+  perform public.need_strong();
+  return jsonb_build_object('uid', auth.uid(), 'role', case when public.is_admin() then 'admin' else 'user' end,
     'email', (select email from auth.users where id = auth.uid()), 'handle', (select handle from public.profiles where id = auth.uid()),
-    'suspended', public.is_susp(auth.uid()))
-$$;
+    'suspended', public.is_susp(auth.uid()));
+end $$;
 
 create or replace function public.handle_available(h text) returns boolean language sql stable security definer set search_path = public as $$
   select h ~ '^[A-Za-z0-9_]{3,20}$' and not exists (select 1 from public.profiles where lower(handle) = lower(h))
@@ -360,13 +374,14 @@ create or replace function public.poll_results() returns table (post text, count
   select v.post, array[count(*) filter (where choice = 0), count(*) filter (where choice = 1), count(*) filter (where choice = 2), count(*) filter (where choice = 3)]::int[],
     coalesce(max(case when v.user_id = auth.uid() then v.choice end), -1)
   from public.votes v join public.posts p on p.id = v.post
-  where public.can_see(p.author, p.aud, p.id)
+  where public.can_see(p.author, p.aud, p.id) and public.strong_session()
   group by v.post
 $$;
 
 create or replace function public.vote(post_id text, choice int) returns void language plpgsql security definer set search_path = public as $$
 declare p record; me uuid := auth.uid();
 begin
+  perform public.need_strong();
   select * into p from public.posts where id = post_id;
   if not found or p.poll is null then perform public.fail('投票が見つかりません'); end if;
   if not public.can_see(p.author, p.aud, p.id) or public.blocked(p.author, me) then perform public.fail('この投票には参加できません'); end if;
@@ -381,6 +396,7 @@ end $$;
 create or replace function public.follow_req(target uuid) returns void language plpgsql security definer set search_path = public as $$
 declare me uuid := auth.uid();
 begin
+  perform public.need_strong();
   if target = me or not exists (select 1 from public.profiles where id = target) then perform public.fail('ユーザーが見つかりません'); end if;
   if public.is_susp(me) then perform public.fail('アカウントが凍結中です'); end if;
   if public.blocked(target, me) or public.blocked(me, target) then perform public.fail('このユーザーはフォローできません'); end if;
@@ -396,6 +412,7 @@ end $$;
 
 create or replace function public.freq_answer(requester uuid, ok boolean) returns void language plpgsql security definer set search_path = public as $$
 begin
+  perform public.need_strong();
   if not exists (select 1 from public.freqs where from_id = requester and to_id = auth.uid()) then return; end if;
   if ok then
     perform set_config('orbit.approving', 'on', true);
@@ -406,12 +423,13 @@ begin
 end $$;
 
 create or replace function public.freq_cancel(target uuid) returns void language sql security definer set search_path = public as $$
-  delete from public.freqs where from_id = auth.uid() and to_id = target
+  delete from public.freqs where from_id = auth.uid() and to_id = target and public.strong_session()
 $$;
 
 create or replace function public.dm_send(target uuid, body text, media jsonb default '[]') returns text language plpgsql security definer set search_path = public as $$
 declare me uuid := auth.uid(); cv text; pref text; nid text;
 begin
+  perform public.need_strong();
   body := btrim(coalesce(body, ''));
   if char_length(body) > 1000 then perform public.fail('メッセージは1000文字以内で入力してください'); end if;
   if jsonb_typeof(media) <> 'array' then media := '[]'; end if;
@@ -434,12 +452,13 @@ begin
 end $$;
 
 create or replace function public.dm_read(cv text) returns void language sql security definer set search_path = public as $$
-  update public.dms set read_at = public.now_ms() where conv = cv and to_id = auth.uid() and read_at = 0
+  update public.dms set read_at = public.now_ms() where conv = cv and to_id = auth.uid() and read_at = 0 and public.strong_session()
 $$;
 
 create or replace function public.dm_react(mid text, emoji text) returns void language plpgsql security definer set search_path = public as $$
 declare m record; lst jsonb; me text := auth.uid()::text;
 begin
+  perform public.need_strong();
   if emoji not in ('❤️', '😂', '😮', '😢', '👍', '🔥', '🎉', '🙏') then perform public.fail('このリアクションは使えません'); end if;
   select * into m from public.dms where id = mid for update;
   if not found then perform public.fail('メッセージが見つかりません'); end if;
@@ -452,12 +471,14 @@ end $$;
 
 create or replace function public.dm_delete(mid text) returns void language plpgsql security definer set search_path = public as $$
 begin
+  perform public.need_strong();
   if exists (select 1 from public.dms where id = mid and from_id <> auth.uid()) then perform public.fail('自分のメッセージだけ削除できます'); end if;
   delete from public.dms where id = mid and from_id = auth.uid();
 end $$;
 
 create or replace function public.set_nsfw(post_id text, on_ boolean) returns void language plpgsql security definer set search_path = public as $$
 begin
+  perform public.need_strong();
   if not exists (select 1 from public.posts where id = post_id and (author = auth.uid() or public.is_admin())) then perform public.fail('この操作は許可されていません'); end if;
   update public.posts set nsfw = on_ where id = post_id;
 end $$;
@@ -465,6 +486,7 @@ end $$;
 create or replace function public.comm_create(c_name text, c_desc text, c_color text) returns text language plpgsql security definer set search_path = public as $$
 declare nid text; me uuid := auth.uid();
 begin
+  perform public.need_strong();
   c_name := left(btrim(coalesce(c_name, '')), 40);
   if c_name = '' then perform public.fail('コミュニティ名を入力してください'); end if;
   if public.is_susp(me) then perform public.fail('アカウントが凍結中です'); end if;
@@ -478,6 +500,7 @@ end $$;
 
 create or replace function public.comm_update(c_id text, c_name text, c_desc text, c_color text) returns void language plpgsql security definer set search_path = public as $$
 begin
+  perform public.need_strong();
   if not exists (select 1 from public.communities where id = c_id and (owner = auth.uid() or public.is_admin())) then perform public.fail('この操作は許可されていません'); end if;
   if btrim(coalesce(c_name, '')) = '' then perform public.fail('コミュニティ名を入力してください'); end if;
   update public.communities set name = left(btrim(c_name), 40), descr = left(btrim(coalesce(c_desc, '')), 300), color = case when c_color ~ '^#[0-9a-fA-F]{6}$' then c_color else color end where id = c_id;
@@ -486,6 +509,7 @@ end $$;
 create or replace function public.comm_join(c_id text) returns void language plpgsql security definer set search_path = public as $$
 declare c record;
 begin
+  perform public.need_strong();
   select * into c from public.communities where id = c_id;
   if not found then perform public.fail('コミュニティが見つかりません'); end if;
   if public.is_susp(auth.uid()) then perform public.fail('アカウントが凍結中です'); end if;
@@ -495,12 +519,14 @@ end $$;
 
 create or replace function public.comm_leave(c_id text) returns void language plpgsql security definer set search_path = public as $$
 begin
+  perform public.need_strong();
   if exists (select 1 from public.communities where id = c_id and owner = auth.uid()) then perform public.fail('作成者は退出できません。コミュニティを削除してください'); end if;
   delete from public.members where comm = c_id and user_id = auth.uid();
 end $$;
 
 create or replace function public.comm_kick(c_id text, target uuid) returns void language plpgsql security definer set search_path = public as $$
 begin
+  perform public.need_strong();
   if not exists (select 1 from public.communities where id = c_id and (owner = auth.uid() or public.is_admin())) then perform public.fail('この操作は許可されていません'); end if;
   if exists (select 1 from public.communities where id = c_id and owner = target) then perform public.fail('作成者は外せません'); end if;
   delete from public.members where comm = c_id and user_id = target;
@@ -508,6 +534,7 @@ end $$;
 
 create or replace function public.comm_delete(c_id text) returns void language plpgsql security definer set search_path = public as $$
 begin
+  perform public.need_strong();
   if not exists (select 1 from public.communities where id = c_id and (owner = auth.uid() or public.is_admin())) then perform public.fail('この操作は許可されていません'); end if;
   delete from public.posts where comm = c_id;
   delete from public.communities where id = c_id;
@@ -517,6 +544,7 @@ end $$;
 create or replace function public.schedule_post(post jsonb, at_ms bigint) returns void language plpgsql security definer set search_path = public as $$
 declare me uuid := auth.uid();
 begin
+  perform public.need_strong();
   if at_ms <= public.now_ms() + 60000 then perform public.fail('予約日時は1分以上先にしてください'); end if;
   if at_ms > public.now_ms() + 60::bigint * 86400000 then perform public.fail('予約できるのは60日先までです'); end if;
   if public.is_susp(me) then perform public.fail('アカウントが凍結中のため投稿できません'); end if;
@@ -548,6 +576,7 @@ end $$;
 create or replace function public.presence_sync(pref text) returns jsonb language plpgsql security definer set search_path = public as $$
 declare out jsonb := '{}'; r record; now_ bigint := public.now_ms();
 begin
+  perform public.need_strong();
   if pref not in ('auto', 'busy', 'offline') then pref := 'auto'; end if;
   update public.profiles set last_seen = now_, presence = pref where id = auth.uid();
   for r in select id, last_seen, presence from public.profiles where last_seen > now_ - 30::bigint * 86400000 loop
@@ -562,6 +591,7 @@ end $$;
 
 create or replace function public.admin_info() returns jsonb language plpgsql security definer set search_path = public as $$
 begin
+  perform public.need_strong();
   if not public.is_admin() then perform public.fail('この操作は許可されていません'); end if;
   return jsonb_build_object('pending', (select count(*) from public.scheduled), 'backup', true, 'lastBackup', 0,
     'sched', exists (select 1 from pg_extension where extname = 'pg_cron'));
@@ -571,12 +601,87 @@ end $$;
 create or replace function public.delete_account() returns void language plpgsql security definer set search_path = public, auth as $$
 declare me uuid := auth.uid();
 begin
+  perform public.need_strong();
   if me is null then perform public.fail('ログインしてください'); end if;
   if public.is_admin() and (select count(*) from public.admins) <= 1 and (select count(*) from public.profiles) > 1 then
     perform public.fail('最後の管理者は削除できません。先に他のユーザーを管理者にしてください（admins テーブルにユーザーIDを追加）');
   end if;
   delete from public.posts where comm in (select id from public.communities where owner = me);
   delete from auth.users where id = me;
+end $$;
+
+-- ---------- ログイン（メールアドレス or ユーザーID）と 2段階認証 ----------
+-- 1) login_resolve: ID とパスワードが正しいときだけメールアドレスを返す（知らない人はメールアドレスを調べられない）
+--    8回続けて失敗すると15分ロック
+-- 2) メールのコード・リンクで入ったログインだけを「確認済み」として扱う
+--    パスワードだけのログインは、30日以内にコードで確認した端末（trusted_devices）からのときだけ確認済みになる
+drop function if exists public.login_email(text, text);
+drop table if exists public.login_attempts;
+create table if not exists public.login_guard (uid uuid primary key references auth.users(id) on delete cascade, fails int not null default 0, until bigint not null default 0);
+create table if not exists public.trusted_devices (uid uuid not null references auth.users(id) on delete cascade, hash text not null, label text not null default '', created bigint not null default public.now_ms(), expires bigint not null, primary key (uid, hash));
+alter table public.login_guard enable row level security;
+alter table public.trusted_devices enable row level security;
+alter table public.strong_sessions enable row level security;
+
+create or replace function public.login_resolve(p_id text, p_pw text) returns jsonb language plpgsql security definer set search_path = public, extensions, auth as $$
+declare u record; g record; now_ bigint := public.now_ms(); bad constant text := 'メールアドレス（またはユーザーID）かパスワードが違います';
+begin
+  p_id := regexp_replace(lower(btrim(coalesce(p_id, ''))), '^@+', '');
+  if p_id = '' or coalesce(p_pw, '') = '' then return jsonb_build_object('ok', false, 'error', bad); end if;
+  if position('@' in p_id) > 0 then
+    select au.id, au.email, au.encrypted_password, au.email_confirmed_at into u from auth.users au where lower(au.email) = p_id limit 1;
+  else
+    select au.id, au.email, au.encrypted_password, au.email_confirmed_at into u from public.profiles p join auth.users au on au.id = p.id where lower(p.handle) = p_id limit 1;
+  end if;
+  if u.id is null then return jsonb_build_object('ok', false, 'error', bad); end if;
+  select * into g from public.login_guard where uid = u.id;
+  if found and g.until > now_ then
+    return jsonb_build_object('ok', false, 'locked', true, 'error', 'ログインの失敗が続いたため、一時的にロックしています。15分ほど待ってからお試しください');
+  end if;
+  if coalesce(u.encrypted_password, '') = '' or u.encrypted_password <> crypt(p_pw, u.encrypted_password) then
+    insert into public.login_guard as x (uid, fails, until) values (u.id, 1, 0)
+    on conflict (uid) do update set
+      fails = case when x.until > 0 and x.until <= now_ then 1 else x.fails + 1 end,
+      until = case when (case when x.until > 0 and x.until <= now_ then 1 else x.fails + 1 end) >= 8 then now_ + 900000 else 0 end;
+    return jsonb_build_object('ok', false, 'error', bad);
+  end if;
+  delete from public.login_guard where uid = u.id;
+  return jsonb_build_object('ok', true, 'email', u.email, 'confirmed', u.email_confirmed_at is not null);
+end $$;
+
+-- パスワードでログインした直後に呼ぶ：信頼済みの端末なら、このログインを確認済みにする
+create or replace function public.device_check(p_token text) returns boolean language plpgsql security definer set search_path = public, extensions as $$
+declare sid text := auth.jwt() ->> 'session_id';
+begin
+  if auth.uid() is null or sid is null or coalesce(p_token, '') = '' then return false; end if;
+  if not exists (select 1 from public.trusted_devices where uid = auth.uid() and hash = encode(digest(p_token, 'sha256'), 'hex') and expires > public.now_ms()) then return false; end if;
+  insert into public.strong_sessions (session_id, uid) values (sid, auth.uid()) on conflict do nothing;
+  return true;
+end $$;
+
+-- 確認済みのログインのときに呼ぶ：この端末を30日間信頼する（延長はしない）
+create or replace function public.device_trust(p_token text, p_label text) returns void language plpgsql security definer set search_path = public, extensions as $$
+declare h text;
+begin
+  perform public.need_strong();
+  if coalesce(length(p_token), 0) < 20 then return; end if;
+  h := encode(digest(p_token, 'sha256'), 'hex');
+  delete from public.trusted_devices where uid = auth.uid() and expires <= public.now_ms();
+  delete from public.strong_sessions where at < public.now_ms() - 90::bigint * 86400000;
+  insert into public.trusted_devices (uid, hash, label, expires) values (auth.uid(), h, left(coalesce(p_label, ''), 80), public.now_ms() + 30::bigint * 86400000)
+  on conflict (uid, hash) do nothing;
+end $$;
+
+-- 信頼済みの端末をすべて解除（パスワード変更時などに使う）
+create or replace function public.devices_forget() returns void language plpgsql security definer set search_path = public as $$
+begin perform public.need_strong(); delete from public.trusted_devices where uid = auth.uid(); end $$;
+
+-- 確認済みでないログインでは、どのデータも読み書きできないようにする
+do $$ declare t text; begin
+  foreach t in array array['profiles','admins','posts','likes','reposts','follows','freqs','blocks','private_docs','reports','report_status','hidden','suspended','announcements','modlog','dms','votes','communities','members','scheduled'] loop
+    execute format('drop policy if exists "strong" on public.%I', t);
+    execute format('create policy "strong" on public.%I as restrictive for all to authenticated using (public.strong_session()) with check (public.strong_session())', t);
+  end loop;
 end $$;
 
 -- RPCを呼べるのはログインした人だけ
@@ -588,6 +693,10 @@ do $$ declare f text; begin
     execute format('grant execute on function public.%s to authenticated', f);
   end loop;
   execute 'grant execute on function public.handle_available(text) to anon';
+  execute 'grant execute on function public.login_resolve(text,text) to anon, authenticated';
+  execute 'revoke all on function public.device_check(text) from anon';
+  execute 'revoke all on function public.device_trust(text,text) from anon';
+  execute 'revoke all on function public.devices_forget() from anon';
   execute 'revoke all on function public.publish_due() from public, anon, authenticated';
 end $$;
 
@@ -599,8 +708,8 @@ drop policy if exists "orbit media read" on storage.objects;
 drop policy if exists "orbit media upload" on storage.objects;
 drop policy if exists "orbit media delete" on storage.objects;
 create policy "orbit media read" on storage.objects for select using (bucket_id = 'media');
-create policy "orbit media upload" on storage.objects for insert to authenticated with check (bucket_id = 'media' and (storage.foldername(name))[1] = auth.uid()::text);
-create policy "orbit media delete" on storage.objects for delete to authenticated using (bucket_id = 'media' and ((storage.foldername(name))[1] = auth.uid()::text or public.is_admin()));
+create policy "orbit media upload" on storage.objects for insert to authenticated with check (bucket_id = 'media' and (storage.foldername(name))[1] = auth.uid()::text and public.strong_session());
+create policy "orbit media delete" on storage.objects for delete to authenticated using (bucket_id = 'media' and ((storage.foldername(name))[1] = auth.uid()::text or public.is_admin()) and public.strong_session());
 
 -- ---------- リアルタイム配信 ----------
 do $$ declare t text; begin
