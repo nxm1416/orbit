@@ -1051,6 +1051,12 @@ do $$ declare t text; begin
   end loop;
 end $$;
 
+-- ---------- サーバー側の処理（Edge Function など）がテーブルを使えるようにする ----------
+-- 新しい Supabase プロジェクトでは service_role にも自動では権限が付かないため
+grant usage on schema public to service_role;
+grant all on all tables in schema public to service_role;
+grant execute on all functions in schema public to service_role;
+
 -- ---------- 予約投稿の自動実行（1分ごと） ----------
 do $$ begin
   create extension if not exists pg_cron;
