@@ -6,5 +6,5 @@ window.ORBIT_CONFIG = {
   SUPABASE_URL: 'https://aqwmuwnbcrjkzrzaguui.supabase.co',
   SUPABASE_ANON_KEY: 'sb_publishable_9FgAsW05EL7zAM1KDxK8pA_pTPFWz0G',
   // ロボット対策（Cloudflare Turnstile）の「サイトキー」。空のあいだはロボット対策なしで動きます
-  TURNSTILE_SITE_KEY: '',
+  TURNSTILE_SITE_KEY: '0x4AAAAAAGSu033cVO8i0TzG',
 };
