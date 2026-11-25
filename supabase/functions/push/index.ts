@@ -107,14 +107,33 @@ export function buildMessage(kind, actorName, actorId, ref, snippet, lang = "ja"
 const CORS = { "Access-Control-Allow-Origin": "*", "Access-Control-Allow-Headers": "authorization, apikey, content-type, x-client-info", "Access-Control-Allow-Methods": "GET, POST, OPTIONS" };
 const json = (o, status = 200) => new Response(JSON.stringify(o), { status, headers: { ...CORS, "Content-Type": "application/json" } });
 
-function serviceKey() {
-  const k = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY");
-  if (k) return k;
-  try { const j = JSON.parse(Deno.env.get("SUPABASE_SECRET_KEYS") || "{}"); return j.default || Object.values(j)[0] || ""; } catch (_) { return ""; }
+// 管理用の鍵：新しい方式（sb_secret_…）を優先し、なければ従来の service_role を使う
+function serviceKeys() {
+  const out = [];
+  const raw = Deno.env.get("SUPABASE_SECRET_KEYS") || "";
+  try { const j = JSON.parse(raw); for (const v of Object.values(j)) if (typeof v === "string" && v) out.push(v); }
+  catch (_) { if (raw.startsWith("sb_secret_")) out.push(raw); }
+  const legacy = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY");
+  if (legacy) out.push(legacy);
+  return out;
+}
+// 使える鍵を探す（push_config が読めるかで確かめる）
+let DB = null;
+async function getDb() {
+  if (DB) return DB;
+  const errs = [];
+  for (const k of serviceKeys()) {
+    const db = createClient(Deno.env.get("SUPABASE_URL"), k, { auth: { persistSession: false } });
+    const { error } = await db.from("push_config").select("key").limit(1);
+    if (!error) { DB = db; return db; }
+    errs.push((k.startsWith("sb_secret_") ? "secret key" : "service_role key") + ": " + error.message);
+  }
+  throw new Error(errs.length ? "データベースに接続できません — " + errs.join(" / ") : "管理用の鍵が見つかりません（SUPABASE_SECRET_KEYS / SUPABASE_SERVICE_ROLE_KEY）");
 }
 
 async function config(db, origin) {
-  const { data } = await db.from("push_config").select("key,value");
+  const { data, error } = await db.from("push_config").select("key,value");
+  if (error) throw new Error("push_config を読めません: " + error.message);
   const c = Object.fromEntries((data || []).map((r) => [r.key, r.value]));
   const add = {};
   if (!c.vapid_public || !c.vapid_private) {
@@ -127,8 +146,8 @@ async function config(db, origin) {
   if (Object.keys(add).length) {
     const vap = Object.entries(add).filter(([k]) => k.startsWith("vapid_")), rest = Object.entries(add).filter(([k]) => !k.startsWith("vapid_"));
     // 鍵が同時に作られた場合は、先に保存された方を使う（上書きしない）
-    if (vap.length) await db.from("push_config").upsert(vap.map(([key, value]) => ({ key, value })), { onConflict: "key", ignoreDuplicates: true });
-    if (rest.length) await db.from("push_config").upsert(rest.map(([key, value]) => ({ key, value })), { onConflict: "key" });
+    if (vap.length) { const r = await db.from("push_config").upsert(vap.map(([key, value]) => ({ key, value })), { onConflict: "key", ignoreDuplicates: true }); if (r.error) throw new Error("鍵を保存できません: " + r.error.message); }
+    if (rest.length) { const r = await db.from("push_config").upsert(rest.map(([key, value]) => ({ key, value })), { onConflict: "key" }); if (r.error) throw new Error("設定を保存できません: " + r.error.message); }
     const again = await db.from("push_config").select("key,value");
     return Object.fromEntries((again.data || []).map((r) => [r.key, r.value]));
   }
@@ -137,11 +156,11 @@ async function config(db, origin) {
 
 Deno.serve(async (req) => {
   if (req.method === "OPTIONS") return new Response(null, { headers: CORS });
-  const db = createClient(Deno.env.get("SUPABASE_URL"), serviceKey(), { auth: { persistSession: false } });
   try {
+    const db = await getDb();
     const cfg = await config(db, req.headers.get("origin"));
     // 端末から：通知の公開鍵を返す
-    if (req.method === "GET") return json({ publicKey: cfg.vapid_public });
+    if (req.method === "GET") return cfg.vapid_public ? json({ publicKey: cfg.vapid_public }) : json({ error: "通知の鍵を作れませんでした" }, 500);
     // データベースから：通知を送る
     if (!cfg.hook_secret || req.headers.get("x-orbit-secret") !== cfg.hook_secret) return json({ error: "forbidden" }, 403);
     const { target, kind, actor, ref, snippet } = await req.json();
