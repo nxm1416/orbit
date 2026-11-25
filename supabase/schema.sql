@@ -269,6 +269,12 @@ do $$ declare t text; begin
   end loop;
 end $$;
 
+-- ---------- 画面（ログインした人）がテーブルと関数を使えるようにする ----------
+-- （新しい Supabase プロジェクトは自動では許可しないため。実際に読み書きできる範囲は下の RLS で制限します）
+grant usage on schema public to anon, authenticated;
+grant select, insert, update, delete on all tables in schema public to authenticated;
+grant execute on all functions in schema public to authenticated;
+
 -- ---------- 読み書きの権限（Row Level Security） ----------
 do $$ declare t text; begin
   foreach t in array array['profiles','admins','posts','likes','reposts','follows','freqs','blocks','private_docs','reports','report_status','hidden','suspended','announcements','modlog','dms','votes','communities','members','scheduled'] loop
