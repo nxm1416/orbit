@@ -327,6 +327,77 @@ input.invalid{border-color:var(--like)!important;box-shadow:0 0 0 3px rgba(255,9
  .fab{display:grid;place-items:center;position:fixed;right:18px;bottom:calc(84px + env(safe-area-inset-bottom));z-index:9;width:60px;height:60px;border-radius:50%;background:var(--grad);color:#fff;box-shadow:var(--glow)}
  .fab svg{width:26px;height:26px}#ovl{padding:0;align-items:flex-start}.dlg{border-radius:0;min-height:100%;border:0;align-self:flex-start;overflow:visible}.zoom{min-height:auto;align-self:center}}
 @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+
+/* ===== 流れ星 ===== */
+#starsC{padding:12px 6px 4px}#starsC[hidden]{display:none}
+.stars{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;padding:2px 8px 6px;align-items:flex-start}.stars::-webkit-scrollbar{display:none}
+.sitem{flex:none;width:78px;display:flex;flex-direction:column;align-items:center;gap:6px;border-radius:16px;padding:4px 0}
+.sav{position:relative;width:64px;height:64px;display:grid;place-items:center}.sav .av{width:50px;height:50px;font-size:19px;position:relative;z-index:1;box-shadow:none}
+.sring{position:absolute;inset:0;width:64px;height:64px;overflow:visible}.sring .sbg{fill:none;stroke:var(--line2);stroke-width:2}
+.sring .sarc{fill:none;stroke:url(#sgrad);stroke:#6aa8ff;stroke-width:3.2;stroke-linecap:round;filter:drop-shadow(0 0 4px rgba(120,170,255,.9))}
+.sring .sdot{fill:#fff;filter:drop-shadow(0 0 5px #9cc4ff)}
+.sitem:not(.seen) .sring .sarc{stroke:#8ab8ff;animation:sglow 2.4s ease-in-out infinite}
+.sring.seen .sarc{stroke:#5b6a95;filter:none}.sring.seen .sdot{fill:#8f9aba;filter:none}
+@keyframes sglow{50%{filter:drop-shadow(0 0 9px rgba(160,200,255,1))}}
+.splus{position:absolute;right:2px;bottom:2px;z-index:2;width:22px;height:22px;border-radius:50%;background:var(--grad);color:#fff;font:700 16px/22px "Outfit",sans-serif;font-style:normal;text-align:center;border:2px solid var(--bg)}
+.snm{font-size:12px;max-width:76px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:var(--ink)}.sitem.seen .snm{color:var(--mut)}
+.shint{align-self:center;font-size:12.5px;color:var(--mut);line-height:1.6;padding:0 8px}
+#ovl.sv{padding:0;align-items:center;justify-content:center;background:rgba(2,6,20,.92)}
+.sview{position:relative;width:min(440px,100vw);height:min(780px,100dvh);border-radius:24px;overflow:hidden;color:#fff;display:flex;flex-direction:column;box-shadow:0 30px 80px rgba(0,0,0,.6);animation:svin .32s cubic-bezier(.2,.9,.3,1)}
+@keyframes svin{from{opacity:0;transform:scale(.94) translateY(16px)}}
+@media(max-width:600px){.sview{width:100vw;height:100dvh;border-radius:0}}
+.sky{position:absolute;inset:0;pointer-events:none;overflow:hidden}.sky i{position:absolute;width:2px;height:2px;border-radius:50%;background:#fff;animation:twk 3s ease-in-out infinite}
+@keyframes twk{50%{opacity:.15;transform:scale(.6)}}
+.shoot{position:absolute;top:14%;left:62%;width:130px;height:2px;border-radius:2px;background:linear-gradient(90deg,#fff,transparent);transform:rotate(-24deg);opacity:0;animation:shoot 5.5s ease-in 1s infinite}.shoot.s2{top:34%;left:85%;animation-delay:3.6s;width:90px}
+@keyframes shoot{0%{opacity:0;transform:translate(0,0) rotate(-24deg)}4%{opacity:1}14%{opacity:0;transform:translate(-260px,118px) rotate(-24deg)}100%{opacity:0}}
+.sprog{position:relative;z-index:2;display:flex;gap:4px;padding:12px 14px 0}.sprog i{flex:1;height:3px;border-radius:3px;background:rgba(255,255,255,.28);overflow:hidden}
+.sprog i b{display:block;height:100%;width:0;background:#fff}.sprog i.done b{width:100%}.sprog i.now b{animation:sprog 6s linear forwards}
+.sview.paused .sprog i.now b{animation-play-state:paused}
+@keyframes sprog{to{width:100%}}
+.shead{position:relative;z-index:2;display:flex;align-items:center;gap:10px;padding:12px 14px}.shead .av{width:40px;height:40px;box-shadow:0 0 0 2px rgba(255,255,255,.5)}
+.sh2{flex:1;min-width:0;display:flex;flex-direction:column}.sh2 b{font-size:15px}.sh2 span{font-size:12px;opacity:.8}
+.sx{width:40px;height:40px;border-radius:50%;display:grid;place-items:center;color:#fff;background:rgba(0,0,0,.18)}
+.sbody{position:relative;z-index:1;flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;padding:10px 26px;min-height:0}
+.simg{max-width:100%;max-height:52%;border-radius:18px;box-shadow:0 14px 40px rgba(0,0,0,.4);object-fit:contain}
+.stext{margin:0;font:700 clamp(21px,5.4vw,27px)/1.55 "Zen Kaku Gothic New",sans-serif;text-align:center;text-shadow:0 2px 16px rgba(0,0,0,.45);white-space:pre-wrap;overflow-wrap:anywhere;animation:stin .6s ease-out}
+.stext .lnk,.stext .tag{color:#fff;text-decoration:underline}
+@keyframes stin{from{opacity:0;transform:translateY(10px)}}
+.snav{position:absolute;top:0;bottom:0;width:32%;z-index:0}.snav.l{left:0}.snav.r{right:0}
+.sfoot{position:relative;z-index:2;display:flex;align-items:center;gap:8px;padding:12px 14px calc(14px + env(safe-area-inset-bottom))}
+.sfoot .btn{background:rgba(0,0,0,.25);color:#fff;border-color:rgba(255,255,255,.3)}.sfoot .btn.dan{color:#ffb3c6}
+.srep{flex:1;display:flex;align-items:center;gap:6px;background:rgba(0,0,0,.28);border:1px solid rgba(255,255,255,.35);border-radius:999px;padding:4px 4px 4px 16px}
+.srep input{flex:1;min-width:0;background:transparent;border:0;outline:0;color:#fff;font-size:15px}.srep input::placeholder{color:rgba(255,255,255,.75)}.srep .send{min-height:36px;width:36px;padding:0;margin:0;justify-content:center}
+.swish{width:48px;height:48px;border-radius:50%;font-size:22px;background:rgba(0,0,0,.25);border:1px solid rgba(255,255,255,.35);transition:transform .15s}
+.swish.on{background:rgba(255,214,102,.28);border-color:#ffd666;box-shadow:0 0 18px rgba(255,214,102,.6);animation:pop .5s cubic-bezier(.3,1.6,.5,1)}
+.swho{position:absolute;inset:auto 0 0 0;z-index:3;max-height:62%;overflow:auto;background:#0c1330;border-radius:22px 22px 0 0;padding:6px 14px 18px;animation:swup .25s ease-out}
+@keyframes swup{from{transform:translateY(100%)}}
+.swh{display:flex;align-items:center;justify-content:space-between;padding:8px 2px}.swr{display:flex;align-items:center;gap:10px;padding:7px 2px}.swr b{flex:1;font-size:14px}.swk{font-size:18px}
+.stdlg .db{padding-top:14px}
+.spv{position:relative;border-radius:18px;min-height:190px;padding:22px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;overflow:hidden;color:#fff}
+.spv img{position:relative;max-height:140px;max-width:80%;border-radius:12px;box-shadow:0 10px 30px rgba(0,0,0,.35)}
+.spv p{position:relative;margin:0;font:700 19px/1.5 "Zen Kaku Gothic New",sans-serif;text-align:center;white-space:pre-wrap;overflow-wrap:anywhere;text-shadow:0 2px 12px rgba(0,0,0,.4)}
+.stcnt{display:block;text-align:right;margin-top:4px}
+.skysel{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}.skyb{min-height:46px;border-radius:14px;color:#fff;font-weight:700;font-size:13px;border:2px solid transparent;text-shadow:0 1px 6px rgba(0,0,0,.4)}
+.skyb.on{border-color:#fff;box-shadow:0 0 0 3px rgba(106,168,255,.6)}
+html[data-theme=light] .sring .sbg{stroke:rgba(30,60,140,.18)}html[data-theme=light] .splus{border-color:#fff}
+/* ===== 表示回数 ===== */
+.act.vw{cursor:default;opacity:.85}.act.vw svg{width:18px;height:18px}.vwn{padding:0 4px;color:var(--mut)}.vwn b{color:var(--ink)}
+/* ===== 操作時のアニメーション ===== */
+@keyframes pop{0%{transform:scale(1)}30%{transform:scale(1.38)}60%{transform:scale(.9)}100%{transform:scale(1)}}
+@keyframes lglow{0%{filter:drop-shadow(0 0 0 rgba(255,92,138,0))}40%{filter:drop-shadow(0 0 9px rgba(255,92,138,.95))}100%{filter:none}}
+@keyframes rspin{from{transform:rotate(0)}to{transform:rotate(360deg)}}
+.act.liked.pop svg{animation:pop .5s cubic-bezier(.3,1.6,.5,1),lglow .7s ease-out}
+.act.pop:not(.liked):not(.rped):not(.bmd) svg{animation:pop .35s ease}
+.act.rped.pop svg{animation:rspin .55s cubic-bezier(.3,1.2,.5,1)}
+.act.bmd.pop svg{animation:pop .45s cubic-bezier(.3,1.6,.5,1)}
+.btn,.act,.tab,.send,.big,.nav,.bottom a,.sitem,.tool,.skyb,.swish,.sx{transition:transform .12s ease,background .2s,color .2s,box-shadow .2s}
+.btn:active,.tab:active,.send:active,.big:active,.tool:active,.skyb:active,.sx:active{transform:scale(.95)}
+.act:active,.bottom a:active,.sitem:active,.swish:active{transform:scale(.88)}.nav:active{transform:scale(.98)}
+#view.enter{animation:vin .28s ease-out}@keyframes vin{from{opacity:0;transform:translateY(8px)}}
+#ovl:not([hidden]):not(.sv){animation:ofade .2s ease-out}@keyframes ofade{from{opacity:0}}
+#ovl:not(.sv) .dlg{animation:dlgin .26s cubic-bezier(.2,.9,.3,1.1)}@keyframes dlgin{from{opacity:0;transform:translateY(14px) scale(.98)}}
+.menu{animation:mnin .16s ease-out;transform-origin:top}@keyframes mnin{from{opacity:0;transform:translateY(-4px) scale(.97)}}
+#accm{animation:mnin .16s ease-out}
 .nav[hidden]{display:none!important}
 
 #accm{position:fixed;z-index:70;background:linear-gradient(180deg,#13204a,#0e1834);border:1px solid var(--line2);border-radius:18px;padding:8px;box-shadow:0 18px 50px rgba(0,0,0,.55);max-height:80vh;overflow:auto}
@@ -403,6 +474,10 @@ html[data-theme=light] .po{background:rgba(255,255,255,.5)}
 html[data-theme=light] .pedit{background:rgba(255,255,255,.35)}
 html[data-theme=light] #ac{box-shadow:0 16px 40px rgba(20,40,100,0.165)}
 @media(max-width:600px){html[data-theme=light] .bottom{background:rgba(255,255,255,.88);box-shadow:0 10px 30px rgba(20,40,100,0.150)}}
+html[data-theme=light] .sring.seen .sdot{fill:#5d6788}
+html[data-theme=light] #ovl.sv{background:rgba(255,255,255,.92)}
+html[data-theme=light] .sview{box-shadow:0 30px 80px rgba(20,40,100,0.180)}
+html[data-theme=light] .simg{box-shadow:0 14px 40px rgba(20,40,100,0.120)}
 html[data-theme=light] #accm{background:linear-gradient(180deg,#eef3ff,#ffffff);box-shadow:0 18px 50px rgba(20,40,100,0.165)}
 html[data-theme=light] .dlg{background:#fff;box-shadow:0 24px 70px rgba(30,60,140,.18)}
 html[data-theme=light] .acard{background:#fff;border-color:var(--line2);box-shadow:0 24px 60px rgba(30,60,140,.14);color:var(--ink)}
@@ -457,7 +532,7 @@ html[data-theme=light] .btn.pri,html[data-theme=light] .send,html[data-theme=lig
 <symbol id="i-rp" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 4 4 7l3 3M4 7h12a4 4 0 0 1 4 4v1M17 20l3-3-3-3M20 17H8a4 4 0 0 1-4-4v-1"/></symbol>
 <symbol id="i-heart" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M12 20s-7.5-4.6-9-9.3C2 7.4 4.2 4.5 7.3 4.5c2 0 3.6 1.1 4.7 2.8 1.1-1.7 2.7-2.8 4.7-2.8 3.1 0 5.3 2.9 4.3 6.2-1.5 4.7-9 9.3-9 9.3z"/></symbol>
 <symbol id="i-share" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v13M7 8l5-5 5 5M5 14v6h14v-6"/></symbol>
-<symbol id="i-badge" viewBox="0 0 24 24"><path fill="currentColor" d="M12 1.6l2.5 1.9 3.1-.3 1 3 2.6 1.8-1 3 1 3-2.6 1.8-1 3-3.1-.3L12 22.4l-2.5-1.9-3.1.3-1-3-2.6-1.8 1-3-1-3 2.6-1.8 1-3 3.1.3z"/><path d="M7.8 12.3l2.8 2.8 5.6-5.8" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></symbol><symbol id="i-check" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></symbol><symbol id="i-dots" viewBox="0 0 24 24" fill="currentColor"><circle cx="5" cy="12" r="1.8"/><circle cx="12" cy="12" r="1.8"/><circle cx="19" cy="12" r="1.8"/></symbol>
+<symbol id="i-views" viewBox="0 0 24 24"><path d="M5 20v-8M10 20V5M15 20v-6M20 20V9" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol><symbol id="i-badge" viewBox="0 0 24 24"><path fill="currentColor" d="M12 1.6l2.5 1.9 3.1-.3 1 3 2.6 1.8-1 3 1 3-2.6 1.8-1 3-3.1-.3L12 22.4l-2.5-1.9-3.1.3-1-3-2.6-1.8 1-3-1-3 2.6-1.8 1-3 3.1.3z"/><path d="M7.8 12.3l2.8 2.8 5.6-5.8" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></symbol><symbol id="i-check" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></symbol><symbol id="i-dots" viewBox="0 0 24 24" fill="currentColor"><circle cx="5" cy="12" r="1.8"/><circle cx="12" cy="12" r="1.8"/><circle cx="19" cy="12" r="1.8"/></symbol>
 <symbol id="i-img" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="3"/><circle cx="9" cy="10" r="2"/><path d="m21 16-5-5-9 9"/></symbol>
 <symbol id="i-draft" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M6 3h9l4 4v14H6z"/><path d="M14 3v5h5M9 13h6M9 17h4"/></symbol>
 <symbol id="i-pin" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 3h6l-1 6 4 4H6l4-4zM12 13v8"/></symbol>
@@ -488,6 +563,7 @@ html[data-theme=light] .btn.pri,html[data-theme=light] .send,html[data-theme=lig
   <main>
     <div id="top"></div>
     <div id="banner"></div>
+    <div id="starsC" hidden></div>
     <div id="homeC"></div>
     <div id="view" aria-live="polite"></div>
     <div id="dmC" hidden></div>
@@ -580,6 +656,9 @@ const TB={
  badges:{t:'badges',lim:10000,fr:r=>({kind:r.kind,by:s0(r.by_id),at:ms(r.at)})},
  siteSettings:{t:'site_settings',lim:100,fr:r=>({value:r.value,by:s0(r.by_id),at:ms(r.at)})},
  admins:{t:'admins',lim:100,fr:r=>({uid:r.uid})},
+ views:{t:'post_stats',lim:20000,fr:r=>({views:ms(r.views)})},
+ stars:{t:'stars',ord:'at',lim:2000,fr:r=>({author:r.author,text:r.text,media:r.media||[],sky:r.sky,at:ms(r.at),expires:ms(r.expires)})},
+ starViews:{t:'star_views',lim:20000,idf:r=>r.star+'__'+r.uid,fr:r=>({star:r.star,uid:r.uid,at:ms(r.at),wish:!!r.wish})},
  dms:{t:'dms',ord:'at',lim:3000,fr:r=>({conv:r.conv,from:r.from_id,to:r.to_id,text:r.text,at:ms(r.at),media:r.media||[],readAt:ms(r.read_at),reacts:r.reacts||{},replyTo:s0(r.reply_to),editedAt:ms(r.edited_at)})}};
 const T2P={};for(const k in TB)T2P[TB[k].t]=k;T2P.private_docs='data';T2P.votes='votes';
 const yes=v=>v===true||v==='yes';
@@ -607,7 +686,7 @@ async function readPath(p){const me=K.me&&K.me.uid,seg=p.split('/');
  if(p==='votes')return(await q(sb.rpc('poll_results'))).map(r=>({id:r.post,data:{counts:r.counts,mine:r.mine}}));
  const m=TB[p];if(!m)return[];
  if((p==='reportStatus'||p==='modlog')&&!(K.me&&K.me.role==='admin'))return[];
- return(await allRows(m.t,m.ord,m.lim)).map(r=>({id:String(r.id||r.uid||r.key),data:m.fr(r)}))}
+ return(await allRows(m.t,m.ord,m.lim)).map(r=>({id:String(m.idf?m.idf(r):(r.id||r.uid||r.key)),data:m.fr(r)}))}
 function splitPath(path){const seg=String(path||'').split('/');
  if(seg[0]==='data'){if(seg.length!==4||seg[1]!=='users'||seg[2]!==(K.me&&K.me.uid))throw E('permission_denied','この操作は許可されていません');return{priv:true,key:seg[3]}}
  if(seg.length!==2||!TB[seg[0]])throw E('permission_denied','この操作は許可されていません');return{col:seg[0],id:seg[1]}}
@@ -669,6 +748,9 @@ const OPS={
   try{for(let i=0;i<20;i++){const{data}=await sb.storage.from('media').list(me,{limit:1000});if(!data||!data.length)break;await sb.storage.from('media').remove(data.map(f=>me+'/'+f.name));if(data.length<1000)break}}catch(e){}
   await q(sb.rpc('delete_account'));await sb.auth.signOut({scope:'local'}).catch(()=>{});return{ok:true}},
  dmSend:async r=>({id:await q(sb.rpc('dm_send',{target:r.to,body:String(r.text||''),media:(r.media||[]).slice(0,1).map(m=>({id:String(m.id||''),type:m.type==='video'?'video':'image',alt:String(m.alt||'').slice(0,400)})),reply:r.reply||null}))}),
+ views:r=>q(sb.rpc('record_views',{ids:(r.ids||[]).map(String).slice(0,100)})),
+ starPost:async r=>({id:await q(sb.rpc('star_post',{body:String(r.text||''),media:(r.media||[]).slice(0,1).map(m=>({id:String(m.id||''),alt:String(m.alt||'').slice(0,400)})),sky:String(r.sky||'night')}))}),
+ starSeen:r=>q(sb.rpc('star_seen',{sid:r.id,p_wish:r.wish===undefined?null:!!r.wish})),
  dmEdit:r=>q(sb.rpc('dm_edit',{mid:r.id,body:String(r.text||'')})),
  dmReact:r=>q(sb.rpc('dm_react',{mid:r.id,emoji:r.emoji})),
  dmRead:r=>q(sb.rpc('dm_read',{cv:r.conv})),
@@ -933,10 +1015,14 @@ PATX['zh-CN'].push([/^(\S+) にログイン用の確認コードを送りまし�
 PATX['zh-TW'].push([/^(\S+) にログイン用の確認コードを送りました。[\s\S]*$/,'已寄送登入驗證碼到 $1。請輸入郵件中的 6 位數驗證碼。'],[/^@(\S*) からログアウト$/,'登出 @$1'],[/^@(\S*) に切り替えました$/,'已切換到 @$1'],[/^@(\S*) のログインが切れました。[\s\S]*$/,'@$1 的登入已失效，請重新登入。']);
 for(const[k,v]of Object.entries({"認証済みアカウント": "Verified account", "公式アカウント": "Official account", "コミュニティ": "Communities", "サイト設定": "Site settings", "メンテナンス中です。": "Under maintenance.", "現在は閲覧のみできます。": "You can browse but not post right now.", " （管理者は通常どおり操作できます）": " (Admins can still make changes)", "名前・ユーザーIDで検索": "Search by name or user ID", "すべて": "All", "管理者": "Admins", "凍結中": "Suspended", "バッジあり": "Has badge", "管理": "Manage", "該当するユーザーはいません": "No matching users", "閉じる": "Close", "読み込み中…": "Loading…", "このユーザーは削除されています。": "This user has been deleted.", "メールアドレス": "Email", "登録日": "Joined", "最終ログイン": "Last sign-in", "メール確認": "Email confirmed", "済み": "Yes", "まだ": "Not yet", "投稿数": "Posts", "送ったメッセージ": "Messages sent", "信頼済みの端末": "Trusted devices", "プッシュ通知の端末": "Push devices", "ログイン": "Sign-in", "正常": "Normal", "状態": "Status", "利用中": "Active", "権限とバッジ": "Role and badge", "あなた（管理者）": "You (admin)", "管理者から外す": "Remove admin", "管理者にする": "Make admin", "バッジ": "Badge", "なし": "None", "認証済み（青）": "Verified (blue)", "公式（金）": "Official (gold)", "アカウント": "Account", "警告を送る": "Send warning", "凍結を解除": "Unsuspend", "凍結する": "Suspend", "ログインのロックを解除": "Unlock sign-in", "信頼済みの端末をすべて解除": "Untrust all devices", "プロフィールの修正": "Fix profile", "不適切な内容を初期状態に戻します。": "Reset inappropriate content.", "表示名": "Display name", "自己紹介": "Bio", "アイコン": "Avatar", "ヘッダー画像": "Header image", "リンク": "Link", "選んだ項目を初期化": "Reset selected", "新しいユーザーID": "New user ID", "ユーザーIDを変更": "Change user ID", "削除": "Delete", "投稿をすべて削除": "Delete all posts", "アカウントを削除": "Delete account", "コミュニティ名で検索": "Search communities", "新しい作成者のユーザーID": "New owner user ID", "作成者を変更": "Change owner", "コミュニティはまだありません": "No communities yet", "新規登録": "Sign-ups", "新規登録を受け付ける": "Allow new sign-ups", "オフにすると、新しいアカウントを作れなくなります（荒らし対策や、招待した人だけで使いたいときに）。": "When off, no new accounts can be created (useful against spam or for invite-only use).", "メンテナンスモード": "Maintenance mode", "メンテナンス中にする（管理者以外は閲覧のみ）": "Turn on maintenance (read-only for non-admins)", "利用者に表示するメッセージ": "Message shown to users", "例：22時〜23時はメンテナンスのため投稿できません": "e.g. Posting is paused 22:00–23:00 for maintenance", "メッセージを保存": "Save message", "NGワード": "Blocked words", "ここに書いた語句を含む投稿・メッセージ・プロフィール・コミュニティ名は保存できなくなります。1行に1つ入力してください（大文字・小文字は区別しません。管理者は対象外）。": "Posts, messages, profiles and community names containing these words can’t be saved. One per line (case-insensitive; admins are exempt).", "例：宣伝URL": "e.g. spam-url", "保存": "Save", "あなた": "You", "外す": "Remove", "管理者を増やすときは「ユーザー管理」でユーザーの「管理」を押し、「管理者にする」を選びます。": "To add an admin, open Users, press Manage on a user and choose Make admin.", "テーマ": "Theme", "端末の設定に合わせる": "Match device", "ダーク（夜空）": "Dark (night sky)", "ライト": "Light", "プッシュ通知": "Push notifications", "確認中…": "Checking…", "この端末で通知を受け取っています。": "This device receives notifications.", "この端末の通知をオフにする": "Turn off on this device", "アプリを閉じていても、いいね・返信・フォロー・メッセージなどをこの端末に通知します。": "Get likes, replies, follows and messages on this device even when Orbit is closed.", "この端末で通知を受け取る": "Turn on for this device", "ブラウザで通知がブロックされています。ブラウザ（またはスマホ）の設定で Orbit の通知を許可してください。": "Notifications are blocked. Allow notifications for Orbit in your browser or phone settings.", "iPhone・iPad では、Safari の共有ボタン →「ホーム画面に追加」で Orbit を追加し、ホーム画面から開くと通知を受け取れます。": "On iPhone/iPad, tap Share → “Add to Home Screen” in Safari, then open Orbit from the Home Screen to get notifications.", "このブラウザはプッシュ通知に対応していません。": "This browser doesn’t support push notifications.", "メッセージ（DM）の通知を受け取る": "Get message (DM) notifications", "いいね・返信などの種類ごとのオン・オフは「通知設定」と共通です。": "On/off for likes, replies, etc. is shared with Notification settings.", "この端末で通知を受け取ります": "Notifications on for this device", "この端末の通知をオフにしました": "Notifications off for this device", "iPhone・iPad では、Orbit をホーム画面に追加してから開くと通知を受け取れます": "On iPhone/iPad, add Orbit to your Home Screen and open it from there to get notifications", "このブラウザはプッシュ通知に対応していません": "This browser doesn’t support push notifications", "通知が許可されませんでした。ブラウザの設定で Orbit の通知を許可してください": "Notifications weren’t allowed. Allow them for Orbit in your browser settings.", "プッシュ通知はまだ準備中です（管理者が Supabase に「push」機能を設定すると使えます）": "Push notifications aren’t set up yet (an admin needs to add the “push” function in Supabase).", "通知の準備ができませんでした。ページを再読み込みしてください": "Couldn’t prepare notifications. Please reload the page.", "管理者は、通報の対応・凍結・投稿の削除・サイト設定など、すべての管理機能を使えるようになります。": "Admins can use every admin tool: reports, suspensions, deleting posts, site settings and more.", "管理者にしました": "Made admin", "管理者から外しました": "Removed admin", "ログインのロックを解除しました": "Sign-in unlocked", "信頼済みの端末をすべて解除しますか？": "Untrust all devices?", "このユーザーは、次にログインするときにメールの確認コードが必要になります。パスワードだけでログインしている端末はログアウトされます。": "This user will need an email code next time they sign in. Devices signed in with only a password will be signed out.", "解除する": "Untrust", "信頼済みの端末を解除しました": "Devices untrusted", "初期化する項目を選んでください": "Choose what to reset", "選んだ項目を初期化しますか？": "Reset the selected items?", "初期化する": "Reset", "初期化しました": "Reset done", "ユーザーIDは3〜20文字の英数字と _ で指定してください": "User IDs must be 3–20 letters, numbers or _", "ユーザーIDを変更しました": "User ID changed", "元に戻せません。": "This can’t be undone.", "すべて削除": "Delete all", "投稿・画像・メッセージなど、このユーザーのデータがすべて削除され、元に戻せません。": "All of this user’s data, including posts, images and messages, will be deleted. This can’t be undone.", "削除する": "Delete", "アカウントを削除しました": "Account deleted", "ユーザーが見つかりません": "User not found", "変更する": "Change", "作成者を変更しました": "Owner changed", "このコミュニティを削除しますか？": "Delete this community?", "メンバーとコミュニティ内の投稿もすべて削除され、元に戻せません。": "Its members and posts will also be deleted. This can’t be undone.", "コミュニティを削除しました": "Community deleted", "メッセージを保存しました": "Message saved", "バッジを付けました": "Badge added", "バッジを外しました": "Badge removed", "新規登録を受け付けます": "Sign-ups are open", "新規登録を停止しました": "Sign-ups stopped", "メンテナンスモードにしました": "Maintenance mode on", "メンテナンスモードを解除しました": "Maintenance mode off", "禁止されている語句が含まれています": "Contains a blocked word", "メンテナンス中のため、現在は閲覧のみできます": "Under maintenance — you can only browse right now", "現在、新規登録を受け付けていません": "New sign-ups are currently closed", "最後の管理者は外せません": "You can’t remove the last admin", "自分のアカウントは設定画面から削除してください": "Delete your own account from Settings", "管理者のアカウントは削除できません。先に管理者から外してください": "Admin accounts can’t be deleted. Remove admin first.", "ロボットではないことの確認に失敗しました。ページを再読み込みして、もう一度お試しください": "Bot check failed. Reload the page and try again.", "ロボットではないことの確認に失敗しました。もう一度お試しください": "Bot check failed. Please try again.", "ロボットではないことの確認を読み込めませんでした。通信環境を確認して、もう一度お試しください": "Couldn’t load the bot check. Check your connection and try again.", "ロボットではないことの確認に時間がかかっています。もう一度お試しください": "The bot check is taking too long. Please try again."}))if(!(k in EN))EN[k]=v;
 PAT.push([/^@(\S+) を管理者にしますか？$/,'Make @$1 an admin?'],[/^@(\S+) を管理者から外しますか？$/,'Remove @$1 from admins?'],[/^@(\S+) の投稿をすべて削除しますか？$/,'Delete all posts by @$1?'],[/^@(\S+) のアカウントを削除しますか？$/,"Delete @$1's account?"],[/^作成者を @(\S+) に変更しますか？$/,'Change the owner to @$1?'],[/^(\d+)人$/,(m,n)=>n+(n==='1'?' person':' people')],[/^(\d+)件の投稿を削除しました$/,'Deleted $1 posts'],[/^NGワードを保存しました（(\d+)件）$/,'Saved $1 blocked words'],[/^ロック中（(.*)まで）$/,'Locked (until $1)'],[/^失敗 (\d+)回$/,'$1 failed attempts'],[/^作成者: ([\s\S]*?) @(\S+) ・ メンバー (\d+)人 ・ 投稿 (\d+)件 ・ ([\s\S]*)$/,'Owner: $1 @$2 · $3 members · $4 posts · $5']);
-for(const[k,v]of Object.entries({"返信先": "Replying to", "引用して返信": "Quote reply", "編集済み": "Edited", "自分の画面から削除": "Delete for me", "自分の画面から削除しました": "Deleted for you", "メッセージを編集": "Edit message", "メッセージを削除（相手からも消えます）": "Delete for everyone", "元のメッセージは削除されました": "Original message was deleted", "元のメッセージは表示範囲にありません": "The original message isn’t loaded", "返信をやめる": "Cancel reply", "編集をやめる": "Cancel editing", "添付を外す": "Remove attachment", "画像・GIF・動画を添付": "Attach photo, GIF or video", "20MBまでの画像・GIF・動画を選んでください": "Choose a photo, GIF or video up to 20 MB", "保存できませんでした": "Couldn’t save", "自分のメッセージだけ編集できます": "You can only edit your own messages", "動画": "Video", "保存": "Save", "返信": "Reply", "画像を読み込んでいます…": "Loading image…", "この画像は読み込めませんでした。JPEGかPNGの画像を選んでください": "Couldn’t read this image. Please choose a JPEG or PNG.", "40MBまでの画像を選んでください": "Choose an image up to 40 MB", "アイコンを変更しました": "Profile photo updated", "ヘッダー画像を変更しました": "Header image updated", "左へ": "Scroll left", "右へ": "Scroll right", "その他": "More"}))EN[k]=v;
-Object.assign(OVR["ko"]=OVR["ko"]||{},{"返信先": "답장 대상", "引用して返信": "인용 답장", "編集済み": "수정됨", "自分の画面から削除": "나에게서 삭제", "自分の画面から削除しました": "나에게서 삭제했습니다", "メッセージを編集": "메시지 수정", "メッセージを削除（相手からも消えます）": "모두에게서 삭제", "元のメッセージは削除されました": "원본 메시지가 삭제되었습니다", "元のメッセージは表示範囲にありません": "원본 메시지가 표시 범위에 없습니다", "返信をやめる": "답장 취소", "編集をやめる": "수정 취소", "添付を外す": "첨부 삭제", "画像・GIF・動画を添付": "사진·GIF·동영상 첨부", "20MBまでの画像・GIF・動画を選んでください": "20MB 이하의 사진·GIF·동영상을 선택하세요", "保存できませんでした": "저장하지 못했습니다", "自分のメッセージだけ編集できます": "내 메시지만 수정할 수 있습니다", "動画": "동영상", "保存": "저장", "返信": "답장", "画像を読み込んでいます…": "이미지를 불러오는 중…", "この画像は読み込めませんでした。JPEGかPNGの画像を選んでください": "이 이미지를 읽을 수 없습니다. JPEG 또는 PNG 이미지를 선택하세요", "40MBまでの画像を選んでください": "40MB 이하의 이미지를 선택하세요", "アイコンを変更しました": "프로필 사진을 변경했습니다", "ヘッダー画像を変更しました": "헤더 이미지를 변경했습니다", "左へ": "왼쪽으로", "右へ": "오른쪽으로", "その他": "더보기"});
-Object.assign(OVR["zh-CN"]=OVR["zh-CN"]||{},{"返信先": "回复给", "引用して返信": "引用回复", "編集済み": "已编辑", "自分の画面から削除": "仅对我删除", "自分の画面から削除しました": "已仅对你删除", "メッセージを編集": "编辑消息", "メッセージを削除（相手からも消えます）": "对所有人删除", "元のメッセージは削除されました": "原消息已删除", "元のメッセージは表示範囲にありません": "原消息不在显示范围内", "返信をやめる": "取消回复", "編集をやめる": "取消编辑", "添付を外す": "移除附件", "画像・GIF・動画を添付": "添加图片、GIF 或视频", "20MBまでの画像・GIF・動画を選んでください": "请选择 20MB 以内的图片、GIF 或视频", "保存できませんでした": "无法保存", "自分のメッセージだけ編集できます": "只能编辑自己的消息", "動画": "视频", "保存": "保存", "返信": "回复", "画像を読み込んでいます…": "正在加载图片…", "この画像は読み込めませんでした。JPEGかPNGの画像を選んでください": "无法读取此图片，请选择 JPEG 或 PNG 图片", "40MBまでの画像を選んでください": "请选择 40MB 以内的图片", "アイコンを変更しました": "已更换头像", "ヘッダー画像を変更しました": "已更换封面图片", "左へ": "向左", "右へ": "向右", "その他": "更多"});
-Object.assign(OVR["zh-TW"]=OVR["zh-TW"]||{},{"返信先": "回覆給", "引用して返信": "引用回覆", "編集済み": "已編輯", "自分の画面から削除": "僅對我刪除", "自分の画面から削除しました": "已僅對你刪除", "メッセージを編集": "編輯訊息", "メッセージを削除（相手からも消えます）": "對所有人刪除", "元のメッセージは削除されました": "原訊息已刪除", "元のメッセージは表示範囲にありません": "原訊息不在顯示範圍內", "返信をやめる": "取消回覆", "編集をやめる": "取消編輯", "添付を外す": "移除附件", "画像・GIF・動画を添付": "附加圖片、GIF 或影片", "20MBまでの画像・GIF・動画を選んでください": "請選擇 20MB 以內的圖片、GIF 或影片", "保存できませんでした": "無法儲存", "自分のメッセージだけ編集できます": "只能編輯自己的訊息", "動画": "影片", "保存": "儲存", "返信": "回覆", "画像を読み込んでいます…": "正在載入圖片…", "この画像は読み込めませんでした。JPEGかPNGの画像を選んでください": "無法讀取此圖片，請選擇 JPEG 或 PNG 圖片", "40MBまでの画像を選んでください": "請選擇 40MB 以內的圖片", "アイコンを変更しました": "已更換頭像", "ヘッダー画像を変更しました": "已更換封面圖片", "左へ": "向左", "右へ": "向右", "その他": "更多"});
+for(const[k,v]of Object.entries({"返信先": "Replying to", "引用して返信": "Quote reply", "編集済み": "Edited", "自分の画面から削除": "Delete for me", "自分の画面から削除しました": "Deleted for you", "メッセージを編集": "Edit message", "メッセージを削除（相手からも消えます）": "Delete for everyone", "元のメッセージは削除されました": "Original message was deleted", "元のメッセージは表示範囲にありません": "The original message isn’t loaded", "返信をやめる": "Cancel reply", "編集をやめる": "Cancel editing", "添付を外す": "Remove attachment", "画像・GIF・動画を添付": "Attach photo, GIF or video", "20MBまでの画像・GIF・動画を選んでください": "Choose a photo, GIF or video up to 20 MB", "保存できませんでした": "Couldn’t save", "自分のメッセージだけ編集できます": "You can only edit your own messages", "動画": "Video", "保存": "Save", "返信": "Reply", "画像を読み込んでいます…": "Loading image…", "この画像は読み込めませんでした。JPEGかPNGの画像を選んでください": "Couldn’t read this image. Please choose a JPEG or PNG.", "40MBまでの画像を選んでください": "Choose an image up to 40 MB", "アイコンを変更しました": "Profile photo updated", "ヘッダー画像を変更しました": "Header image updated", "左へ": "Scroll left", "右へ": "Scroll right", "その他": "More", "投稿しました": "Posted", "流れ星": "Shooting stars", "自分の流れ星を見る": "View my shooting star", "流れ星を流す": "Send a shooting star", "フォローしている人の流れ星がここに流れます。": "Shooting stars from people you follow appear here.", "24時間で消える「いま」のひとことです。": "A short “right now” moment that disappears in 24 hours.", "いまのひとこと": "What’s happening right now", "いまのひとこと（100文字まで）": "What’s happening right now (up to 100 characters)", "空の色": "Sky color", "夜空": "Night", "夜明け": "Dawn", "夕焼け": "Sunset", "オーロラ": "Aurora", "写真を添える": "Add a photo", "写真を外す": "Remove photo", "写真": "Photo", "24時間で自動的に消えます。流せるのは1つだけで、新しく流すと前の流れ星は消えます。あなたの投稿を見られる人に表示されます。": "It disappears automatically after 24 hours. You can have only one at a time — sending a new one replaces the last. It’s shown to people who can see your posts.", "流す": "Send", "流しています…": "Sending…", "流れ星を流しました 🌠": "Shooting star sent 🌠", "流せませんでした": "Couldn’t send", "この流れ星はもう消えました": "This shooting star has already faded", "まもなく消えます": "Fading soon", "前の流れ星": "Previous", "次の流れ星": "Next", "消す": "Delete", "メッセージを送る": "Send a message", "願いをかける": "Make a wish", "願いをかけました ✨": "Wish made ✨", "見た人": "Viewers", "まだだれも見ていません": "No one has viewed it yet", "流れ星を消しますか？": "Delete this shooting star?", "消すと元に戻せません。": "This can’t be undone.", "流れ星を消しました": "Shooting star deleted", "メッセージを送りました": "Message sent", "ひとことか写真を入れてください": "Add a few words or a photo", "流れ星のひとことは100文字以内にしてください": "Keep it within 100 characters", "流れ星は1日20回までです": "You can send up to 20 shooting stars a day", "表示回数": "Views", "回表示": " views"}))EN[k]=v;
+PAT.push([/^あと(\d+)時間で消えます$/,(m,n)=>n==='1'?'Fades in 1 hour':'Fades in '+n+' hours'],[/^見た人 (\d+) ・ ✨ (\d+)$/,'Viewers $1 · ✨ $2'],[/^表示回数 (\d+)$/,'Views $1']);
+PATX.ko.push([/^あと(\d+)時間で消えます$/,'$1시간 후 사라져요'],[/^見た人 (\d+) ・ ✨ (\d+)$/,'본 사람 $1 · ✨ $2'],[/^表示回数 (\d+)$/,'조회수 $1']);
+PATX['zh-CN'].push([/^あと(\d+)時間で消えます$/,'$1 小时后消失'],[/^見た人 (\d+) ・ ✨ (\d+)$/,'查看 $1 · ✨ $2'],[/^表示回数 (\d+)$/,'浏览 $1']);
+PATX['zh-TW'].push([/^あと(\d+)時間で消えます$/,'$1 小時後消失'],[/^見た人 (\d+) ・ ✨ (\d+)$/,'看過 $1 · ✨ $2'],[/^表示回数 (\d+)$/,'瀏覽 $1']);
+Object.assign(OVR["ko"]=OVR["ko"]||{},{"返信先": "답장 대상", "引用して返信": "인용 답장", "編集済み": "수정됨", "自分の画面から削除": "나에게서 삭제", "自分の画面から削除しました": "나에게서 삭제했습니다", "メッセージを編集": "메시지 수정", "メッセージを削除（相手からも消えます）": "모두에게서 삭제", "元のメッセージは削除されました": "원본 메시지가 삭제되었습니다", "元のメッセージは表示範囲にありません": "원본 메시지가 표시 범위에 없습니다", "返信をやめる": "답장 취소", "編集をやめる": "수정 취소", "添付を外す": "첨부 삭제", "画像・GIF・動画を添付": "사진·GIF·동영상 첨부", "20MBまでの画像・GIF・動画を選んでください": "20MB 이하의 사진·GIF·동영상을 선택하세요", "保存できませんでした": "저장하지 못했습니다", "自分のメッセージだけ編集できます": "내 메시지만 수정할 수 있습니다", "動画": "동영상", "保存": "저장", "返信": "답장", "画像を読み込んでいます…": "이미지를 불러오는 중…", "この画像は読み込めませんでした。JPEGかPNGの画像を選んでください": "이 이미지를 읽을 수 없습니다. JPEG 또는 PNG 이미지를 선택하세요", "40MBまでの画像を選んでください": "40MB 이하의 이미지를 선택하세요", "アイコンを変更しました": "프로필 사진을 변경했습니다", "ヘッダー画像を変更しました": "헤더 이미지를 변경했습니다", "左へ": "왼쪽으로", "右へ": "오른쪽으로", "その他": "더보기", "投稿しました": "게시했어요", "流れ星": "별똥별", "自分の流れ星を見る": "내 별똥별 보기", "流れ星を流す": "별똥별 보내기", "フォローしている人の流れ星がここに流れます。": "팔로우한 사람들의 별똥별이 여기에 흘러요.", "24時間で消える「いま」のひとことです。": "24시간 후 사라지는 ‘지금’의 한마디예요.", "いまのひとこと": "지금의 한마디", "いまのひとこと（100文字まで）": "지금의 한마디 (100자까지)", "空の色": "하늘 색", "夜空": "밤하늘", "夜明け": "새벽", "夕焼け": "노을", "オーロラ": "오로라", "写真を添える": "사진 추가", "写真を外す": "사진 삭제", "写真": "사진", "24時間で自動的に消えます。流せるのは1つだけで、新しく流すと前の流れ星は消えます。あなたの投稿を見られる人に表示されます。": "24시간 후 자동으로 사라져요. 하나만 보낼 수 있으며, 새로 보내면 이전 별똥별은 사라져요. 내 게시물을 볼 수 있는 사람에게 표시돼요.", "流す": "보내기", "流しています…": "보내는 중…", "流れ星を流しました 🌠": "별똥별을 보냈어요 🌠", "流せませんでした": "보내지 못했어요", "この流れ星はもう消えました": "이 별똥별은 이미 사라졌어요", "まもなく消えます": "곧 사라져요", "前の流れ星": "이전", "次の流れ星": "다음", "消す": "삭제", "メッセージを送る": "메시지 보내기", "願いをかける": "소원 빌기", "願いをかけました ✨": "소원을 빌었어요 ✨", "見た人": "본 사람", "まだだれも見ていません": "아직 아무도 보지 않았어요", "流れ星を消しますか？": "별똥별을 삭제할까요?", "消すと元に戻せません。": "삭제하면 되돌릴 수 없어요.", "流れ星を消しました": "별똥별을 삭제했어요", "メッセージを送りました": "메시지를 보냈어요", "ひとことか写真を入れてください": "한마디나 사진을 넣어 주세요", "流れ星のひとことは100文字以内にしてください": "100자 이내로 입력해 주세요", "流れ星は1日20回までです": "별똥별은 하루 20번까지 보낼 수 있어요", "表示回数": "조회수", "回表示": "회 조회"});
+Object.assign(OVR["zh-CN"]=OVR["zh-CN"]||{},{"返信先": "回复给", "引用して返信": "引用回复", "編集済み": "已编辑", "自分の画面から削除": "仅对我删除", "自分の画面から削除しました": "已仅对你删除", "メッセージを編集": "编辑消息", "メッセージを削除（相手からも消えます）": "对所有人删除", "元のメッセージは削除されました": "原消息已删除", "元のメッセージは表示範囲にありません": "原消息不在显示范围内", "返信をやめる": "取消回复", "編集をやめる": "取消编辑", "添付を外す": "移除附件", "画像・GIF・動画を添付": "添加图片、GIF 或视频", "20MBまでの画像・GIF・動画を選んでください": "请选择 20MB 以内的图片、GIF 或视频", "保存できませんでした": "无法保存", "自分のメッセージだけ編集できます": "只能编辑自己的消息", "動画": "视频", "保存": "保存", "返信": "回复", "画像を読み込んでいます…": "正在加载图片…", "この画像は読み込めませんでした。JPEGかPNGの画像を選んでください": "无法读取此图片，请选择 JPEG 或 PNG 图片", "40MBまでの画像を選んでください": "请选择 40MB 以内的图片", "アイコンを変更しました": "已更换头像", "ヘッダー画像を変更しました": "已更换封面图片", "左へ": "向左", "右へ": "向右", "その他": "更多", "投稿しました": "已发布", "流れ星": "流星", "自分の流れ星を見る": "查看我的流星", "流れ星を流す": "放出流星", "フォローしている人の流れ星がここに流れます。": "你关注的人的流星会出现在这里。", "24時間で消える「いま」のひとことです。": "这是 24 小时后消失的“此刻”一句话。", "いまのひとこと": "此刻的一句话", "いまのひとこと（100文字まで）": "此刻的一句话（最多 100 字）", "空の色": "天空颜色", "夜空": "夜空", "夜明け": "黎明", "夕焼け": "晚霞", "オーロラ": "极光", "写真を添える": "添加照片", "写真を外す": "移除照片", "写真": "照片", "24時間で自動的に消えます。流せるのは1つだけで、新しく流すと前の流れ星は消えます。あなたの投稿を見られる人に表示されます。": "24 小时后自动消失。同一时间只能有一个，发送新的会替换之前的流星。能看到你帖子的人可以看到它。", "流す": "放出", "流しています…": "正在放出…", "流れ星を流しました 🌠": "已放出流星 🌠", "流せませんでした": "无法放出", "この流れ星はもう消えました": "这颗流星已经消失了", "まもなく消えます": "即将消失", "前の流れ星": "上一个", "次の流れ星": "下一个", "消す": "删除", "メッセージを送る": "发送消息", "願いをかける": "许愿", "願いをかけました ✨": "已许愿 ✨", "見た人": "查看过的人", "まだだれも見ていません": "还没有人看过", "流れ星を消しますか？": "要删除这颗流星吗？", "消すと元に戻せません。": "删除后无法恢复。", "流れ星を消しました": "已删除流星", "メッセージを送りました": "消息已发送", "ひとことか写真を入れてください": "请输入一句话或添加照片", "流れ星のひとことは100文字以内にしてください": "请控制在 100 字以内", "流れ星は1日20回までです": "每天最多放出 20 颗流星", "表示回数": "浏览次数", "回表示": " 次浏览"});
+Object.assign(OVR["zh-TW"]=OVR["zh-TW"]||{},{"返信先": "回覆給", "引用して返信": "引用回覆", "編集済み": "已編輯", "自分の画面から削除": "僅對我刪除", "自分の画面から削除しました": "已僅對你刪除", "メッセージを編集": "編輯訊息", "メッセージを削除（相手からも消えます）": "對所有人刪除", "元のメッセージは削除されました": "原訊息已刪除", "元のメッセージは表示範囲にありません": "原訊息不在顯示範圍內", "返信をやめる": "取消回覆", "編集をやめる": "取消編輯", "添付を外す": "移除附件", "画像・GIF・動画を添付": "附加圖片、GIF 或影片", "20MBまでの画像・GIF・動画を選んでください": "請選擇 20MB 以內的圖片、GIF 或影片", "保存できませんでした": "無法儲存", "自分のメッセージだけ編集できます": "只能編輯自己的訊息", "動画": "影片", "保存": "儲存", "返信": "回覆", "画像を読み込んでいます…": "正在載入圖片…", "この画像は読み込めませんでした。JPEGかPNGの画像を選んでください": "無法讀取此圖片，請選擇 JPEG 或 PNG 圖片", "40MBまでの画像を選んでください": "請選擇 40MB 以內的圖片", "アイコンを変更しました": "已更換頭像", "ヘッダー画像を変更しました": "已更換封面圖片", "左へ": "向左", "右へ": "向右", "その他": "更多", "投稿しました": "已發佈", "流れ星": "流星", "自分の流れ星を見る": "查看我的流星", "流れ星を流す": "放出流星", "フォローしている人の流れ星がここに流れます。": "你追蹤的人的流星會出現在這裡。", "24時間で消える「いま」のひとことです。": "這是 24 小時後消失的「此刻」一句話。", "いまのひとこと": "此刻的一句話", "いまのひとこと（100文字まで）": "此刻的一句話（最多 100 字）", "空の色": "天空顏色", "夜空": "夜空", "夜明け": "黎明", "夕焼け": "晚霞", "オーロラ": "極光", "写真を添える": "新增照片", "写真を外す": "移除照片", "写真": "照片", "24時間で自動的に消えます。流せるのは1つだけで、新しく流すと前の流れ星は消えます。あなたの投稿を見られる人に表示されます。": "24 小時後自動消失。同一時間只能有一個，傳送新的會取代之前的流星。能看到你貼文的人可以看到它。", "流す": "放出", "流しています…": "正在放出…", "流れ星を流しました 🌠": "已放出流星 🌠", "流せませんでした": "無法放出", "この流れ星はもう消えました": "這顆流星已經消失了", "まもなく消えます": "即將消失", "前の流れ星": "上一個", "次の流れ星": "下一個", "消す": "刪除", "メッセージを送る": "傳送訊息", "願いをかける": "許願", "願いをかけました ✨": "已許願 ✨", "見た人": "看過的人", "まだだれも見ていません": "還沒有人看過", "流れ星を消しますか？": "要刪除這顆流星嗎？", "消すと元に戻せません。": "刪除後無法復原。", "流れ星を消しました": "已刪除流星", "メッセージを送りました": "訊息已傳送", "ひとことか写真を入れてください": "請輸入一句話或新增照片", "流れ星のひとことは100文字以内にしてください": "請控制在 100 字以內", "流れ星は1日20回までです": "每天最多放出 20 顆流星", "表示回数": "瀏覽次數", "回表示": " 次瀏覽"});
 const LANGS=['ja','en','ko','zh-CN','zh-TW'];K.LANGS=LANGS;K.dicts={};
 K.lang=(()=>{try{const l=localStorage.getItem('orbit-lang');if(LANGS.includes(l))return l}catch(e){}const n=String(navigator.language||'ja');return /^ja/i.test(n)?'ja':/^ko/i.test(n)?'ko':/^zh-(TW|HK|MO|Hant)/i.test(n)?'zh-TW':/^zh/i.test(n)?'zh-CN':'en'})();
 try{const c=JSON.parse(localStorage.getItem('orbit-dict-'+K.lang)||'null');if(c&&c.d)K.dicts[K.lang]=c.d}catch(e){}
@@ -1104,7 +1190,7 @@ const ANNK={info:'お知らせ',maint:'メンテナンス',outage:'障害情報'
 const NK={like:'いいね',repost:'リポスト',reply:'返信',quote:'引用',mention:'メンション',follow:'フォロー',ann:'お知らせ'};
 const S={badges:{},site:{signup:true,maintenance:false,ngwords:[],maint_msg:''},adminsList:[],db:null,user:null,assets:null,dl:null,me:null,admin:false,ro:false,loaded:false,
  posts:[],likes:[],reposts:[],follows:[],profiles:{},names:{},hidden:{},susp:{},blocks:{},ann:[],reports:[],rstat:{},modlog:[],privPosts:[],
- priv:{lists:[],showNsfw:false,bookmarks:[],mutes:[],muteWords:[],seen:0,history:[],drafts:[],notifOff:[],dismissed:[],dm:'all',dmAccepted:[],dmHidden:{},dmHideMsg:[]},dms:[],dmc:{text:'',file:null,url:''},votes:{},freqs:[],comms:[],members:[],reveal:new Set(),trx:{},ef:{from:'',to:'',type:'all',user:'',likes:0,replies:true},cq:'',sched:null,adminInfo:null,
+ priv:{lists:[],showNsfw:false,bookmarks:[],mutes:[],muteWords:[],seen:0,history:[],drafts:[],notifOff:[],dismissed:[],dm:'all',dmAccepted:[],dmHidden:{},dmHideMsg:[]},views:{},stars:[],starViews:[],anim:null,dms:[],dmc:{text:'',file:null,url:''},votes:{},freqs:[],comms:[],members:[],reveal:new Set(),trx:{},ef:{from:'',to:'',type:'all',user:'',likes:0,replies:true},cq:'',sched:null,adminInfo:null,
  route:'home',arg:null,tab:{comm:'posts',list:'posts',messages:'inbox',home:'rec',profile:'posts',notifications:'all',explore:'posts',admin:'stats',bookmarks:'new'},
  q:'',esort:'new',limit:PAGE,menu:null,modal:null,who:null,edit:null,adm:{},lastPost:0,likeT:[],followT:[],homeSeen:0,pending:false,hc:null};
 const hash32=s=>{let h=2166136261;for(const c of String(s)){h^=c.charCodeAt(0);h=Math.imul(h,16777619)}return h>>>0};
@@ -1174,10 +1260,10 @@ function menuHTML(p){const mine=p.author===S.me,pinned=prof(S.me).pinned===p.id;
  if(S.admin&&!p.private){h+=`<button data-act="ahide">${S.hidden[p.id]?'非表示を解除（管理）':'投稿を非表示（管理）'}</button>`;if(!mine)h+=`<button class="dan" data-act="adel">投稿を削除（管理）</button>`}
  return h+'</div>'}
 // ===== 利用規約・プライバシーポリシー（たたき台） =====
-// ===== 【】の部分を書き換えてください。一般公開の前に、専門家の確認を受けることをおすすめします =====
+// 運営者：ゆばり ／ 制定日：2026年11月26日
 const LEGAL={
  terms:{ja:{t:'利用規約',b:[
- ['第1条（適用）','この規約は、【運営者名】（以下「運営者」）が提供するSNS「Orbit」（以下「本サービス」）の利用に関する条件を定めるものです。利用者は、この規約に同意したうえで本サービスを利用するものとします。'],
+ ['第1条（適用）','この規約は、ゆばり（以下「運営者」）が提供するSNS「Orbit」（以下「本サービス」）の利用に関する条件を定めるものです。利用者は、この規約に同意したうえで本サービスを利用するものとします。'],
  ['第2条（利用登録）','利用を希望する方は、運営者の定める方法で登録を申請し、運営者がこれを承認することで登録が完了します。虚偽の情報による申請、過去に規約違反で利用停止となった方からの申請などは、承認しないことがあります。'],
  ['第3条（アカウントの管理）','利用者は、自己の責任でパスワードを管理するものとします。アカウントを第三者に譲渡・貸与することはできません。不正利用に気づいた場合は、すみやかに運営者へ連絡してください。'],
  ['第4条（禁止事項）','利用者は、次の行為をしてはなりません。法令や公序良俗に反する行為／他人への嫌がらせ・脅迫・差別的な言動／他人の個人情報を本人の同意なく公開する行為／他人の著作権・肖像権その他の権利を侵害する行為／なりすまし・スパム・同じ内容の大量投稿／18歳未満の利用者に有害な内容を、センシティブ設定なしで投稿する行為／本サービスの運営を妨げる行為／その他、運営者が不適切と判断する行為。'],
@@ -1186,10 +1272,10 @@ const LEGAL={
  ['第7条（サービスの変更・停止）','運営者は、保守・障害・その他やむを得ない事情により、本サービスの内容を変更し、または提供を一時停止・終了することがあります。'],
  ['第8条（免責）','運営者は、本サービスに事実上または法律上の不具合がないことを保証しません。利用者間または利用者と第三者との間で生じたトラブルについて、運営者は責任を負いません。ただし、運営者の故意または重大な過失による場合はこの限りではありません。'],
  ['第9条（規約の変更）','運営者は、必要に応じてこの規約を変更できます。変更する場合は、本サービス上でお知らせします。'],
- ['第10条（準拠法・管轄）','この規約は日本法に準拠します。本サービスに関して紛争が生じた場合は、【管轄裁判所】を第一審の専属的合意管轄裁判所とします。'],
- ['','制定日：【2026年◯月◯日】／運営者：【運営者名】／お問い合わせ：【連絡先】']]},
+ ['第10条（準拠法・管轄）','この規約は日本法に準拠します。本サービスに関して紛争が生じた場合は、運営者の住所地を管轄する地方裁判所を第一審の専属的合意管轄裁判所とします。'],
+ ['','制定日：2026年11月26日／運営者：ゆばり／お問い合わせ：xnymx0222@gmail.com']]},
  en:{t:'Terms of Service',b:[
- ['1. Scope','These terms set out the conditions for using the social network "Orbit" (the "Service") provided by [Operator name] (the "Operator"). By using the Service, you agree to these terms.'],
+ ['1. Scope','These terms set out the conditions for using the social network "Orbit" (the "Service") provided by Yubari (the "Operator"). By using the Service, you agree to these terms.'],
  ['2. Registration','To use the Service, apply for registration in the way the Operator specifies. Registration is complete once approved. Applications with false information, or from people previously suspended for violations, may be refused.'],
  ['3. Your account','You are responsible for keeping your password safe. You may not transfer or lend your account. If you notice unauthorized use, contact the Operator promptly.'],
  ['4. Prohibited conduct','You must not: break the law or public order; harass, threaten or discriminate against others; post others\' personal information without consent; infringe copyrights, portrait rights or other rights; impersonate others, spam or mass-post the same content; post content harmful to minors without marking it sensitive; interfere with the Service; or do anything else the Operator considers inappropriate.'],
@@ -1198,30 +1284,30 @@ const LEGAL={
  ['7. Changes and suspension','The Operator may change, pause or end the Service for maintenance, outages or other unavoidable reasons.'],
  ['8. Disclaimer','The Operator does not guarantee that the Service is free of defects. The Operator is not responsible for disputes between users or between users and third parties, except in cases of intentional misconduct or gross negligence by the Operator.'],
  ['9. Changes to these terms','The Operator may change these terms when necessary and will announce changes in the Service.'],
- ['10. Governing law','These terms are governed by the laws of Japan. [Court name] has exclusive jurisdiction as the court of first instance.'],
- ['','Effective: [Date] / Operator: [Operator name] / Contact: [Contact]']]}},
+ ['10. Governing law','These terms are governed by the laws of Japan. The district court having jurisdiction over the Operator\'s address has exclusive jurisdiction as the court of first instance.'],
+ ['','Effective: November 26, 2026 / Operator: Yubari / Contact: xnymx0222@gmail.com']]}},
  privacy:{ja:{t:'プライバシーポリシー',b:[
  ['1. 取得する情報','本サービスでは、次の情報を取得します。メールアドレス、表示名、ユーザーID、パスワード（暗号化したもののみ保存）／プロフィール、投稿、画像、いいね、フォロー、メッセージなど、利用者が入力・送信した情報／ログイン日時、利用している端末・ブラウザの種類、オンライン状態などの利用状況。'],
  ['2. 利用目的','取得した情報は、本サービスの提供・本人確認・不正利用の防止・お問い合わせへの対応・お知らせの送信・サービス改善のために利用します。'],
  ['3. 第三者への提供','法令に基づく場合などを除き、本人の同意なく個人情報を第三者に提供しません。'],
- ['4. 外部サービスの利用','本サービスはSupabase Inc.が提供するSupabase（データベース・認証・ファイル保存）と、Vercel Inc.が提供するVercel（Webサイトの配信）を利用して運営しており、データはこれらのサービスのサーバーに保存されます。投稿・メッセージに添付した画像は、URLを知っている人が閲覧できる形で保存されます。翻訳ボタンを押したとき、その文章をGoogleの翻訳サービスに送信します。'],
+ ['4. 外部サービスの利用','本サービスはSupabase Inc.が提供するSupabase（データベース・認証・ファイル保存）と、Vercel Inc.が提供するVercel（Webサイトの配信）を利用して運営しており、データはこれらのサービスのサーバーに保存されます。投稿・メッセージに添付した画像は、URLを知っている人が閲覧できる形で保存されます。翻訳ボタンを押したとき、その文章をGoogleの翻訳サービスに送信します。不正な登録を防ぐため、登録・ログイン時にCloudflare, Inc.のTurnstileを利用することがあります。プッシュ通知をオンにした場合、通知の内容は端末のブラウザの提供元（Google・Apple・Mozillaなど）の通知サービスを経由して届きます。'],
  ['5. メッセージの取り扱い','ダイレクトメッセージは送信者と受信者だけが閲覧できます。運営者は、通報があった場合などに限り、必要な範囲で内容を確認することがあります。'],
- ['6. 保存期間と削除','利用者はいつでも設定画面からアカウントを削除でき、その際に投稿・メッセージ・プロフィールなどのデータを削除します。ただし、障害対策のためのバックアップには最大【14日間】残る場合があります。'],
+ ['6. 保存期間と削除','利用者はいつでも設定画面からアカウントを削除でき、その際に投稿・メッセージ・プロフィールなどのデータを削除します。ただし、障害対策のためのバックアップには最大30日間残る場合があります。'],
  ['7. 安全管理','パスワードは暗号化して保存し、データへのアクセスは本サービスのプログラムを通じたものに限定するなど、情報の漏えい防止に努めます。'],
  ['8. 開示・訂正・削除の請求','ご本人から個人情報の開示・訂正・削除の請求があった場合は、本人確認のうえ対応します。'],
  ['9. 改定','このポリシーは必要に応じて改定し、本サービス上でお知らせします。'],
- ['','制定日：【2026年◯月◯日】／運営者：【運営者名】／お問い合わせ：【連絡先】']]},
+ ['','制定日：2026年11月26日／運営者：ゆばり／お問い合わせ：xnymx0222@gmail.com']]},
  en:{t:'Privacy Policy',b:[
  ['1. Information we collect','We collect: your email, display name, username and password (stored only in encrypted form); information you enter or send, such as your profile, posts, images, likes, follows and messages; and usage data such as sign-in times, device and browser type, and online status.'],
  ['2. How we use it','We use this information to provide the Service, verify identity, prevent abuse, respond to inquiries, send announcements and improve the Service.'],
  ['3. Sharing with third parties','We do not share personal information with third parties without your consent, except where required by law.'],
- ['4. External services','The Service runs on Supabase (database, sign-in and file storage) provided by Supabase Inc. and Vercel (website delivery) provided by Vercel Inc., and data is stored on their servers. Images attached to posts and messages can be viewed by anyone with the link. When you press Translate, the text is sent to Google\'s translation service.'],
+ ['4. External services','The Service runs on Supabase (database, sign-in and file storage) provided by Supabase Inc. and Vercel (website delivery) provided by Vercel Inc., and data is stored on their servers. Images attached to posts and messages can be viewed by anyone with the link. When you press Translate, the text is sent to Google\'s translation service. To prevent abuse, sign-up and sign-in may use Cloudflare Turnstile provided by Cloudflare, Inc. If you turn on push notifications, notifications are delivered through your browser vendor\'s push service (such as Google, Apple or Mozilla).'],
  ['5. Messages','Direct messages can be read only by the sender and recipient. The Operator may review content only as needed, for example when a message is reported.'],
- ['6. Retention and deletion','You can delete your account at any time in Settings, which deletes your posts, messages and profile. Backups kept for recovery may retain data for up to [14 days].'],
+ ['6. Retention and deletion','You can delete your account at any time in Settings, which deletes your posts, messages and profile. Backups kept for recovery may retain data for up to 30 days.'],
  ['7. Security','We store passwords in encrypted form and limit data access to the Service\'s own program to help prevent leaks.'],
  ['8. Your requests','If you ask us to disclose, correct or delete your personal information, we will respond after verifying your identity.'],
  ['9. Changes','We may update this policy as needed and will announce changes in the Service.'],
- ['','Effective: [Date] / Operator: [Operator name] / Contact: [Contact]']]}}};
+ ['','Effective: November 26, 2026 / Operator: Yubari / Contact: xnymx0222@gmail.com']]}}};
 function legalHTML(k){const d=LEGAL[k][LGX()==='ja'?'ja':'en'];return`<div class="dlg guide" role="dialog" aria-modal="true" aria-label="${esc(d.t)}"><div class="dh"><button class="back" data-act="close" aria-label="閉じる"><svg class="i"><use href="#i-x"/></svg></button><b data-ugc>${esc(d.t)}</b></div><div class="db legal" data-ugc>${d.b.map(([h,p])=>(h?`<h3>${esc(h)}</h3>`:'')+`<p${h?'':' class="hint"'}>${esc(p)}</p>`).join('')}</div></div>`}
 
 const detLang=t=>{t=String(t||'').replace(/https:\S+|[@＠#＃][^\s　]+/g,' ');const ja=(t.match(/[\u3040-\u30ff]/g)||[]).length,ko=(t.match(/[\uac00-\ud7af]/g)||[]).length,han=(t.match(/[\u4e00-\u9fff]/g)||[]).length,lat=(t.match(/[A-Za-z]/g)||[]).length;
@@ -1261,13 +1347,13 @@ function card(p,o={}){const id=p.id;
  if(p.text)h+=`<div class="txt">${fmt(p.text)}</div>`+(p.private?'':trBlock('post',id,p.text));
  h+=pollHTML(p)+nsfwWrap(p,media(p))+linkCard(p);if(p.quoteOf)h+=quoteBox(D.byId[p.quoteOf]);
  if(o.main){h+=`<div class="tm" style="margin:4px 0">${esc(full(p.at))}${p.editedAt?' · 最終編集 '+esc(full(p.editedAt)):''}${p.scope&&p.scope!=='all'?' · '+(p.scope==='following'?'フォロー中の人だけ返信できます':'@した人だけ返信できます'):''}</div>`;
-  const qn=(D.qc[id]||[]).length;h+=`<div class="stats"><button data-act="who" data-w="reposts"><b>${reps.length}</b> 件のリポスト</button><button data-act="who" data-w="quotes"><b>${qn}</b> 件の引用</button><button data-act="who" data-w="likes"><b>${likes.length}</b> 件のいいね</button></div>`}
+  const qn=(D.qc[id]||[]).length;h+=`<div class="stats"><button data-act="who" data-w="reposts"><b>${reps.length}</b> 件のリポスト</button><button data-act="who" data-w="quotes"><b>${qn}</b> 件の引用</button><button data-act="who" data-w="likes"><b>${likes.length}</b> 件のいいね</button><span class="vwn"><b>${nfmt(S.views[id]||0)}</b> 回表示</span></div>`}
  if(!p.private){h+=`<div class="acts">
  <button class="act" data-act="reply" ${cr?'':'disabled title="この投稿には返信できません"'} aria-label="返信"><svg fill="none"><use href="#i-reply"/></svg>${rc||''}</button>
- <span style="position:relative"><button class="act${rped?' rped':''}" data-act="rpmenu" aria-label="リポスト" ${S.me&&!S.ro&&(isPubPost(p)||p.author===S.me)?'':'disabled title="この投稿はリポストできません"'}><svg><use href="#i-rp"/></svg>${reps.length||''}</button>${S.menu==='rp:'+id?`<div class="menu"><button data-act="repost">${rped?'リポストを取り消す':'リポスト'}</button><button data-act="quote">引用して投稿</button></div>`:''}</span>
- <button class="act${liked?' liked':''}" data-act="like" aria-label="いいね" aria-pressed="${liked}" ${S.me&&!S.ro?'':'disabled'}><svg fill="none"><use href="#i-heart"/></svg>${likes.length||''}</button>
- <button class="act${bm?' bmd':''}" data-act="bm" aria-label="ブックマーク" aria-pressed="${bm}"><svg fill="none"><use href="#i-bm"/></svg></button>
- <button class="act" data-act="share" aria-label="リンクをコピー"><svg><use href="#i-share"/></svg></button></div>`}
+ <span style="position:relative"><button class="act${rped?' rped':''}${S.anim==='rp:'+id?' pop':''}" data-act="rpmenu" aria-label="リポスト" ${S.me&&!S.ro&&(isPubPost(p)||p.author===S.me)?'':'disabled title="この投稿はリポストできません"'}><svg><use href="#i-rp"/></svg>${reps.length||''}</button>${S.menu==='rp:'+id?`<div class="menu"><button data-act="repost">${rped?'リポストを取り消す':'リポスト'}</button><button data-act="quote">引用して投稿</button></div>`:''}</span>
+ <button class="act${liked?' liked':''}${S.anim==='like:'+id?' pop':''}" data-act="like" aria-label="いいね" aria-pressed="${liked}" ${S.me&&!S.ro?'':'disabled'}><svg fill="none"><use href="#i-heart"/></svg>${likes.length||''}</button>
+ <button class="act${bm?' bmd':''}${S.anim==='bm:'+id?' pop':''}" data-act="bm" aria-label="ブックマーク" aria-pressed="${bm}"><svg fill="none"><use href="#i-bm"/></svg></button>
+ <button class="act" data-act="share" aria-label="リンクをコピー"><svg><use href="#i-share"/></svg></button>${(()=>{const n=S.views[id]||0;return`<span class="act vw" title="表示回数" aria-label="表示回数 ${n}"><svg><use href="#i-views"/></svg>${n?nfmt(n):''}</span>`})()}</div>`}
  else if(o.main||true)h+=`<div class="acts"><button class="act${bm?' bmd':''}" data-act="bm" aria-label="ブックマーク"><svg fill="none"><use href="#i-bm"/></svg></button></div>`;
  return h+`</div></div></article>`}
 function urow(u,extra=''){const me=u===S.me,fol=following(S.me).has(u),fb=following(u).has(S.me);
@@ -1563,7 +1649,7 @@ function renderView(){S.pending=false;const r=S.route,v=$('#view');const nearB=i
  const changed=v.__h!==html||v.__r!==r+'|'+S.arg||KODAMA.lang!==v.__l;if(changed){v.innerHTML=html;v.__h=html;v.__r=r+'|'+S.arg;v.__l=KODAMA.lang}
  if(r!=='home')$('#newpill').hidden=true;
  if(r==='dm'&&S.loaded){if(S.dmJump||(nearB&&changed)){S.dmJump=false;requestAnimationFrame(()=>scrollTo(0,document.documentElement.scrollHeight))}dmMarkRead()}
- const s=$('#sent');if(s){io.disconnect();io.observe(s)}}
+ const s=$('#sent');if(s){io.disconnect();io.observe(s)}renderStars();vWatch()}
 const io=new IntersectionObserver(es=>{if(es.some(e=>e.isIntersecting)){S.limit+=PAGE;renderView()}},{rootMargin:'400px'});
 function spark(t){const now=Date.now(),c=[0,0,0,0,0,0,0];for(const p of S.posts){const d=Math.floor((now-p.at)/DAY);if(d<7&&tagsOf(p.text).includes(t))c[6-d]++}const mx=Math.max(1,...c);
  return`<svg viewBox="0 0 64 28" aria-hidden="true"><polyline points="${c.map((v,i)=>`${(i*10+2)},${(25-v/mx*21).toFixed(1)}`).join(' ')}" fill="none" stroke="var(--acc2)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="filter:drop-shadow(0 0 4px rgba(90,160,255,.7))"/></svg>`}
@@ -1646,7 +1732,7 @@ async function submitC(key){const c=getC(key);if(!c||c.busy)return;const text=c.
    if(c.vis==='self')await privRef(id).set({...doc,private:true});else await S.db.doc('posts/'+id).set(doc);S.lastPost=Date.now();
    if(c.draftId){S.priv.drafts=S.priv.drafts.filter(d=>d.id!==c.draftId);savePriv()}}});
  c.busy=false;
- if(ok){toast(c.sched?'予約しました。設定画面の「予約中の投稿」で確認できます':{new:'響かせました',reply:'返信しました',quote:'引用しました',edit:'編集しました'}[c.mode]);c.files.forEach(f=>URL.revokeObjectURL(f.url));
+ if(ok){toast(c.sched?'予約しました。設定画面の「予約中の投稿」で確認できます':{new:'投稿しました',reply:'返信しました',quote:'引用しました',edit:'編集しました'}[c.mode]);c.files.forEach(f=>URL.revokeObjectURL(f.url));
   if(key==='h'){S.hc=newC();try{localStorage.removeItem('kodama-draft')}catch(_){}mountC('h')}else if(key==='c'){const cid=S.cc.comm;S.cc=newC();S.cc.comm=cid;mountC('c')}else closeModal()}
  else mountC(key)}
 
@@ -1661,8 +1747,8 @@ function savePriv(){if(!S.db||!S.me||!S.privLoaded){schedule();return}const snap
 const modlog=(action,note='')=>S.db.collection('modlog').doc(newId()).set({by:S.me,action,note,at:Date.now()}).catch(()=>{});
 function rate(arr,n,ms,msg){const now=Date.now();while(arr.length&&now-arr[0]>ms)arr.shift();if(arr.length>=n){toast(msg);return false}arr.push(now);return true}
 async function toggleLike(id){if(!S.me)return;const on=(D.lk[id]||[]).some(l=>l.user===S.me);if(!on&&!rate(S.likeT,40,6e4,'いいねの操作が多すぎます。少し待ってください'))return;
- const ref=S.db.doc(`likes/${id}__${S.me}`);await write(()=>on?ref.delete():ref.set({post:id,user:S.me,at:Date.now()}))}
-async function toggleRepost(id){const on=(D.rp[id]||[]).some(r=>r.user===S.me);const ref=S.db.doc(`reposts/${id}__${S.me}`);if(await write(()=>on?ref.delete():ref.set({post:id,user:S.me,at:Date.now()})))toast(on?'リポストを取り消しました':'リポストしました')}
+ const ref=S.db.doc(`likes/${id}__${S.me}`);anim('like:'+id);await write(()=>on?ref.delete():ref.set({post:id,user:S.me,at:Date.now()}))}
+async function toggleRepost(id){const on=(D.rp[id]||[]).some(r=>r.user===S.me);const ref=S.db.doc(`reposts/${id}__${S.me}`);anim('rp:'+id);if(await write(()=>on?ref.delete():ref.set({post:id,user:S.me,at:Date.now()})))toast(on?'リポストを取り消しました':'リポストしました')}
 async function toggleFollow(u){const on=following(S.me).has(u);if(!on&&blocksMe(u))return;if(!on&&!rate(S.followT,30,6e5,'短時間に多くのユーザーをフォローすることはできません'))return;
  const ref=S.db.doc(`follows/${S.me}__${u}`);await write(()=>on?ref.delete():ref.set({from:S.me,to:u,at:Date.now()}))}
 async function setBlock(u,on){const list=new Set(S.blocks[S.me]||[]);on?list.add(u):list.delete(u);
@@ -1681,6 +1767,7 @@ async function exportData(){const me=S.me,data={exportedAt:new Date().toISOStrin
 
 // ===== モーダル =====
 function openModal(m){S.modal=m;const o=$('#ovl');o.hidden=false;document.body.style.overflow='hidden';
+ if(m.kind==='star'||m.kind==='starv'){starModal(m,o);return}
  if(m.kind==='compose'){o.innerHTML=`<div class="dlg" role="dialog" aria-modal="true" aria-label="投稿"><div class="dh"><button class="back" data-act="close" aria-label="閉じる"><svg class="i"><use href="#i-x"/></svg></button><b>${{new:'新しい投稿',reply:'返信',quote:'引用して投稿',edit:'投稿を編集'}[m.c.mode]}</b></div><div class="db" style="padding:0"></div></div>`;mountC('m');setTimeout(()=>o.querySelector('.ctext')?.focus(),30)}
  if(m.kind==='report')o.innerHTML=`<form class="dlg" id="repf" role="dialog" aria-modal="true" aria-label="通報"><div class="dh"><button type="button" class="back" data-act="close" aria-label="閉じる"><svg class="i"><use href="#i-x"/></svg></button><b>${m.rk==='post'?'投稿を通報':m.rk==='dm'?'メッセージを通報':'ユーザーを通報'}</b></div><div class="db"><p class="hint" style="margin-top:0">通報は運営だけが確認します。相手に通報者が知らされることはありません。</p>${REASONS.map((r,i)=>`<label class="radio"><input type="radio" name="rr" value="${esc(r)}"${i?'':' checked'}>${esc(r)}</label>`).join('')}<div class="fld" style="margin-top:12px"><label for="rd">詳しい内容（任意）</label><textarea id="rd" rows="3" maxlength="500"></textarea></div></div><div class="df"><button type="button" class="btn" data-act="close">キャンセル</button><button class="btn pri">通報する</button></div></form>`;
  if(m.kind==='confirm')o.innerHTML=`<div class="dlg" role="alertdialog" aria-modal="true" style="max-width:400px;margin:auto;min-height:0"><div class="db"><b style="font-size:18px">${esc(m.title)}</b><p class="hint">${esc(m.text||'')}</p></div><div class="df"><button class="btn" data-act="close">やめる</button><button class="btn pri${m.danger?' dan':''}" data-act="yes" style="${m.danger?'background:var(--like);border-color:var(--like);color:#fff':''}">${esc(m.yes)}</button></div></div>`;
@@ -1695,8 +1782,76 @@ function openModal(m){S.modal=m;const o=$('#ovl');o.hidden=false;document.body.s
  if(m.kind==='link')o.innerHTML=`<div class="dlg" style="max-width:460px;margin:auto;min-height:0"><div class="dh"><button class="back" data-act="close" aria-label="閉じる"><svg class="i"><use href="#i-x"/></svg></button><b>投稿のリンク</b></div><div class="db"><p class="hint" style="margin-top:0">このリンクをコピーして共有できます。</p><input class="inp" readonly value="${esc(m.url)}" onfocus="this.select()"></div></div>`;
  if(m.kind==='delacct')o.innerHTML=`<form class="dlg" id="delf" style="max-width:440px;margin:auto;min-height:0"><div class="dh"><button type="button" class="back" data-act="close" aria-label="閉じる"><svg class="i"><use href="#i-x"/></svg></button><b>アカウントを削除</b></div><div class="db"><p class="hint" style="margin-top:0">投稿・いいね・フォロー・プロフィール・設定・アップロードした画像がすべて削除され、元に戻せません。続けるにはパスワードを入力してください。</p><div class="fld"><label for="dp">パスワード</label><input id="dp" type="password" autocomplete="current-password" required></div></div><div class="df"><button type="button" class="btn" data-act="close">キャンセル</button><button class="btn pri" style="background:var(--like);border-color:var(--like)">完全に削除する</button></div></form>`;
  if(m.kind==='guide')o.innerHTML=`<div class="dlg guide" role="dialog" aria-modal="true"><div class="dh"><button class="back" data-act="close" aria-label="閉じる"><svg class="i"><use href="#i-x"/></svg></button><b>コミュニティガイドライン</b></div><div class="db"><p>Orbitは「自由につながる、落ち着いて交流できる場所」を目指しています。みんなが安心して毎日使えるよう、次のことを守ってください。</p><ol><li>相手への敬意を忘れない。嫌がらせ・脅迫・差別的な発言は禁止です。</li><li>他人の個人情報（住所・電話番号・本名など）を本人の同意なく投稿しない。</li><li>他人の作品を無断で転載しない。引用するときは出典を示す。</li><li>スパム、同じ内容の連投、なりすましは禁止です。</li><li>違法な内容や、暴力・性的に過激な内容は投稿しない。</li><li>困ったときは、ミュート・ブロック・通報を使ってください。通報は運営だけが確認します。</li></ol><p class="hint">違反が確認された場合、投稿の非表示、警告、一時凍結または永久凍結を行うことがあります。</p></div></div>`;}
-function closeModal(){const m=S.modal;if(m?.kind==='crop'&&S.crop){URL.revokeObjectURL(S.crop.url);S.crop=null}if(m?.kind==='compose')m.c.files.forEach(f=>URL.revokeObjectURL(f.url));S.modal=null;$('#ovl').hidden=true;$('#ovl').innerHTML='';document.body.style.overflow=''}
+function closeModal(){const m=S.modal;if(m?.kind==='star'&&m.url)URL.revokeObjectURL(m.url);$('#ovl').classList.remove('sv');if(m?.kind==='crop'&&S.crop){URL.revokeObjectURL(S.crop.url);S.crop=null}if(m?.kind==='compose')m.c.files.forEach(f=>URL.revokeObjectURL(f.url));S.modal=null;$('#ovl').hidden=true;$('#ovl').innerHTML='';document.body.style.overflow=''}
 const confirmAct=(title,text,yes,fn,danger=true)=>openModal({kind:'confirm',title,text,yes,fn,danger});
+
+
+// ===== 小さなアニメーション =====
+function anim(k){S.anim=k;clearTimeout(anim.t);anim.t=setTimeout(()=>{S.anim=null},700)}
+const nfmt=n=>{n=Number(n)||0;const L=KODAMA.lang;if(n<10000)return n.toLocaleString();if(L==='ja'||L==='zh-CN'||L==='zh-TW')return(n/10000).toFixed(n<100000?1:0).replace(/\.0$/,'')+(L==='ja'?'万':L==='zh-TW'?'萬':'万');if(L==='ko')return(n/10000).toFixed(n<100000?1:0).replace(/\.0$/,'')+'만';return n<1e6?(n/1000).toFixed(n<1e5?1:0).replace(/\.0$/,'')+'K':(n/1e6).toFixed(1).replace(/\.0$/,'')+'M'};
+
+// ===== 表示回数：画面に0.8秒以上表示された投稿を記録 =====
+const VQ=new Set(),VSEEN=new Set();let vT=null;
+const vio=typeof IntersectionObserver==='function'?new IntersectionObserver(es=>{for(const e of es){const el=e.target,id=el.dataset.id;if(!id)continue;
+ if(e.isIntersecting){clearTimeout(el.__vt);el.__vt=setTimeout(()=>{if(!VSEEN.has(id)&&D.byId[id]&&D.byId[id].author!==S.me&&!D.byId[id].private){VSEEN.add(id);VQ.add(id);clearTimeout(vT);vT=setTimeout(vFlush,2500)}},800)}else clearTimeout(el.__vt)}},{threshold:.5}):null;
+function vFlush(){if(!VQ.size||!S.me)return;const ids=[...VQ].slice(0,100);ids.forEach(i=>VQ.delete(i));KODAMA.run({op:'views',ids}).catch(()=>ids.forEach(i=>VSEEN.delete(i)));if(VQ.size)vT=setTimeout(vFlush,1000)}
+function vWatch(){if(!vio||!S.me)return;document.querySelectorAll('#view article.post[data-id]').forEach(a=>{if(!a.__vw){a.__vw=1;vio.observe(a)}})}
+document.addEventListener('visibilitychange',()=>{if(document.hidden)vFlush()});
+
+// ===== 流れ星：24時間で消える「いま」のひとこと =====
+const SKIES={night:['夜空','linear-gradient(160deg,#0b1535 0%,#1b2a6b 55%,#3b2a7a 100%)'],dawn:['夜明け','linear-gradient(160deg,#25336e 0%,#b0679a 58%,#f2b27c 100%)'],dusk:['夕焼け','linear-gradient(160deg,#341b55 0%,#c94f6a 55%,#f39c58 100%)'],aurora:['オーロラ','linear-gradient(160deg,#04192b 0%,#0d5f63 45%,#3fc59a 72%,#5a4fc8 100%)']};
+const STAR_LIFE=86400000;
+const activeStars=()=>{const now=Date.now();return S.stars.filter(x=>x.expires>now&&!iBlock(x.author)&&!blocksMe(x.author)&&!isSusp(x.author))};
+const starOf=u=>activeStars().filter(x=>x.author===u).sort((a,b)=>b.at-a.at)[0];
+const starSeen=id=>S.starViews.some(v=>v.star===id&&v.uid===S.me);
+function starList(){const fol=following(S.me),mine=starOf(S.me);
+ const others=[...new Set(activeStars().map(x=>x.author))].filter(u=>u!==S.me&&fol.has(u)&&!S.priv.mutes.includes(u)).map(starOf);
+ others.sort((a,b)=>(starSeen(a.id)-starSeen(b.id))||(b.at-a.at));return{mine,others,all:[...(mine?[mine]:[]),...others]}}
+// 残り時間を「軌道の弧」で表す（流したばかりは一周、消える直前は短い弧）
+function starRing(x,seen){const C=2*Math.PI*29;if(!x)return`<svg class="sring" viewBox="0 0 64 64" aria-hidden="true"><circle cx="32" cy="32" r="29" class="sbg"/></svg>`;
+ const left=Math.max(0,Math.min(1,(x.expires-Date.now())/STAR_LIFE)),a=2*Math.PI*left-Math.PI/2;
+ return`<svg class="sring${seen?' seen':''}" viewBox="0 0 64 64" aria-hidden="true"><circle cx="32" cy="32" r="29" class="sbg"/><circle cx="32" cy="32" r="29" class="sarc" stroke-dasharray="${(C*left).toFixed(1)} ${C.toFixed(1)}" transform="rotate(-90 32 32)"/><circle class="sdot" r="3" cx="${(32+29*Math.cos(a)).toFixed(1)}" cy="${(32+29*Math.sin(a)).toFixed(1)}"/></svg>`}
+function starsBand(){const{mine,others}=starList();
+ const me=`<button class="sitem me" data-act="${mine?'starv':'starnew'}" data-u="${esc(S.me)}" aria-label="${mine?'自分の流れ星を見る':'流れ星を流す'}"><span class="sav">${starRing(mine,false)}${av(S.me,'s')}${mine?'':'<i class="splus" aria-hidden="true">+</i>'}</span><span class="snm">${mine?'あなた':'流れ星を流す'}</span></button>`;
+ return`<div class="stars" role="list" aria-label="流れ星">${me}${others.map(x=>`<button class="sitem${starSeen(x.id)?' seen':''}" role="listitem" data-act="starv" data-u="${esc(x.author)}" aria-label="${esc(dname(x.author))}"><span class="sav">${starRing(x,starSeen(x.id))}${av(x.author,'s')}</span><span class="snm" data-ugc>${esc(dname(x.author))}</span></button>`).join('')}${others.length?'':`<div class="shint">フォローしている人の流れ星がここに流れます。<br>24時間で消える「いま」のひとことです。</div>`}</div>`}
+function renderStars(){const b=$('#starsC');if(!b)return;const show=S.route==='home'&&!!S.me&&S.loaded&&!S.ro;b.hidden=!show;if(!show)return;const h=starsBand();if(b.__h!==h){b.innerHTML=h;b.__h=h}}
+setInterval(()=>{if(S.route==='home')renderStars()},60000);
+function starStep(d){const m=S.modal;if(!m||m.kind!=='starv')return;const L=starList().all,i=L.findIndex(x=>x.id===m.id),j=i+d;
+ if(i<0||j<0||j>=L.length){closeModal();return}m.id=L[j].id;m.who=false;starModal(m,$('#ovl'))}
+function skyDots(seed){let h='',r=seed;const rnd=()=>{r=(r*9301+49297)%233280;return r/233280};for(let i=0;i<26;i++)h+=`<i style="left:${(rnd()*100).toFixed(1)}%;top:${(rnd()*100).toFixed(1)}%;animation-delay:${(rnd()*3).toFixed(2)}s;opacity:${(.3+rnd()*.7).toFixed(2)}"></i>`;return h}
+function starModal(m,o){
+ if(m.kind==='star'){const sky=SKIES[m.sky]||SKIES.night;
+  o.classList.remove('sv');
+  o.innerHTML=`<form class="dlg stdlg" id="starf" role="dialog" aria-modal="true" aria-label="流れ星を流す"><div class="dh"><button type="button" class="back" data-act="close" aria-label="閉じる"><svg class="i"><use href="#i-x"/></svg></button><b>流れ星を流す</b><span class="sp" style="flex:1"></span><button class="btn sm pri" type="submit">流す</button></div><div class="db">
+   <div class="spv" style="background:${sky[1]}"><div class="sky">${skyDots(7)}<b class="shoot"></b></div>${m.url?`<img src="${esc(m.url)}" alt="">`:''}<p data-ugc>${esc(m.text)||esc(KODAMA.tr('いまのひとこと'))}</p></div>
+   <div class="fld" style="margin:14px 0 6px"><textarea id="sttext" class="inp" rows="2" maxlength="100" placeholder="いまのひとこと（100文字まで）">${esc(m.text)}</textarea><span class="stcnt small">${[...m.text].length}/100</span></div>
+   <div class="skysel" role="radiogroup" aria-label="空の色">${Object.entries(SKIES).map(([k,[l,g]])=>`<button type="button" class="skyb${m.sky===k?' on':''}" role="radio" aria-checked="${m.sky===k}" data-act="starsky" data-k="${k}" style="background:${g}">${l}</button>`).join('')}</div>
+   <div class="inline" style="flex-wrap:wrap;margin-top:12px"><label class="btn sm"><input type="file" id="stfile" accept="image/*" hidden><svg class="i" style="width:18px"><use href="#i-img"/></svg>写真を添える</label>${m.url?`<button type="button" class="btn sm" data-act="starfdel">写真を外す</button>`:''}</div>
+   <p class="hint">24時間で自動的に消えます。流せるのは1つだけで、新しく流すと前の流れ星は消えます。あなたの投稿を見られる人に表示されます。</p></div></form>`;
+  setTimeout(()=>{const t=$('#sttext');if(t&&document.activeElement!==t){t.focus();t.setSelectionRange(t.value.length,t.value.length)}},30);return}
+ // 見る
+ const x=S.stars.find(y=>y.id===m.id);if(!x){closeModal();toast('この流れ星はもう消えました');return}
+ const L=starList().all,i=Math.max(0,L.findIndex(y=>y.id===x.id)),mine=x.author===S.me,sky=SKIES[x.sky]||SKIES.night,left=x.expires-Date.now();
+ const views=S.starViews.filter(v=>v.star===x.id&&v.uid!==S.me),wishes=views.filter(v=>v.wish),myWish=S.starViews.some(v=>v.star===x.id&&v.uid===S.me&&v.wish);
+ const remain=left<3600000?KODAMA.tr('まもなく消えます'):KODAMA.tr('あと'+Math.ceil(left/3600000)+'時間で消えます');
+ o.classList.add('sv');
+ o.innerHTML=`<div class="sview${m.who||m.hold?' paused':''}" style="background:${sky[1]}" role="dialog" aria-modal="true" aria-label="流れ星">
+  <div class="sky">${skyDots(x.at%997)}<b class="shoot"></b><b class="shoot s2"></b></div>
+  <div class="sprog">${L.map((y,j)=>`<i class="${j<i?'done':j===i?'now':''}"><b></b></i>`).join('')}</div>
+  <div class="shead">${ulink(x.author,av(x.author,'s'))}<div class="sh2"><b data-ugc>${esc(dname(x.author))}</b><span>${esc(ago(x.at))} · ${esc(remain)}</span></div><button class="sx" data-act="close" aria-label="閉じる"><svg class="i"><use href="#i-x"/></svg></button></div>
+  <div class="sbody">${x.media[0]?`<img class="simg" src="${esc(blob(x.media[0].id))}" alt="">`:''}${x.text?`<p class="stext" data-ugc>${fmt(x.text)}</p>`:''}
+   <button class="snav l" data-act="starprev" aria-label="前の流れ星"></button><button class="snav r" data-act="starnext" aria-label="次の流れ星"></button></div>
+  <div class="sfoot">${mine?`<button class="btn sm" data-act="starwho">見た人 ${views.length} ・ ✨ ${wishes.length}</button><button class="btn sm dan" data-act="stardel">消す</button>`
+   :`<form class="srep" id="srep"><input id="srepin" maxlength="300" placeholder="メッセージを送る" autocomplete="off" aria-label="メッセージを送る"><button class="send" type="submit" aria-label="送信"><svg class="i"><use href="#i-send"/></svg></button></form><button class="swish${myWish?' on':''}" data-act="starwish" aria-pressed="${myWish}" aria-label="願いをかける" title="願いをかける">✨</button>`}</div>
+  ${m.who?`<div class="swho"><div class="swh"><b>見た人</b><button class="sx" data-act="starwho" aria-label="閉じる"><svg class="i"><use href="#i-x"/></svg></button></div>${views.length?views.sort((a,b)=>(b.wish-a.wish)||(b.at-a.at)).map(v=>`<div class="swr">${ulink(v.uid,av(v.uid,'s'))}<b data-ugc>${esc(dname(v.uid))}</b><span class="tm">${esc(ago(v.at))}</span>${v.wish?'<span class="swk">✨</span>':''}</div>`).join(''):'<p class="hint">まだだれも見ていません</p>'}</div>`:''}
+ </div>`;
+ if(!mine&&!starSeen(x.id)){S.starViews=[...S.starViews,{star:x.id,uid:S.me,at:Date.now(),wish:false}];KODAMA.run({op:'starSeen',id:x.id}).catch(()=>{})}
+ if(!o.__sb){o.__sb=1;
+  o.addEventListener('animationend',e=>{if(e.target.matches&&e.target.matches('.sprog .now b')&&S.modal?.kind==='starv')starStep(1)});
+  const hold=on=>{const v=o.querySelector('.sview');if(v&&S.modal?.kind==='starv')v.classList.toggle('paused',on||!!S.modal.who||o.contains(document.activeElement)&&document.activeElement.id==='srepin')};
+  o.addEventListener('pointerdown',e=>{if(e.target.closest('.sbody'))hold(true)});o.addEventListener('pointerup',()=>hold(false));o.addEventListener('pointercancel',()=>hold(false));
+  o.addEventListener('focusin',e=>{if(e.target.id==='srepin')hold(true)});o.addEventListener('focusout',e=>{if(e.target.id==='srepin')hold(false)});
+  document.addEventListener('keydown',e=>{if(S.modal?.kind!=='starv'||document.activeElement?.id==='srepin')return;if(e.key==='ArrowRight')starStep(1);if(e.key==='ArrowLeft')starStep(-1)})}}
 
 // ===== 画像の切り抜き =====
 async function loadPic(file){
@@ -1708,7 +1863,7 @@ async function loadPic(file){
  const cv=document.createElement('canvas');cv.width=W;cv.height=H;const g=cv.getContext('2d');g.fillStyle='#fff';g.fillRect(0,0,W,H);g.drawImage(d.src,0,0,W,H);
  if(d.u)URL.revokeObjectURL(d.u);if(d.src.close)d.src.close();
  const blob=await new Promise(r=>cv.toBlob(r,'image/jpeg',.92));if(!blob)throw new Error('encode');
- const url=URL.createObjectURL(blob);const img=await new Promise((res,rej)=>{const im=new Image();im.onload=()=>res(im);im.onerror=rej;im.src=url});return{url,img,w:W,h:H}}
+ const url=URL.createObjectURL(blob);const img=await new Promise((res,rej)=>{const im=new Image();im.onload=()=>res(im);im.onerror=rej;im.src=url});return{url,img,w:W,h:H,blob}}
 async function openCrop(field,file){if(!S.assets){toast('画像をアップロードする権限がありません');return}
  toast('画像を読み込んでいます…');
  try{const p=await loadPic(file);S.crop={field,url:p.url,img:p.img,file,w:p.w,h:p.h,z:1,x:0,y:0,s:1,ptrs:new Map()};openModal({kind:'crop'});const o=$('#ovl');if(o)o.scrollTop=0}
@@ -1855,7 +2010,7 @@ function go(){const[r,a]=parseHash();if(r!==S.route||a!==S.arg){if(r==='profile'
  if(r==='notifications'){S.seenAtOpen=S.priv.seen;if(S.me){S.priv.seen=Date.now();savePriv()}}
  syncHomeC();if(r==='prefs'&&S.me)KODAMA.run({op:'schedList'}).then(x=>{S.sched=x;if(S.route==='prefs'&&!editing())renderView()}).catch(()=>{});
  if(r==='admin'&&S.admin)KODAMA.run({op:'adminInfo'}).then(x=>{S.adminInfo=x;if(S.route==='admin'&&!editing())renderView()}).catch(()=>{});
- derive();renderTop();renderSide();renderView();scrollTo(0,0)}
+ derive();renderTop();renderSide();renderView();scrollTo(0,0);const vv=$('#view');vv.classList.remove('enter');void vv.offsetWidth;vv.classList.add('enter')}
 addEventListener('hashchange',go);
 window.__presence=()=>{if(S.loaded)schedule()};
 window.__rerender=()=>{if(!S.hc)return;const hk=$('#homeC').dataset.k;if(hk)mountC(hk);if(S.route==='dm')mountDm();go()};
@@ -1864,7 +2019,7 @@ window.__rerender=()=>{if(!S.hc)return;const hk=$('#homeC').dataset.k;if(hk)moun
 document.addEventListener('click',async e=>{const t=e.target;
  const nt=t.closest('.nt');if(nt&&!t.closest('button,a')){if(nt.dataset.href)location.hash=nt.dataset.href;return}
  if(t.closest('#ovl')&&t.id==='ovl'){closeModal();return}
- const b=t.closest('button[data-act],button[data-tag],button[data-tab]');
+ const b=t.closest('button[data-act],button[data-tag],button[data-tab],.bub[data-act=msel],.sitem[data-act]');
  if(!b){if(S.menu&&!t.closest('.menu')){S.menu=null;renderView()}
   const op=t.closest('[data-open]');if(op&&!t.closest('a,button,video,input,textarea,select,.menu'))location.hash='post-'+op.dataset.open;return}
  if(b.dataset.tab){S.tab[b.dataset.tab]=b.dataset.v;S.limit=PAGE;if(b.closest('#top'))renderTop();renderView();return}
@@ -1931,6 +2086,17 @@ document.addEventListener('click',async e=>{const t=e.target;
  case'yes':{const fn=S.modal.fn;closeModal();await fn();break}
  case'back':history.length>1?history.back():location.hash='home';break;
  case'tabl':case'tabr':{const t=b.parentNode.querySelector('.tabs');if(t)t.scrollBy({left:(act==='tabl'?-1:1)*Math.max(160,t.clientWidth*.6),behavior:'smooth'});break}
+ case'starnew':openModal({kind:'star',text:'',sky:'night'});break;
+ case'starv':{const x=starOf(b.dataset.u);if(x)openModal({kind:'starv',id:x.id});else if(b.dataset.u===S.me)openModal({kind:'star',text:'',sky:'night'});break}
+ case'starnext':starStep(1);break;
+ case'starprev':starStep(-1);break;
+ case'starsky':if(S.modal?.kind==='star'){S.modal.sky=b.dataset.k;starModal(S.modal,$('#ovl'))}break;
+ case'starfdel':if(S.modal?.kind==='star'){if(S.modal.url)URL.revokeObjectURL(S.modal.url);S.modal.url='';S.modal.blob=null;starModal(S.modal,$('#ovl'))}break;
+ case'starwish':{const x=S.stars.find(y=>y.id===S.modal?.id);if(!x)break;const on=!S.starViews.some(v=>v.star===x.id&&v.uid===S.me&&v.wish);
+  S.starViews=[...S.starViews.filter(v=>!(v.star===x.id&&v.uid===S.me)),{star:x.id,uid:S.me,at:Date.now(),wish:on}];starModal(S.modal,$('#ovl'));
+  try{await KODAMA.run({op:'starSeen',id:x.id,wish:on});if(on)toast('願いをかけました ✨')}catch(e){toast(e.message)}break}
+ case'starwho':if(S.modal?.kind==='starv'){S.modal.who=!S.modal.who;starModal(S.modal,$('#ovl'))}break;
+ case'stardel':{const id=S.modal?.id;closeModal();confirmAct('流れ星を消しますか？','消すと元に戻せません。','消す',async()=>{try{await S.db.doc('stars/'+id).delete();toast('流れ星を消しました')}catch(e){toast(e.message)}});break}
  case'totop':scrollTo({top:0,behavior:'smooth'});S.homeSeen=Math.max(...S.posts.map(p=>p.at));$('#newpill').hidden=true;break;
  case'menu':S.menu=S.menu===id?null:id;renderView();break;
  case'rpmenu':S.menu=S.menu==='rp:'+id?null:'rp:'+id;renderView();break;
@@ -1939,7 +2105,7 @@ document.addEventListener('click',async e=>{const t=e.target;
  case'quote':openModal({kind:'compose',c:newC('quote',id)});break;
  case'repost':renderView();await toggleRepost(id);break;
  case'like':await toggleLike(id);break;
- case'bm':{const s=new Set(S.priv.bookmarks),on=!s.has(id);on?s.add(id):s.delete(id);S.priv.bookmarks=[...s].slice(-500);savePriv();toast(on?'ブックマークに保存しました':'ブックマークから外しました');break}
+ case'bm':{const s=new Set(S.priv.bookmarks),on=!s.has(id);anim('bm:'+id);on?s.add(id):s.delete(id);S.priv.bookmarks=[...s].slice(-500);savePriv();toast(on?'ブックマークに保存しました':'ブックマークから外しました');break}
  case'share':{const url=`${KODAMA.cfg?.url||''}?p=${id}`;try{await navigator.clipboard.writeText(url);toast('投稿のリンクをコピーしました')}catch(_){openModal({kind:'link',url})}break}
  case'copytext':try{await navigator.clipboard.writeText(p.text);toast('コピーしました')}catch(_){toast('コピーできませんでした')}renderView();break;
  case'edit':{const c=newC('edit',id);c.text=p.text;c.keep=(p.media||[]).map(m=>({...m}));openModal({kind:'compose',c});break}
@@ -2004,6 +2170,7 @@ document.addEventListener('input',e=>{const t=e.target;
  if(t.id==='lq'){clearTimeout(S.qt);S.qt=setTimeout(lres,150);return}
  if(t.id==='dmq'){S.modal.q=t.value;dmList();return}
  if(t.id==='dmtext'){S.dmc.text=t.value;dmUpd();return}
+  if(t.id==='sttext'&&S.modal?.kind==='star'){S.modal.text=t.value;const p=$('#ovl .spv p');if(p)p.textContent=t.value||KODAMA.tr('いまのひとこと');const c=$('#ovl .stcnt');if(c)c.textContent=[...t.value].length+'/100';return}
  if(t.id==='aq'){S.adm.q=t.value;clearTimeout(S.qt);S.qt=setTimeout(()=>{const pos=t.selectionStart;renderView();const n=$('#aq');n?.focus();n?.setSelectionRange(pos,pos)},250)}
  if(t.dataset.e&&S.edit){S.edit[t.dataset.e]=t.value;if(t.dataset.e==='handle'){const v=t.value,el=$('#herr');const bad=v&&!/^[A-Za-z0-9_]{3,20}$/.test(v)?'3〜20文字の英数字と _ だけ使えます':v&&byHandle(v)&&byHandle(v)!==S.me?'このユーザーIDは使われています':'';el.className=bad?'err':'hint';el.textContent=bad||'@'+(v||handle(S.me))+' として表示されます'}}
  if(t.dataset.rn)S.adm[t.dataset.rn]=t.value});
@@ -2020,7 +2187,15 @@ document.addEventListener('change',async e=>{const t=e.target;
  if(t.id==='stsel'||t.name==='stset'){setStatus(t.value);return}
  if(t.id==='langsel'){KODAMA.setLang(t.value);S.priv.lang=t.value;savePriv();return}
  if(t.name==='dmset'){S.priv.dm=t.value;savePriv();toast('メッセージの受信設定を変更しました');return}
- if(t.id==='dmfile'&&t.files[0]){const f=t.files[0];t.value='';if(!/^(image[/](png|jpeg|gif|webp)|video[/](mp4|webm|quicktime))$/.test(f.type)||f.size>20*1048576){toast('20MBまでの画像・GIF・動画を選んでください');return}if(S.dmc.url)URL.revokeObjectURL(S.dmc.url);S.dmc.file=f;S.dmc.url=URL.createObjectURL(f);S.dmc.isVideo=/^video[/]/.test(f.type);mountDm();return}});
+ if(t.id==='stfile'&&t.files[0]&&S.modal?.kind==='star'){const f=t.files[0];t.value='';if((f.type&&!/^image[/]|octet-stream/.test(f.type))||f.size>40*1048576){toast('40MBまでの画像を選んでください');return}toast('画像を読み込んでいます…');try{const p=await loadPic(f);if(S.modal?.kind!=='star')return;if(S.modal.url)URL.revokeObjectURL(S.modal.url);S.modal.url=p.url;S.modal.blob=p.blob;starModal(S.modal,$('#ovl'))}catch(e){toast('この画像は読み込めませんでした。JPEGかPNGの画像を選んでください')}return}
+  if(t.id==='dmfile'&&t.files[0]){const f=t.files[0];t.value='';if(!/^(image[/](png|jpeg|gif|webp)|video[/](mp4|webm|quicktime))$/.test(f.type)||f.size>20*1048576){toast('20MBまでの画像・GIF・動画を選んでください');return}if(S.dmc.url)URL.revokeObjectURL(S.dmc.url);S.dmc.file=f;S.dmc.url=URL.createObjectURL(f);S.dmc.isVideo=/^video[/]/.test(f.type);mountDm();return}});
+document.addEventListener('submit',async e=>{const f0=e.target,fid0=f0.getAttribute&&f0.getAttribute('id');
+ if(fid0==='starf'){e.preventDefault();const m=S.modal;if(!m||m.busy)return;if(!m.text.trim()&&!m.blob){toast('ひとことか写真を入れてください');return}m.busy=true;const btn=f0.querySelector('[type=submit]');if(btn){btn.disabled=true;btn.textContent=KODAMA.tr('流しています…')}
+  try{let media=[];if(m.blob){const r=await S.assets.upload(m.blob);media=[{id:r.id,alt:''}]}await KODAMA.run({op:'starPost',text:m.text.trim(),media,sky:m.sky});closeModal();KODAMA.refresh();toast('流れ星を流しました 🌠')}
+  catch(x){m.busy=false;if(btn){btn.disabled=false;btn.textContent=KODAMA.tr('流す')}toast(x?.message||'流せませんでした')}return}
+ if(fid0==='srep'){e.preventDefault();const x=S.stars.find(y=>y.id===S.modal?.id),inp=$('#srepin');const msg=(inp?.value||'').trim();if(!x||!msg)return;
+  try{await KODAMA.run({op:'dmSend',to:x.author,text:'🌠「'+([...(x.text||KODAMA.tr('写真'))].slice(0,40).join(''))+'」\n'+msg});inp.value='';if(!S.priv.dmAccepted.includes(x.author)){S.priv.dmAccepted=[...S.priv.dmAccepted,x.author];savePriv()}toast('メッセージを送りました');KODAMA.refresh()}catch(err){toast(err?.message||'送信できませんでした')}return}
+},true);
 document.addEventListener('submit',async e=>{e.preventDefault();const f=e.target;const fid=f.getAttribute('id');
  if(fid==='sform'){const q=S.q.trim();if(q){S.priv.history=[q,...S.priv.history.filter(x=>x!==q)].slice(0,10);savePriv()}$('#q')?.blur()}
  if(fid==='sideq'){const q=f.querySelector('input').value.trim();if(!q)return;S.q=q;S.priv.history=[q,...S.priv.history.filter(x=>x!==q)].slice(0,10);savePriv();if(location.hash==='#explore')go();else location.hash='explore'}
@@ -2071,6 +2246,9 @@ go();
  sub(db.collection('follows').limit(1000),s=>{S.follows=s.docs.map(d=>{const x=d.data()||{};return{from:str(x.from),to:str(x.to),at:num(x.at)}}).filter(f=>f.from&&f.to);resolveNames()});
  sub(db.collection('profiles').limit(1000),s=>{const o={};for(const d of s.docs){const x=d.data()||{};o[d.id]={name:str(x.name).slice(0,40),handle:/^[A-Za-z0-9_]{3,20}$/.test(x.handle)?x.handle:'',bio:str(x.bio).slice(0,160),link:str(x.link).slice(0,200),color:str(x.color),avatar:str(x.avatar),header:str(x.header),pinned:str(x.pinned),at:num(x.at),locked:x.locked==='yes'}}S.profiles=o;resolveNames()});
  sub(db.collection('votes'),s=>{S.votes=Object.fromEntries(s.docs.map(d=>{const x=d.data()||{};return[d.id,{counts:Array.isArray(x.counts)?x.counts.map(num):[0,0,0,0],mine:Number.isInteger(x.mine)?x.mine:-1}]}))});
+ sub(db.collection('views'),s=>{S.views=Object.fromEntries(s.docs.map(d=>[d.id,num((d.data()||{}).views)]))});
+ sub(db.collection('stars'),s=>{S.stars=s.docs.map(d=>{const x=d.data()||{};return{id:d.id,author:str(x.author),text:str(x.text).slice(0,100),media:Array.isArray(x.media)?x.media.slice(0,1).map(m=>({id:str(m?.id)})).filter(m=>m.id):[],sky:SKIES[x.sky]?x.sky:'night',at:num(x.at),expires:num(x.expires)}}).filter(x=>x.author)});
+ sub(db.collection('starViews'),s=>{S.starViews=s.docs.map(d=>{const x=d.data()||{};return{star:str(x.star),uid:str(x.uid),at:num(x.at),wish:x.wish===true}})});
  sub(db.collection('freqs'),s=>{S.freqs=s.docs.map(d=>{const x=d.data()||{};return{from:str(x.from),to:str(x.to),at:num(x.at)}}).filter(f=>f.from&&f.to)});
  sub(db.collection('communities'),s=>{S.comms=s.docs.map(d=>{const x=d.data()||{};return{id:d.id,name:str(x.name).slice(0,40),desc:str(x.desc).slice(0,300),owner:str(x.owner),color:/^#[0-9a-f]{6}$/i.test(str(x.color))?x.color:'',at:num(x.at)}});syncHomeC()});
  sub(db.collection('members'),s=>{S.members=s.docs.map(d=>{const x=d.data()||{};return{comm:str(x.comm),user:str(x.user),role:str(x.role)}});syncHomeC()});
