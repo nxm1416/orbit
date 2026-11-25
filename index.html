@@ -233,6 +233,14 @@ aside{padding:22px 20px;position:sticky;top:0;height:100vh;overflow:auto}
 .bub{background:rgba(19,32,74,.85);border:1px solid var(--line2);border-radius:18px 18px 18px 6px;padding:9px 14px;overflow:hidden}.msg.me .bub{background:var(--grad);border-color:transparent;border-radius:18px 18px 6px 18px;color:#fff}
 .mt{white-space:pre-wrap;overflow-wrap:anywhere;font-size:15.5px;line-height:1.55}.msg.me .mt .tag,.msg.me .mt .lnk{color:#fff;text-decoration:underline}
 .bub .mi img{display:block;max-width:min(260px,60vw);max-height:300px;border-radius:12px;margin:4px 0}
+.bub .ed{display:block;font-size:11px;opacity:.7;margin-top:2px;text-align:right}
+.bub .mv{display:block;width:min(280px,62vw);max-height:360px;border-radius:12px;margin:4px 0;background:#000}
+.msgs .msg.cont{margin-top:-8px}.msg .avsp{width:36px;flex:none}.msg.mid .mm{display:none}.msg.mid.sel .mm,.msg.mid:hover .mm,.msg.mid:focus-within .mm{display:flex}
+.msg.cont .bub{border-top-left-radius:8px}.msg.me.cont .bub{border-top-left-radius:18px;border-top-right-radius:8px}.msg.mid .bub{border-bottom-left-radius:8px}.msg.me.mid .bub{border-bottom-left-radius:18px;border-bottom-right-radius:8px}
+.mq{display:flex;flex-direction:column;align-items:flex-start;gap:1px;width:100%;text-align:left;border-left:3px solid var(--acc2);background:rgba(255,255,255,.07);border-radius:8px;padding:5px 10px;margin:2px 0 6px;font-size:13px;line-height:1.4}.mq b{font-size:12px;color:var(--accD)}.msg.me .mq{border-left-color:#fff;background:rgba(255,255,255,.16)}.msg.me .mq b{color:#fff}.mq span{overflow:hidden;text-overflow:ellipsis;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical}.mq.gone{color:var(--mut);font-style:italic}
+.msg.flash .bub{animation:mflash 1.4s}@keyframes mflash{0%,40%{box-shadow:0 0 0 3px var(--acc2)}100%{box-shadow:0 0 0 0 transparent}}
+.dmctx{display:flex;align-items:center;gap:8px;padding:6px 10px 8px;border-bottom:1px solid var(--line);margin-bottom:4px;font-size:13px}.dmctx>span{flex:1;min-width:0;display:flex;flex-direction:column}.dmctx small{color:var(--mut);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.dmctx .i{width:18px;height:18px;color:var(--acc2)}.dmctx .x{width:28px;height:28px;border-radius:50%;background:rgba(255,255,255,.08)}
+.dmprev video{display:block;height:90px;border-radius:12px;background:#000}
 .mm{display:flex;align-items:center;gap:4px;margin-top:2px}.mm .tm{font-size:12px}.mm .rd{color:var(--acc2)}.mm .act{min-height:28px;padding:0 6px;opacity:.6}.mm .act:hover{opacity:1}.mm .act svg{width:16px;height:16px}
 #dmC{position:sticky;bottom:0;z-index:6;padding:10px 14px 14px;background:linear-gradient(180deg,transparent,var(--bg) 30%)}
 .dmbar{background:rgba(14,24,52,.95);border:1px solid var(--line2);border-radius:22px;padding:6px;box-shadow:0 10px 30px rgba(0,0,0,.4)}
@@ -309,7 +317,7 @@ input.invalid{border-color:var(--like)!important;box-shadow:0 0 0 3px rgba(255,9
  .rpick{gap:0;padding:5px}.rpick button{width:32px;height:32px;min-height:32px;font-size:19px}
  #dmC{bottom:calc(76px + env(safe-area-inset-bottom));padding:8px 8px 10px}.msgs{padding:6px 10px 12px}.cv{margin:0 8px 8px;padding:12px 14px;grid-template-columns:42px minmax(0,1fr) auto}.cbox.sq{width:100%}
  .fab{display:grid;place-items:center;position:fixed;right:18px;bottom:calc(84px + env(safe-area-inset-bottom));z-index:9;width:60px;height:60px;border-radius:50%;background:var(--grad);color:#fff;box-shadow:var(--glow)}
- .fab svg{width:26px;height:26px}#ovl{padding:0;align-items:stretch}.dlg{border-radius:0;min-height:100%;border:0}.zoom{min-height:auto;align-self:center}}
+ .fab svg{width:26px;height:26px}#ovl{padding:0;align-items:flex-start}.dlg{border-radius:0;min-height:100%;border:0;align-self:flex-start;overflow:visible}.zoom{min-height:auto;align-self:center}}
 @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 .nav[hidden]{display:none!important}
 
@@ -325,6 +333,84 @@ input.invalid{border-color:var(--like)!important;box-shadow:0 0 0 3px rgba(255,9
 #accm .acco{display:block;width:100%;padding:11px 12px;border-radius:12px;text-align:left;font-size:15px}
 #accm .acco.dan{color:var(--like)}#accm p.acco{margin:0;color:var(--mut);font-size:13px}
 .mav{cursor:pointer}
+
+.bdg{width:17px;height:17px;vertical-align:-3px;margin-left:3px;flex:none;display:inline-block}
+.bdg.verified{color:#3d9bff}.bdg.official{color:#f2b01e}
+.xchips{display:flex;gap:8px;align-items:center;flex-wrap:wrap;padding:10px 16px 4px}
+.xchip{padding:6px 14px;border-radius:999px;border:1px solid var(--line2);font-size:14px}.xchip.on{background:var(--grad);border-color:transparent;color:#fff}
+.xadm{border:1px solid var(--line2);border-radius:18px;margin:10px 12px;background:var(--soft)}
+.xadm h3{font-size:15px;margin:16px 0 8px}
+.xah{display:flex;gap:12px;align-items:center}
+.xdl{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:8px 16px;margin:12px 0 0}
+.xdl div{min-width:0}.xdl dt{font-size:12px;color:var(--mut)}.xdl dd{margin:0;overflow-wrap:anywhere}
+.xchecks{display:flex;flex-wrap:wrap;gap:0 16px}
+
+/* ===== ライトモード（自動生成） ===== */
+html[data-theme=light]{color-scheme:light;--bg:#f4f7ff;--panel:#ffffff;--panel2:#eaf0ff;--line:rgba(30,60,140,.12);--line2:rgba(30,60,140,.22);
+--ink:#141b33;--mut:#5d6788;--acc:#2f6bff;--acc2:#2a62ff;--accD:#1f4fd8;--soft:rgba(47,107,255,.09);--card:#ffffff;--ov:rgba(20,30,60,.45);--glow:0 8px 22px rgba(47,107,255,.25)}
+html[data-theme=light] body{background:radial-gradient(900px 600px at 0% 100%,rgba(42,98,255,.08),transparent 60%),radial-gradient(700px 500px at 100% 0%,rgba(88,160,255,.08),transparent 60%),var(--bg)}
+html[data-theme=light] nav.side{background:radial-gradient(420px 300px at 120% 70%,rgba(42,98,255,.22),transparent 70%),linear-gradient(180deg,rgba(255,255,255,.9),rgba(255,255,255,.9))}
+html[data-theme=light] .logo small{color:#4a5578}
+html[data-theme=light] .nav{color:#2c3555}
+html[data-theme=light] .back{background:rgba(20,40,100,0.048)}
+html[data-theme=light] .tabs{background:rgba(255,255,255,.82)}
+html[data-theme=light] .tab{color:#4a5578}
+html[data-theme=light] .srch{background:rgba(255,255,255,.6)}
+html[data-theme=light] .panel,html[data-theme=light] .cmp,html[data-theme=light] .post,html[data-theme=light] .urow,html[data-theme=light] .nt,html[data-theme=light] .sec,html[data-theme=light] .note,html[data-theme=light] .rep{background:linear-gradient(180deg,rgba(255,255,255,.72),rgba(255,255,255,.72))}
+html[data-theme=light] .ctext{background:rgba(255,255,255,.55)}
+html[data-theme=light] .csel{background:rgba(255,255,255,.6) url("data:image/svg+xml,%3Csvg xmlns='http:%2F%2Fwww.w3.org%2F2000%2Fsvg' viewBox='0 0 24 24' fill='none' stroke='%238f9aba' stroke-width='2.4'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E") no-repeat right 10px center/14px;color:#2c3555}
+html[data-theme=light] .emo{box-shadow:0 14px 40px rgba(20,40,100,0.150)}
+html[data-theme=light] .btn{background:rgba(255,255,255,.4)}
+html[data-theme=light] .pv .x{background:rgba(20,40,100,0.180)}
+html[data-theme=light] .pv .alt{background:rgba(255,255,255,.8)}
+html[data-theme=light] .post:hover{background:linear-gradient(180deg,rgba(255,255,255,.8),rgba(255,255,255,.8))}
+html[data-theme=light] .quote{background:rgba(255,255,255,.4)}
+html[data-theme=light] .quote:hover{background:rgba(255,255,255,.6)}
+html[data-theme=light] }
+.menu{box-shadow:0 16px 40px rgba(20,40,100,0.165)}
+html[data-theme=light] .fld input,html[data-theme=light] .fld textarea,html[data-theme=light] .fld select,html[data-theme=light] .inp{background:rgba(255,255,255,.6)}
+html[data-theme=light] .chip{background:rgba(255,255,255,.4)}
+html[data-theme=light] .box{background:linear-gradient(180deg,rgba(255,255,255,.72),rgba(255,255,255,.72))}
+html[data-theme=light] .annb p{color:#3a4466}
+html[data-theme=light] .kpi{background:rgba(255,255,255,.5)}
+html[data-theme=light] .dlg{box-shadow:0 24px 70px rgba(20,40,100,0.180)}
+html[data-theme=light] .langsel{background:rgba(255,255,255,.6) url("data:image/svg+xml,%3Csvg xmlns='http:%2F%2Fwww.w3.org%2F2000%2Fsvg' viewBox='0 0 24 24' fill='none' stroke='%238f9aba' stroke-width='2.4'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E") no-repeat right 12px center/14px}
+html[data-theme=light] .alogo small{color:#4a5578}
+html[data-theme=light] .cmask.round{box-shadow:0 0 0 999px rgba(255,255,255,.6),inset 0 0 0 2px rgba(255,255,255,.85)}
+html[data-theme=light] .cv{background:linear-gradient(180deg,rgba(255,255,255,.72),rgba(255,255,255,.72))}
+html[data-theme=light] .day span{background:rgba(255,255,255,.7)}
+html[data-theme=light] .bub{background:rgba(255,255,255,.85)}
+html[data-theme=light] .mq{background:rgba(20,40,100,0.056)}
+html[data-theme=light] .msg.me .mq{background:rgba(20,40,100,0.128)}
+html[data-theme=light] .dmctx .x{background:rgba(20,40,100,0.064)}
+html[data-theme=light] .dmbar{background:rgba(255,255,255,.95);box-shadow:0 10px 30px rgba(20,40,100,0.120)}
+html[data-theme=light] .dmprev .x{background:rgba(20,40,100,0.180)}
+html[data-theme=light] .pd{border:2.5px solid #ffffff}
+html[data-theme=light] .pd.offline{background:#ffffff}
+html[data-theme=light] .rc{background:rgba(255,255,255,.9)}
+html[data-theme=light] .nsfw-cover{background:rgba(255,255,255,.45)}
+html[data-theme=light] .nsfw-cover span{color:#3a4466}
+html[data-theme=light] .nsfw-cover:hover{background:rgba(255,255,255,.3)}
+html[data-theme=light] .po{background:rgba(255,255,255,.5)}
+html[data-theme=light] .pedit{background:rgba(255,255,255,.35)}
+html[data-theme=light] #ac{box-shadow:0 16px 40px rgba(20,40,100,0.165)}
+@media(max-width:600px){html[data-theme=light] .bottom{background:rgba(255,255,255,.88);box-shadow:0 10px 30px rgba(20,40,100,0.150)}}
+html[data-theme=light] #accm{background:linear-gradient(180deg,#eef3ff,#ffffff);box-shadow:0 18px 50px rgba(20,40,100,0.165)}
+html[data-theme=light] .dlg{background:#fff;box-shadow:0 24px 70px rgba(30,60,140,.18)}
+html[data-theme=light] .acard{background:#fff;border-color:var(--line2);box-shadow:0 24px 60px rgba(30,60,140,.14);color:var(--ink)}
+html[data-theme=light] #auth .wm,html[data-theme=light] .alogo .wm{color:#14204a}
+html[data-theme=light] #auth input:not([type=checkbox]){background:#f4f7ff;color:var(--ink);border-color:var(--line2)}
+html[data-theme=light] .acard .ferr,html[data-theme=light] .aerr{color:#d6295a}
+html[data-theme=light] .btn.pri{background:var(--grad);border-color:transparent;color:#fff}
+html[data-theme=light] .tab[aria-selected=true]{color:#fff}
+html[data-theme=light] .hero .tt,html[data-theme=light] .hero .tt h1{color:#fff}html[data-theme=light] .hero .tt .sub,html[data-theme=light] .hero .tt .hd{color:#dfe6ff}html[data-theme=light] .hero .back{color:#fff;background:rgba(255,255,255,.14)}
+html[data-theme=light] .logo .wm{color:#14204a}
+html[data-theme=light] .nav{color:#2c3555}html[data-theme=light] .nav:hover{background:rgba(47,107,255,.08)}
+html[data-theme=light] nav.side{background:linear-gradient(180deg,#ffffff,#f4f7ff)}
+html[data-theme=light] .tabs{background:rgba(255,255,255,.88)}
+html[data-theme=light] #accm{background:#fff}
+html[data-theme=light] .xchip.on{color:#fff}
+html[data-theme=light] .btn.pri,html[data-theme=light] .send,html[data-theme=light] .big{color:#fff}
 </style>
 </head>
 <body>
@@ -363,7 +449,7 @@ input.invalid{border-color:var(--like)!important;box-shadow:0 0 0 3px rgba(255,9
 <symbol id="i-rp" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 4 4 7l3 3M4 7h12a4 4 0 0 1 4 4v1M17 20l3-3-3-3M20 17H8a4 4 0 0 1-4-4v-1"/></symbol>
 <symbol id="i-heart" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M12 20s-7.5-4.6-9-9.3C2 7.4 4.2 4.5 7.3 4.5c2 0 3.6 1.1 4.7 2.8 1.1-1.7 2.7-2.8 4.7-2.8 3.1 0 5.3 2.9 4.3 6.2-1.5 4.7-9 9.3-9 9.3z"/></symbol>
 <symbol id="i-share" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v13M7 8l5-5 5 5M5 14v6h14v-6"/></symbol>
-<symbol id="i-check" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></symbol><symbol id="i-dots" viewBox="0 0 24 24" fill="currentColor"><circle cx="5" cy="12" r="1.8"/><circle cx="12" cy="12" r="1.8"/><circle cx="19" cy="12" r="1.8"/></symbol>
+<symbol id="i-badge" viewBox="0 0 24 24"><path fill="currentColor" d="M12 1.6l2.5 1.9 3.1-.3 1 3 2.6 1.8-1 3 1 3-2.6 1.8-1 3-3.1-.3L12 22.4l-2.5-1.9-3.1.3-1-3-2.6-1.8 1-3-1-3 2.6-1.8 1-3 3.1.3z"/><path d="M7.8 12.3l2.8 2.8 5.6-5.8" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></symbol><symbol id="i-check" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></symbol><symbol id="i-dots" viewBox="0 0 24 24" fill="currentColor"><circle cx="5" cy="12" r="1.8"/><circle cx="12" cy="12" r="1.8"/><circle cx="19" cy="12" r="1.8"/></symbol>
 <symbol id="i-img" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="3"/><circle cx="9" cy="10" r="2"/><path d="m21 16-5-5-9 9"/></symbol>
 <symbol id="i-draft" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M6 3h9l4 4v14H6z"/><path d="M14 3v5h5M9 13h6M9 17h4"/></symbol>
 <symbol id="i-pin" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 3h6l-1 6 4 4H6l4-4zM12 13v8"/></symbol>
@@ -422,6 +508,11 @@ window.addEventListener('error',e=>showErr('画面のエラー: '+(e.message||''
 window.addEventListener('unhandledrejection',e=>{const r=e.reason||{};showErr('処理のエラー: '+(r.message||r.code||String(r)))});
 const VER='2026-11-25-sb1',steps=[];const trace=m=>{steps.push(new Date().toLocaleTimeString('ja-JP')+'  '+m);if(steps.length>40)steps.shift()};
 const CONF=window.ORBIT_CONFIG||{};
+const themeOf=()=>{let t='dark';try{t=localStorage.getItem('orbit-theme')||'dark'}catch(e){}return['auto','dark','light'].includes(t)?t:'dark'};
+const mqLight=matchMedia('(prefers-color-scheme: light)');
+function applyTheme(){const t=themeOf(),r=t==='auto'?(mqLight.matches?'light':'dark'):t;document.documentElement.dataset.theme=r;
+ const m=document.querySelector('meta[name=theme-color]');if(m)m.setAttribute('content',r==='light'?'#f4f7ff':'#080e20')}
+applyTheme();try{mqLight.addEventListener('change',applyTheme)}catch(e){}
 const SB_URL=String(CONF.SUPABASE_URL||'').replace(/\/+$/,''),SB_KEY=String(CONF.SUPABASE_ANON_KEY||'');
 const SB_OK=!!(window.supabase&&/^https?:\/\/\S+$/.test(SB_URL)&&SB_KEY.length>20);
 const urlHash=location.hash,recovering=/type=recovery/.test(urlHash),urlErr=/error_code=|error=/.test(urlHash)?decodeURIComponent((urlHash.match(/error_description=([^&]*)/)||[])[1]||'').replace(/\+/g,' '):'';
@@ -433,6 +524,7 @@ function norm(e){if(!e)return E('unavailable','通信に失敗しました。も
  const m=String(e.message||e.error_description||e.msg||e||''),c=String(e.code||'');
  if(c==='P0001'&&m==='もう一度ログインしてください')return E('unauthenticated',m);
  if(c==='P0001')return E(/多すぎ|短時間/.test(m)?'resource_exhausted':/許可|できません|凍結/.test(m)?'permission_denied':'invalid_argument',m);
+ if(/maint_(ins|upd|del)/.test(m))return E('permission_denied','メンテナンス中のため、現在は閲覧のみできます');
  if(c==='42501'||/row-level security|permission denied/i.test(m))return E('permission_denied','この操作は許可されていません');
  if(c==='23505'||/duplicate key/i.test(m))return E('already_exists','すでに登録されています');
  if(/JWT|not authenticated|Auth session missing|refresh token/i.test(m)||c==='PGRST301'||e.status===401)return E('unauthenticated','もう一度ログインしてください');
@@ -441,6 +533,20 @@ function norm(e){if(!e)return E('unavailable','通信に失敗しました。も
  return E('internal',m||'エラーが発生しました')}
 const q=async p=>{const{data,error}=await p;if(error)throw norm(error);return data};
 const site=()=>location.origin+location.pathname;
+// ----- ロボット対策（Cloudflare Turnstile）：config.js に TURNSTILE_SITE_KEY があるときだけ使う -----
+const TS_KEY=String(CONF.TURNSTILE_SITE_KEY||'');let tsId=null,tsWait=null,tsP=null;
+const tsLoad=()=>tsP||(tsP=new Promise(res=>{if(window.turnstile)return res(true);const sc=document.createElement('script');sc.src='https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit';sc.async=true;sc.onload=()=>res(!!window.turnstile);sc.onerror=()=>{tsP=null;res(false)};document.head.appendChild(sc)}));
+async function captcha(){if(!TS_KEY)return null;
+ if(!await tsLoad())throw E('unavailable','ロボットではないことの確認を読み込めませんでした。通信環境を確認して、もう一度お試しください');
+ let box=document.getElementById('cfbox');const card=document.getElementById('acard')||document.body;if(!box){box=document.createElement('div');box.id='cfbox'}if(box.parentNode!==card){card.appendChild(box);if(tsId!==null){try{window.turnstile.remove(tsId)}catch(e){}tsId=null}}
+ return new Promise((res,rej)=>{const tm=setTimeout(()=>{tsWait=null;rej(E('timeout','ロボットではないことの確認に時間がかかっています。もう一度お試しください'))},90000);
+  tsWait={res:t=>{clearTimeout(tm);tsWait=null;res(t)},rej:x=>{clearTimeout(tm);tsWait=null;rej(x)}};
+  const L={ja:'ja',en:'en',ko:'ko','zh-CN':'zh-cn','zh-TW':'zh-tw'}[K.lang]||'auto';
+  if(tsId===null)tsId=window.turnstile.render(box,{sitekey:TS_KEY,execution:'execute',appearance:'interaction-only',language:L,
+   callback:t=>tsWait&&tsWait.res(t),'error-callback':()=>{tsWait&&tsWait.rej(E('invalid_argument','ロボットではないことの確認に失敗しました。もう一度お試しください'))},'expired-callback':()=>{}});
+  else window.turnstile.reset(tsId);
+  window.turnstile.execute(tsId)})}
+const cap=async(o={})=>{const t=await captcha();return t?Object.assign({},o,{captchaToken:t}):o};
 const devToken=()=>{let t='';try{t=localStorage.getItem('orbit-device')||''}catch(e){}if(t.length<40){const a=new Uint8Array(24);crypto.getRandomValues(a);t=[...a].map(b=>b.toString(16).padStart(2,'0')).join('');try{localStorage.setItem('orbit-device',t)}catch(e){}}return t};
 const devLabel=()=>{const u=navigator.userAgent;return(/iPhone|iPad/.test(u)?'iPhone/iPad':/Android/.test(u)?'Android':/Mac/.test(u)?'Mac':/Windows/.test(u)?'Windows':'その他')+' · '+(/Edg\//.test(u)?'Edge':/Chrome\//.test(u)?'Chrome':/Safari\//.test(u)?'Safari':/Firefox\//.test(u)?'Firefox':'ブラウザ')};
 const mask=e=>{const m=String(e||'').match(/^(.)(.*)(@.*)$/);return m?m[1]+'•'.repeat(Math.min(6,Math.max(2,m[2].length)))+m[3]:''};
@@ -463,7 +569,10 @@ const TB={
  modlog:{t:'modlog',ord:'at',lim:1000,fr:r=>({by:s0(r.by_id),action:r.action,note:r.note,at:ms(r.at)})},
  communities:{t:'communities',lim:2000,fr:r=>({name:r.name,desc:r.descr,owner:r.owner,color:r.color,at:ms(r.at)})},
  members:{t:'members',lim:20000,fr:r=>({comm:r.comm,user:r.user_id,role:r.role,at:ms(r.at)})},
- dms:{t:'dms',ord:'at',lim:3000,fr:r=>({conv:r.conv,from:r.from_id,to:r.to_id,text:r.text,at:ms(r.at),media:r.media||[],readAt:ms(r.read_at),reacts:r.reacts||{}})}};
+ badges:{t:'badges',lim:10000,fr:r=>({kind:r.kind,by:s0(r.by_id),at:ms(r.at)})},
+ siteSettings:{t:'site_settings',lim:100,fr:r=>({value:r.value,by:s0(r.by_id),at:ms(r.at)})},
+ admins:{t:'admins',lim:100,fr:r=>({uid:r.uid})},
+ dms:{t:'dms',ord:'at',lim:3000,fr:r=>({conv:r.conv,from:r.from_id,to:r.to_id,text:r.text,at:ms(r.at),media:r.media||[],readAt:ms(r.read_at),reacts:r.reacts||{},replyTo:s0(r.reply_to),editedAt:ms(r.edited_at)})}};
 const T2P={};for(const k in TB)T2P[TB[k].t]=k;T2P.private_docs='data';T2P.votes='votes';
 const yes=v=>v===true||v==='yes';
 const nul=v=>v==null||v===''?null:String(v);
@@ -480,6 +589,8 @@ const TO={
  hidden:d=>({reason:s0(d.reason).slice(0,1000),at:ms(d.at)}),
  suspended:d=>({kind:d.kind==='perm'?'perm':'temp',until:ms(d.until),reason:s0(d.reason).slice(0,1000),at:ms(d.at)}),
  announcements:d=>({text:s0(d.text).slice(0,1000),kind:s0(d.kind)||'info',at:ms(d.at),to_id:nul(d.to)}),
+ badges:d=>({kind:d.kind==='official'?'official':'verified',at:ms(d.at)}),
+ siteSettings:d=>({value:d.value===undefined?null:d.value,at:ms(d.at)}),
  modlog:d=>({action:s0(d.action).slice(0,1000),note:s0(d.note).slice(0,1000),at:ms(d.at)})};
 async function allRows(t,ord,lim,filter){const out=[];for(let from=0;from<lim;from+=1000){let x=sb.from(t).select('*');if(filter)x=filter(x);if(ord)x=x.order(ord,{ascending:false});
  const rows=await q(x.range(from,Math.min(from+999,lim-1)));out.push(...rows);if(rows.length<1000)break}return out}
@@ -488,13 +599,13 @@ async function readPath(p){const me=K.me&&K.me.uid,seg=p.split('/');
  if(p==='votes')return(await q(sb.rpc('poll_results'))).map(r=>({id:r.post,data:{counts:r.counts,mine:r.mine}}));
  const m=TB[p];if(!m)return[];
  if((p==='reportStatus'||p==='modlog')&&!(K.me&&K.me.role==='admin'))return[];
- return(await allRows(m.t,m.ord,m.lim)).map(r=>({id:String(r.id),data:m.fr(r)}))}
+ return(await allRows(m.t,m.ord,m.lim)).map(r=>({id:String(r.id||r.uid||r.key),data:m.fr(r)}))}
 function splitPath(path){const seg=String(path||'').split('/');
  if(seg[0]==='data'){if(seg.length!==4||seg[1]!=='users'||seg[2]!==(K.me&&K.me.uid))throw E('permission_denied','この操作は許可されていません');return{priv:true,key:seg[3]}}
  if(seg.length!==2||!TB[seg[0]])throw E('permission_denied','この操作は許可されていません');return{col:seg[0],id:seg[1]}}
 async function getDoc(path){const x=splitPath(path);
  if(x.priv){const r=await q(sb.from('private_docs').select('json').eq('uid',K.me.uid).eq('key',x.key).maybeSingle());return r?r.json:null}
- const m=TB[x.col],r=await q(sb.from(m.t).select('*').eq('id',x.id).maybeSingle());return r?m.fr(r):null}
+ const m=TB[x.col],r=await q(sb.from(m.t).select('*').eq(x.col==='siteSettings'?'key':x.col==='admins'?'uid':'id',x.id).maybeSingle());return r?m.fr(r):null}
 async function applyOp(op){const x=splitPath(op.path),d=op.data&&typeof op.data==='object'?op.data:{};
  if(x.priv){const me=K.me.uid;if(!/^[\w.-]{1,80}$/.test(x.key))throw E('invalid_argument','入力内容を確認してください');
   if(op.type==='delete'){await q(sb.from('private_docs').delete().eq('uid',me).eq('key',x.key));return}
@@ -502,15 +613,15 @@ async function applyOp(op){const x=splitPath(op.path),d=op.data&&typeof op.data=
   if(JSON.stringify(json).length>200000)throw E('invalid_argument','データが大きすぎます');
   await q(sb.from('private_docs').upsert({uid:me,key:x.key,json}));return}
  const{col,id}=x,m=TB[col],t=m.t;
- if(op.type==='delete'){await q(sb.from(t).delete().eq('id',id));if(col==='posts')dirty.add('votes');return}
- if(!TO[col]||['freqs','communities','members','dms'].includes(col))throw E('permission_denied','この操作は許可されていません');
+ if(op.type==='delete'){await q(sb.from(t).delete().eq(col==='siteSettings'?'key':'id',id));if(col==='posts')dirty.add('votes');return}
+ if(!TO[col]||['freqs','communities','members','dms','admins'].includes(col))throw E('permission_denied','この操作は許可されていません');
  if(col==='posts'){if(op.type==='set'){const ex=await q(sb.from('posts').select('id').eq('id',id).maybeSingle());if(!ex){await q(sb.from('posts').insert(Object.assign({id},TO.posts(d,true))));return}}
   await q(sb.from('posts').update(TO.posts(d,false)).eq('id',id));return}
  if(['likes','reposts','follows'].includes(col)){if(op.type==='update')return;try{await q(sb.from(t).insert(TO[col](d)))}catch(e){if(e.code!=='already_exists')throw e}return}
  if(col==='profiles'){await q(sb.from('profiles').update(TO.profiles(d)).eq('id',id));return}
- const row=TO[col](d);
- if(op.type==='update'){await q(sb.from(t).update(row).eq('id',id));return}
- await q(sb.from(t).upsert(Object.assign({id},row)))}
+ const row=TO[col](d),pk=col==='siteSettings'?'key':'id';
+ if(op.type==='update'){await q(sb.from(t).update(row).eq(pk,id));return}
+ await q(sb.from(t).upsert(Object.assign({[pk]:id},row)))}
 // ----- 翻訳（Googleの翻訳サービスを直接使います） -----
 const trCache=new Map();
 async function gtx(text,tl){const k=tl+'\u0000'+text;if(trCache.has(k))return trCache.get(k);
@@ -521,6 +632,8 @@ async function checkPw(pw,msg){const email=K.me&&K.me.email;if(!email)throw E('u
  const r=await q(sb.rpc('login_resolve',{p_id:email,p_pw:String(pw||'')}));if(!r||!r.ok)throw E(r&&r.locked?'resource_exhausted':'invalid_argument',r&&r.locked?r.error:msg)}
 function pwRule(pw){pw=String(pw||'');if(pw.length<8)throw E('invalid_argument','パスワードは8文字以上にしてください');if(!/[A-Za-z]/.test(pw)||!/[0-9]/.test(pw))throw E('invalid_argument','パスワードには英字と数字を両方含めてください')}
 const authErr=e=>{const m=String(e&&e.message||'');
+ if(/captcha/i.test(m))return E('invalid_argument','ロボットではないことの確認に失敗しました。ページを再読み込みして、もう一度お試しください');
+ if(/Database error saving new user/i.test(m))return E('permission_denied','現在、新規登録を受け付けていません');
  if(/Invalid login credentials/i.test(m))return E('invalid_argument','メールアドレス（またはユーザーID）かパスワードが違います');
  if(/already registered|already been registered|User already/i.test(m))return E('already_exists','このメールアドレスは登録済みです');
  if(/Token has expired|invalid|otp/i.test(m)&&/token|otp/i.test(m))return E('invalid_argument','コードが正しくないか、有効期限が切れています');
@@ -547,7 +660,8 @@ const OPS={
  deleteAccount:async r=>{await checkPw(r.password,'パスワードが違います');const me=K.me.uid;
   try{for(let i=0;i<20;i++){const{data}=await sb.storage.from('media').list(me,{limit:1000});if(!data||!data.length)break;await sb.storage.from('media').remove(data.map(f=>me+'/'+f.name));if(data.length<1000)break}}catch(e){}
   await q(sb.rpc('delete_account'));await sb.auth.signOut({scope:'local'}).catch(()=>{});return{ok:true}},
- dmSend:async r=>({id:await q(sb.rpc('dm_send',{target:r.to,body:String(r.text||''),media:(r.media||[]).slice(0,1).map(m=>({id:String(m.id||''),type:'image',alt:String(m.alt||'').slice(0,400)}))}))}),
+ dmSend:async r=>({id:await q(sb.rpc('dm_send',{target:r.to,body:String(r.text||''),media:(r.media||[]).slice(0,1).map(m=>({id:String(m.id||''),type:m.type==='video'?'video':'image',alt:String(m.alt||'').slice(0,400)})),reply:r.reply||null}))}),
+ dmEdit:r=>q(sb.rpc('dm_edit',{mid:r.id,body:String(r.text||'')})),
  dmReact:r=>q(sb.rpc('dm_react',{mid:r.id,emoji:r.emoji})),
  dmRead:r=>q(sb.rpc('dm_read',{cv:r.conv})),
  dmDelete:r=>q(sb.rpc('dm_delete',{mid:r.id})),
@@ -564,6 +678,16 @@ const OPS={
  commJoin:r=>q(sb.rpc('comm_join',{c_id:r.id})),commLeave:r=>q(sb.rpc('comm_leave',{c_id:r.id})),commDelete:r=>q(sb.rpc('comm_delete',{c_id:r.id})),
  commKick:r=>q(sb.rpc('comm_kick',{c_id:r.id,target:r.user})),
  adminInfo:()=>q(sb.rpc('admin_info')),
+ sitePublic:()=>q(sb.rpc('site_public')),
+ adminUser:r=>q(sb.rpc('admin_user_info',{target:r.user})),
+ adminSetAdmin:r=>q(sb.rpc('admin_set_admin',{target:r.user,on_:!!r.on})),
+ adminUnlock:r=>q(sb.rpc('admin_unlock',{target:r.user})),
+ adminForget:r=>q(sb.rpc('admin_forget_devices',{target:r.user})),
+ adminDelPosts:async r=>({n:await q(sb.rpc('admin_delete_posts',{target:r.user}))}),
+ adminDelUser:async r=>{const u=String(r.user||'');
+  try{for(let i=0;i<20;i++){const{data}=await sb.storage.from('media').list(u,{limit:1000});if(!data||!data.length)break;await sb.storage.from('media').remove(data.map(f=>u+'/'+f.name));if(data.length<1000)break}}catch(e){}
+  await q(sb.rpc('admin_delete_user',{target:u}));return{ok:true}},
+ adminCommOwner:r=>q(sb.rpc('admin_comm_owner',{c_id:r.id,target:r.user})),
  backupNow:async()=>{throw E('invalid_argument','バックアップはSupabaseが毎日自動で作成しています（Supabase の Database → Backups で確認できます）')},
  preview:async()=>null,
  translate:async r=>{const list=r.kind==='dm'?cache.dms:cache.posts;const d=(list||[]).find(x=>x.id===r.id);const text=d&&d.data&&d.data.text||'';if(!text)return{text:''};
@@ -578,26 +702,27 @@ const OPS={
   const res=await q(sb.rpc('login_resolve',{p_id:id,p_pw:pw}));
   if(!res||!res.ok)throw E(res&&res.locked?'resource_exhausted':'invalid_argument',res&&res.error||'メールアドレス（またはユーザーID）かパスワードが違います');
   const email=res.email;
-  if(!res.confirmed){await sb.auth.resend({type:'signup',email,options:{emailRedirectTo:site()}}).catch(()=>{});return{needVerify:true,email}}
-  await A_(sb.auth.signInWithPassword({email,password:pw}));
+  if(!res.confirmed){await sb.auth.resend({type:'signup',email,options:await cap({emailRedirectTo:site()})}).catch(()=>{});return{needVerify:true,email}}
+  await A_(sb.auth.signInWithPassword({email,password:pw,options:await cap()}));
   let trusted=false;try{trusted=await q(sb.rpc('device_check',{p_token:devToken()}))}catch(e){}
   if(trusted)return{token:'sb'};
   await sb.auth.signOut({scope:'local'}).catch(()=>{});
-  await A_(sb.auth.signInWithOtp({email,options:{shouldCreateUser:false}}));
+  await A_(sb.auth.signInWithOtp({email,options:await cap({shouldCreateUser:false})}));
   return{need2fa:true,email}},
  verify2fa:async r=>{await A_(sb.auth.verifyOtp({email:r.email,token:String(r.code||'').trim(),type:'email'}));try{if(r.trust===false)sessionStorage.setItem('orbit-notrust','1');else sessionStorage.removeItem('orbit-notrust')}catch(e){}return{token:'sb'}},
- resend2fa:async r=>{await A_(sb.auth.signInWithOtp({email:r.email,options:{shouldCreateUser:false}}));return{ok:true}},
+ resend2fa:async r=>{await A_(sb.auth.signInWithOtp({email:r.email,options:await cap({shouldCreateUser:false})}));return{ok:true}},
  register:async r=>{const handle=String(r.handle||'').trim(),email=String(r.email||'').trim().toLowerCase();pwRule(r.password);
   if(!/^[A-Za-z0-9_]{3,20}$/.test(handle))throw E('invalid_argument','ユーザーIDは3〜20文字の英数字と _ で指定してください');
+  const sp=await q(sb.rpc('site_public')).catch(()=>null);if(sp&&sp.signup===false)throw E('permission_denied','現在、新規登録を受け付けていません');
   if(!await q(sb.rpc('handle_available',{h:handle})))throw E('already_exists','このユーザーIDは使われています');
-  const data=await A_(sb.auth.signUp({email,password:r.password,options:{data:{name:String(r.name||'').trim().slice(0,40),handle},emailRedirectTo:site()}}));
+  const data=await A_(sb.auth.signUp({email,password:r.password,options:await cap({data:{name:String(r.name||'').trim().slice(0,40),handle},emailRedirectTo:site()})}));
   if(data.session)return{token:'sb'};
   if(data.user&&Array.isArray(data.user.identities)&&!data.user.identities.length)throw E('already_exists','このメールアドレスは登録済みです');
   return{needVerify:true,email}},
  verify:async r=>{let res=await sb.auth.verifyOtp({email:r.email,token:String(r.code||'').trim(),type:'signup'});
   if(res.error)res=await sb.auth.verifyOtp({email:r.email,token:String(r.code||'').trim(),type:'email'});if(res.error)throw authErr(res.error);return{token:'sb'}},
- resend:async r=>{await A_(sb.auth.resend({type:'signup',email:r.email,options:{emailRedirectTo:site()}}));return{ok:true}},
- resetReq:async r=>{await A_(sb.auth.resetPasswordForEmail(String(r.email||'').trim().toLowerCase(),{redirectTo:site()}));return{ok:true}},
+ resend:async r=>{await A_(sb.auth.resend({type:'signup',email:r.email,options:await cap({emailRedirectTo:site()})}));return{ok:true}},
+ resetReq:async r=>{await A_(sb.auth.resetPasswordForEmail(String(r.email||'').trim().toLowerCase(),await cap({redirectTo:site()})));return{ok:true}},
  resetDo:async r=>{pwRule(r.password);await A_(sb.auth.verifyOtp({email:r.email,token:String(r.code||'').trim(),type:'recovery'}));await A_(sb.auth.updateUser({password:r.password}));await sb.auth.signOut({scope:'local'}).catch(()=>{});return{ok:true}},
  newPass:async r=>{pwRule(r.password);await A_(sb.auth.updateUser({password:r.password}));return{token:'sb'}}};
 const run=req=>new Promise((res0,rej0)=>{const t0=Date.now(),op=req.op;let done=false;const lim=op==='sync'?60000:op==='i18n'?40000:30000;
@@ -606,7 +731,7 @@ const run=req=>new Promise((res0,rej0)=>{const t0=Date.now(),op=req.op;let done=
  if(!sb){rej({code:'unavailable',message:'Supabase の設定（config.js）が読み込めていません。config.js に Project URL と anon key を入れてください'});return}
  const f=OPS[op];if(!f){rej({code:'invalid_argument',message:'この操作はまだ使えません（'+op+'）'});return}
  Promise.resolve().then(()=>f(req)).then(v=>res(v===undefined?{ok:true}:v),e=>rej(norm(e)))});
-const K=window.KODAMA={run,VER,steps,cfg:null,me:null,sb,media:id=>{id=String(id||'');return!id?'':id.includes('/')?MEDIA+id.split('/').map(encodeURIComponent).join('/'):/^[\w-]{10,120}$/.test(id)?'https:\/\/drive.google.com/thumbnail?id='+id+'&sz=w2000':''},setToken(){}};
+const K=window.KODAMA={run,VER,steps,cfg:null,me:null,sb,theme:themeOf,setTheme:t=>{try{localStorage.setItem('orbit-theme',t)}catch(e){}applyTheme()},media:id=>{id=String(id||'');return!id?'':id.includes('/')?MEDIA+id.split('/').map(encodeURIComponent).join('/'):/^[\w-]{10,120}$/.test(id)?'https:\/\/drive.google.com/thumbnail?id='+id+'&sz=w2000':''},setToken(){}};
 const cache={},cacheJ={},listeners=[],dirty=new Set();let ver=-1,timer=null,busy=false,again=false,lastFull=0,lastPres=0,presPref='';
 const parent=p=>p.split('/').slice(0,-1).join('/');
 const net=on=>{let el=document.getElementById('net');if(!el){el=document.createElement('div');el.id='net';el.setAttribute('role','status');el.textContent='サーバーとの接続を再試行しています…';document.body.appendChild(el)}el.hidden=!on};
@@ -685,16 +810,44 @@ async function accSwitch(uid,msg){if(switching)return;switching=true;
 async function accAdd(){if(accLoad().length>=ACC_MAX&&!accLoad().every(a=>a.uid!==(K.me&&K.me.uid))){alert(K.tr('追加できるアカウントは5つまでです'));return}
  await accRemember();try{localStorage.removeItem('orbit-auth');sessionStorage.setItem('orbit-adding','1')}catch(e){}location.href=site()}
 K.accounts=()=>accLoad();K.mask=mask;K.switchTo=accSwitch;K.addAccount=accAdd;
+// ----- プッシュ通知 -----
+const PUSH_OK=()=>'serviceWorker'in navigator&&'PushManager'in window&&'Notification'in window;
+const isIOS=()=>/iPhone|iPad|iPod/.test(navigator.userAgent)||(navigator.platform==='MacIntel'&&navigator.maxTouchPoints>1);
+const standalone=()=>matchMedia('(display-mode: standalone)').matches||navigator.standalone===true;
+let swReg=null;
+async function swReady(){if(!('serviceWorker'in navigator))return null;if(swReg)return swReg;try{swReg=await navigator.serviceWorker.register('/sw.js');return swReg}catch(e){trace('サービスワーカーを登録できません: '+e.message);return null}}
+const unb64u=s=>{s=String(s).replace(/-/g,'+').replace(/_/g,'/');while(s.length%4)s+='=';return Uint8Array.from(atob(s),c=>c.charCodeAt(0))};
+const b64u=buf=>btoa(String.fromCharCode(...new Uint8Array(buf))).replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'');
+K.push={
+ // 'on' | 'off' | 'denied' | 'unsupported' | 'install'（iPhone はホーム画面に追加してから）
+ async status(){if(isIOS()&&!standalone())return'install';if(!PUSH_OK())return'unsupported';if(Notification.permission==='denied')return'denied';
+  const r=await swReady();const sub=r&&await r.pushManager.getSubscription();if(!sub||!K.me)return'off';
+  const{data}=await sb.from('push_subs').select('endpoint').eq('endpoint',sub.endpoint).eq('uid',K.me.uid).maybeSingle();return data?'on':'off'},
+ async enable(){if(isIOS()&&!standalone())throw E('invalid_argument','iPhone・iPad では、Orbit をホーム画面に追加してから開くと通知を受け取れます');
+  if(!PUSH_OK())throw E('invalid_argument','このブラウザはプッシュ通知に対応していません');
+  const perm=await Notification.requestPermission();if(perm!=='granted')throw E('permission_denied','通知が許可されませんでした。ブラウザの設定で Orbit の通知を許可してください');
+  const r=await swReady();if(!r)throw E('unavailable','通知の準備ができませんでした。ページを再読み込みしてください');
+  let key;try{const res=await fetch(SB_URL+'/functions/v1/push',{headers:{apikey:SB_KEY}});const j=await res.json();key=j&&j.publicKey}catch(e){}
+  if(!key)throw E('unavailable','プッシュ通知はまだ準備中です（管理者が Supabase に「push」機能を設定すると使えます）');
+  let sub=await r.pushManager.getSubscription();
+  if(sub&&sub.options&&sub.options.applicationServerKey&&b64u(sub.options.applicationServerKey)!==key){await sub.unsubscribe().catch(()=>{});sub=null}
+  if(!sub)sub=await r.pushManager.subscribe({userVisibleOnly:true,applicationServerKey:unb64u(key)});
+  const j=sub.toJSON();await q(sb.from('push_subs').upsert({endpoint:j.endpoint,uid:K.me.uid,p256dh:j.keys.p256dh,auth:j.keys.auth,ua:devLabel()}));return'on'},
+ async disable(){const r=await swReady();const sub=r&&await r.pushManager.getSubscription();if(!sub)return'off';
+  await sb.from('push_subs').delete().eq('endpoint',sub.endpoint).eq('uid',K.me.uid);
+  const{data}=await sb.from('push_subs').select('uid').eq('endpoint',sub.endpoint);if(!data||!data.length)await sub.unsubscribe().catch(()=>{});return'off'},
+ async forget(){try{const r=await swReady();const sub=r&&await r.pushManager.getSubscription();if(sub&&K.me)await sb.from('push_subs').delete().eq('endpoint',sub.endpoint).eq('uid',K.me.uid)}catch(e){}}};
+if('serviceWorker'in navigator)navigator.serviceWorker.addEventListener('message',e=>{if(e.data&&e.data.type==='open'&&typeof e.data.url==='string'){const u=new URL(e.data.url,location.origin);if(u.origin===location.origin)location.hash=u.hash}});
 let started=false;
 K.start=async()=>{try{K.me=await run({op:'me'})}catch(e){if(e&&e.code==='unauthenticated'){try{await sb.auth.signOut({scope:'local'})}catch(_){}}throw{code:e&&e.code,message:'ログイン後の読み込みに失敗しました: '+(e.message||e.code)}}
  trace('main '+(window.__kodamaMain?'起動済み':'未起動'));if(started){location.reload();return}started=true;
  try{if(sessionStorage.getItem('orbit-notrust')!=='1')sb.rpc('device_trust',{p_token:devToken(),p_label:devLabel()}).then(()=>{},()=>{});sessionStorage.removeItem('orbit-adding')}catch(e){}
  accRemember().catch(()=>{});setTimeout(()=>accRemember().catch(()=>{}),8000);
  try{const m=sessionStorage.getItem('orbit-msg');if(m){sessionStorage.removeItem('orbit-msg');setTimeout(()=>accToast(m),1200)}}catch(e){}
- ready();realtime();loop();
+ ready();realtime();loop();swReady();
  setTimeout(()=>{if(!window.__kodamaMain)showErr('画面のプログラム（2つ目のscript）が起動していません。index.html の内容が途中で切れている可能性があります。\n'+steps.join('\n'));else if(!K.synced)showErr('15秒たってもデータが届きません。\n'+steps.join('\n'))},15000)};
 // ログアウト：このアカウントだけログアウトし、ほかにログイン中のアカウントがあればそちらに切り替える
-K.leave=async()=>{const me=K.me&&K.me.uid;switching=true;try{await sb.auth.signOut({scope:'local'})}catch(e){}if(me)accDrop(me);try{localStorage.removeItem('orbit-auth')}catch(e){}
+K.leave=async()=>{const me=K.me&&K.me.uid;switching=true;await K.push.forget();try{await sb.auth.signOut({scope:'local'})}catch(e){}if(me)accDrop(me);try{localStorage.removeItem('orbit-auth')}catch(e){}
  switching=false;const next=accLoad()[0];if(next){K.me=null;await accSwitch(next.uid,'ログアウトしました');return}location.href=site()};
 K.logout=async()=>{K.leave()};
 K.expire=msg=>{if(K.expiring)return;K.expiring=true;const me=K.me&&K.me.uid;if(me)accDrop(me);try{sb.auth.signOut({scope:'local'})}catch(e){}showAuth('login',msg||'もう一度ログインしてください')};
@@ -770,6 +923,12 @@ PAT.push([/^(\S+) にログイン用の確認コードを送りました。[\s\S
 PATX.ko.push([/^(\S+) にログイン用の確認コードを送りました。[\s\S]*$/,'$1(으)로 로그인 확인 코드를 보냈습니다. 메일의 6자리 코드를 입력하세요.'],[/^@(\S*) からログアウト$/,'@$1 에서 로그아웃'],[/^@(\S*) に切り替えました$/,'@$1(으)로 전환했습니다'],[/^@(\S*) のログインが切れました。[\s\S]*$/,'@$1 의 로그인이 만료되었습니다. 다시 로그인하세요.']);
 PATX['zh-CN'].push([/^(\S+) にログイン用の確認コードを送りました。[\s\S]*$/,'已向 $1 发送登录验证码。请输入邮件中的 6 位验证码。'],[/^@(\S*) からログアウト$/,'退出 @$1'],[/^@(\S*) に切り替えました$/,'已切换到 @$1'],[/^@(\S*) のログインが切れました。[\s\S]*$/,'@$1 的登录已失效，请重新登录。']);
 PATX['zh-TW'].push([/^(\S+) にログイン用の確認コードを送りました。[\s\S]*$/,'已寄送登入驗證碼到 $1。請輸入郵件中的 6 位數驗證碼。'],[/^@(\S*) からログアウト$/,'登出 @$1'],[/^@(\S*) に切り替えました$/,'已切換到 @$1'],[/^@(\S*) のログインが切れました。[\s\S]*$/,'@$1 的登入已失效，請重新登入。']);
+for(const[k,v]of Object.entries({"認証済みアカウント": "Verified account", "公式アカウント": "Official account", "コミュニティ": "Communities", "サイト設定": "Site settings", "メンテナンス中です。": "Under maintenance.", "現在は閲覧のみできます。": "You can browse but not post right now.", " （管理者は通常どおり操作できます）": " (Admins can still make changes)", "名前・ユーザーIDで検索": "Search by name or user ID", "すべて": "All", "管理者": "Admins", "凍結中": "Suspended", "バッジあり": "Has badge", "管理": "Manage", "該当するユーザーはいません": "No matching users", "閉じる": "Close", "読み込み中…": "Loading…", "このユーザーは削除されています。": "This user has been deleted.", "メールアドレス": "Email", "登録日": "Joined", "最終ログイン": "Last sign-in", "メール確認": "Email confirmed", "済み": "Yes", "まだ": "Not yet", "投稿数": "Posts", "送ったメッセージ": "Messages sent", "信頼済みの端末": "Trusted devices", "プッシュ通知の端末": "Push devices", "ログイン": "Sign-in", "正常": "Normal", "状態": "Status", "利用中": "Active", "権限とバッジ": "Role and badge", "あなた（管理者）": "You (admin)", "管理者から外す": "Remove admin", "管理者にする": "Make admin", "バッジ": "Badge", "なし": "None", "認証済み（青）": "Verified (blue)", "公式（金）": "Official (gold)", "アカウント": "Account", "警告を送る": "Send warning", "凍結を解除": "Unsuspend", "凍結する": "Suspend", "ログインのロックを解除": "Unlock sign-in", "信頼済みの端末をすべて解除": "Untrust all devices", "プロフィールの修正": "Fix profile", "不適切な内容を初期状態に戻します。": "Reset inappropriate content.", "表示名": "Display name", "自己紹介": "Bio", "アイコン": "Avatar", "ヘッダー画像": "Header image", "リンク": "Link", "選んだ項目を初期化": "Reset selected", "新しいユーザーID": "New user ID", "ユーザーIDを変更": "Change user ID", "削除": "Delete", "投稿をすべて削除": "Delete all posts", "アカウントを削除": "Delete account", "コミュニティ名で検索": "Search communities", "新しい作成者のユーザーID": "New owner user ID", "作成者を変更": "Change owner", "コミュニティはまだありません": "No communities yet", "新規登録": "Sign-ups", "新規登録を受け付ける": "Allow new sign-ups", "オフにすると、新しいアカウントを作れなくなります（荒らし対策や、招待した人だけで使いたいときに）。": "When off, no new accounts can be created (useful against spam or for invite-only use).", "メンテナンスモード": "Maintenance mode", "メンテナンス中にする（管理者以外は閲覧のみ）": "Turn on maintenance (read-only for non-admins)", "利用者に表示するメッセージ": "Message shown to users", "例：22時〜23時はメンテナンスのため投稿できません": "e.g. Posting is paused 22:00–23:00 for maintenance", "メッセージを保存": "Save message", "NGワード": "Blocked words", "ここに書いた語句を含む投稿・メッセージ・プロフィール・コミュニティ名は保存できなくなります。1行に1つ入力してください（大文字・小文字は区別しません。管理者は対象外）。": "Posts, messages, profiles and community names containing these words can’t be saved. One per line (case-insensitive; admins are exempt).", "例：宣伝URL": "e.g. spam-url", "保存": "Save", "あなた": "You", "外す": "Remove", "管理者を増やすときは「ユーザー管理」でユーザーの「管理」を押し、「管理者にする」を選びます。": "To add an admin, open Users, press Manage on a user and choose Make admin.", "テーマ": "Theme", "端末の設定に合わせる": "Match device", "ダーク（夜空）": "Dark (night sky)", "ライト": "Light", "プッシュ通知": "Push notifications", "確認中…": "Checking…", "この端末で通知を受け取っています。": "This device receives notifications.", "この端末の通知をオフにする": "Turn off on this device", "アプリを閉じていても、いいね・返信・フォロー・メッセージなどをこの端末に通知します。": "Get likes, replies, follows and messages on this device even when Orbit is closed.", "この端末で通知を受け取る": "Turn on for this device", "ブラウザで通知がブロックされています。ブラウザ（またはスマホ）の設定で Orbit の通知を許可してください。": "Notifications are blocked. Allow notifications for Orbit in your browser or phone settings.", "iPhone・iPad では、Safari の共有ボタン →「ホーム画面に追加」で Orbit を追加し、ホーム画面から開くと通知を受け取れます。": "On iPhone/iPad, tap Share → “Add to Home Screen” in Safari, then open Orbit from the Home Screen to get notifications.", "このブラウザはプッシュ通知に対応していません。": "This browser doesn’t support push notifications.", "メッセージ（DM）の通知を受け取る": "Get message (DM) notifications", "いいね・返信などの種類ごとのオン・オフは「通知設定」と共通です。": "On/off for likes, replies, etc. is shared with Notification settings.", "この端末で通知を受け取ります": "Notifications on for this device", "この端末の通知をオフにしました": "Notifications off for this device", "iPhone・iPad では、Orbit をホーム画面に追加してから開くと通知を受け取れます": "On iPhone/iPad, add Orbit to your Home Screen and open it from there to get notifications", "このブラウザはプッシュ通知に対応していません": "This browser doesn’t support push notifications", "通知が許可されませんでした。ブラウザの設定で Orbit の通知を許可してください": "Notifications weren’t allowed. Allow them for Orbit in your browser settings.", "プッシュ通知はまだ準備中です（管理者が Supabase に「push」機能を設定すると使えます）": "Push notifications aren’t set up yet (an admin needs to add the “push” function in Supabase).", "通知の準備ができませんでした。ページを再読み込みしてください": "Couldn’t prepare notifications. Please reload the page.", "管理者は、通報の対応・凍結・投稿の削除・サイト設定など、すべての管理機能を使えるようになります。": "Admins can use every admin tool: reports, suspensions, deleting posts, site settings and more.", "管理者にしました": "Made admin", "管理者から外しました": "Removed admin", "ログインのロックを解除しました": "Sign-in unlocked", "信頼済みの端末をすべて解除しますか？": "Untrust all devices?", "このユーザーは、次にログインするときにメールの確認コードが必要になります。パスワードだけでログインしている端末はログアウトされます。": "This user will need an email code next time they sign in. Devices signed in with only a password will be signed out.", "解除する": "Untrust", "信頼済みの端末を解除しました": "Devices untrusted", "初期化する項目を選んでください": "Choose what to reset", "選んだ項目を初期化しますか？": "Reset the selected items?", "初期化する": "Reset", "初期化しました": "Reset done", "ユーザーIDは3〜20文字の英数字と _ で指定してください": "User IDs must be 3–20 letters, numbers or _", "ユーザーIDを変更しました": "User ID changed", "元に戻せません。": "This can’t be undone.", "すべて削除": "Delete all", "投稿・画像・メッセージなど、このユーザーのデータがすべて削除され、元に戻せません。": "All of this user’s data, including posts, images and messages, will be deleted. This can’t be undone.", "削除する": "Delete", "アカウントを削除しました": "Account deleted", "ユーザーが見つかりません": "User not found", "変更する": "Change", "作成者を変更しました": "Owner changed", "このコミュニティを削除しますか？": "Delete this community?", "メンバーとコミュニティ内の投稿もすべて削除され、元に戻せません。": "Its members and posts will also be deleted. This can’t be undone.", "コミュニティを削除しました": "Community deleted", "メッセージを保存しました": "Message saved", "バッジを付けました": "Badge added", "バッジを外しました": "Badge removed", "新規登録を受け付けます": "Sign-ups are open", "新規登録を停止しました": "Sign-ups stopped", "メンテナンスモードにしました": "Maintenance mode on", "メンテナンスモードを解除しました": "Maintenance mode off", "禁止されている語句が含まれています": "Contains a blocked word", "メンテナンス中のため、現在は閲覧のみできます": "Under maintenance — you can only browse right now", "現在、新規登録を受け付けていません": "New sign-ups are currently closed", "最後の管理者は外せません": "You can’t remove the last admin", "自分のアカウントは設定画面から削除してください": "Delete your own account from Settings", "管理者のアカウントは削除できません。先に管理者から外してください": "Admin accounts can’t be deleted. Remove admin first.", "ロボットではないことの確認に失敗しました。ページを再読み込みして、もう一度お試しください": "Bot check failed. Reload the page and try again.", "ロボットではないことの確認に失敗しました。もう一度お試しください": "Bot check failed. Please try again.", "ロボットではないことの確認を読み込めませんでした。通信環境を確認して、もう一度お試しください": "Couldn’t load the bot check. Check your connection and try again.", "ロボットではないことの確認に時間がかかっています。もう一度お試しください": "The bot check is taking too long. Please try again."}))if(!(k in EN))EN[k]=v;
+PAT.push([/^@(\S+) を管理者にしますか？$/,'Make @$1 an admin?'],[/^@(\S+) を管理者から外しますか？$/,'Remove @$1 from admins?'],[/^@(\S+) の投稿をすべて削除しますか？$/,'Delete all posts by @$1?'],[/^@(\S+) のアカウントを削除しますか？$/,"Delete @$1's account?"],[/^作成者を @(\S+) に変更しますか？$/,'Change the owner to @$1?'],[/^(\d+)人$/,(m,n)=>n+(n==='1'?' person':' people')],[/^(\d+)件の投稿を削除しました$/,'Deleted $1 posts'],[/^NGワードを保存しました（(\d+)件）$/,'Saved $1 blocked words'],[/^ロック中（(.*)まで）$/,'Locked (until $1)'],[/^失敗 (\d+)回$/,'$1 failed attempts'],[/^作成者: ([\s\S]*?) @(\S+) ・ メンバー (\d+)人 ・ 投稿 (\d+)件 ・ ([\s\S]*)$/,'Owner: $1 @$2 · $3 members · $4 posts · $5']);
+for(const[k,v]of Object.entries({"返信先": "Replying to", "引用して返信": "Quote reply", "編集済み": "Edited", "自分の画面から削除": "Delete for me", "自分の画面から削除しました": "Deleted for you", "メッセージを編集": "Edit message", "メッセージを削除（相手からも消えます）": "Delete for everyone", "元のメッセージは削除されました": "Original message was deleted", "元のメッセージは表示範囲にありません": "The original message isn’t loaded", "返信をやめる": "Cancel reply", "編集をやめる": "Cancel editing", "添付を外す": "Remove attachment", "画像・GIF・動画を添付": "Attach photo, GIF or video", "20MBまでの画像・GIF・動画を選んでください": "Choose a photo, GIF or video up to 20 MB", "保存できませんでした": "Couldn’t save", "自分のメッセージだけ編集できます": "You can only edit your own messages", "動画": "Video", "保存": "Save", "返信": "Reply"}))EN[k]=v;
+Object.assign(OVR["ko"]=OVR["ko"]||{},{"返信先": "답장 대상", "引用して返信": "인용 답장", "編集済み": "수정됨", "自分の画面から削除": "나에게서 삭제", "自分の画面から削除しました": "나에게서 삭제했습니다", "メッセージを編集": "메시지 수정", "メッセージを削除（相手からも消えます）": "모두에게서 삭제", "元のメッセージは削除されました": "원본 메시지가 삭제되었습니다", "元のメッセージは表示範囲にありません": "원본 메시지가 표시 범위에 없습니다", "返信をやめる": "답장 취소", "編集をやめる": "수정 취소", "添付を外す": "첨부 삭제", "画像・GIF・動画を添付": "사진·GIF·동영상 첨부", "20MBまでの画像・GIF・動画を選んでください": "20MB 이하의 사진·GIF·동영상을 선택하세요", "保存できませんでした": "저장하지 못했습니다", "自分のメッセージだけ編集できます": "내 메시지만 수정할 수 있습니다", "動画": "동영상", "保存": "저장", "返信": "답장"});
+Object.assign(OVR["zh-CN"]=OVR["zh-CN"]||{},{"返信先": "回复给", "引用して返信": "引用回复", "編集済み": "已编辑", "自分の画面から削除": "仅对我删除", "自分の画面から削除しました": "已仅对你删除", "メッセージを編集": "编辑消息", "メッセージを削除（相手からも消えます）": "对所有人删除", "元のメッセージは削除されました": "原消息已删除", "元のメッセージは表示範囲にありません": "原消息不在显示范围内", "返信をやめる": "取消回复", "編集をやめる": "取消编辑", "添付を外す": "移除附件", "画像・GIF・動画を添付": "添加图片、GIF 或视频", "20MBまでの画像・GIF・動画を選んでください": "请选择 20MB 以内的图片、GIF 或视频", "保存できませんでした": "无法保存", "自分のメッセージだけ編集できます": "只能编辑自己的消息", "動画": "视频", "保存": "保存", "返信": "回复"});
+Object.assign(OVR["zh-TW"]=OVR["zh-TW"]||{},{"返信先": "回覆給", "引用して返信": "引用回覆", "編集済み": "已編輯", "自分の画面から削除": "僅對我刪除", "自分の画面から削除しました": "已僅對你刪除", "メッセージを編集": "編輯訊息", "メッセージを削除（相手からも消えます）": "對所有人刪除", "元のメッセージは削除されました": "原訊息已刪除", "元のメッセージは表示範囲にありません": "原訊息不在顯示範圍內", "返信をやめる": "取消回覆", "編集をやめる": "取消編輯", "添付を外す": "移除附件", "画像・GIF・動画を添付": "附加圖片、GIF 或影片", "20MBまでの画像・GIF・動画を選んでください": "請選擇 20MB 以內的圖片、GIF 或影片", "保存できませんでした": "無法儲存", "自分のメッセージだけ編集できます": "只能編輯自己的訊息", "動画": "影片", "保存": "儲存", "返信": "回覆"});
 const LANGS=['ja','en','ko','zh-CN','zh-TW'];K.LANGS=LANGS;K.dicts={};
 K.lang=(()=>{try{const l=localStorage.getItem('orbit-lang');if(LANGS.includes(l))return l}catch(e){}const n=String(navigator.language||'ja');return /^ja/i.test(n)?'ja':/^ko/i.test(n)?'ko':/^zh-(TW|HK|MO|Hant)/i.test(n)?'zh-TW':/^zh/i.test(n)?'zh-CN':'en'})();
 try{const c=JSON.parse(localStorage.getItem('orbit-dict-'+K.lang)||'null');if(c&&c.d)K.dicts[K.lang]=c.d}catch(e){}
@@ -821,7 +980,7 @@ const FORMS={
 const BUSY={'2fa':'確認しています…',login:'ログイン中…',register:'登録しています…',verify:'確認しています…',reset:'送信しています…',reset2:'再設定しています…',newpw:'再設定しています…'};
 function showAuth(mode,info){A.mode=mode;if(info!==undefined)A.info=info;$a('#auth').hidden=false;
  $a('#acard').innerHTML=`<form id="af" novalidate><div class="aerr" id="aerr" role="alert" hidden><svg aria-hidden="true"><use href="#i-alert"/></svg><span></span></div>${A.info?`<p class="ainfo" role="status">${e_(A.info)}</p>`:''}${FORMS[mode]()}<p class="aslow" id="aslow" hidden>サーバーの応答を待っています…（混み合っていると10秒ほどかかることがあります）</p></form>`;
- A.info='';setTimeout(()=>{const i=$a('#acard input');i&&i.focus()},30)}
+ A.info='';const card0=$a('#acard');setTimeout(()=>{const i=$a('#acard input'),ae=document.activeElement;if(i&&!(ae&&ae!==document.body&&card0.contains(ae)&&ae.tagName==='INPUT'))i.focus()},30)}
 // ===== アカウントの切り替えメニュー =====
 const hx=s=>[...new TextEncoder().encode(String(s))].map(b=>b.toString(16).padStart(2,'0')).join('');
 function accToast(m){const t=document.getElementById('toast');if(!t)return;t.textContent=K.tr(m);t.classList.add('on');clearTimeout(accToast.t);accToast.t=setTimeout(()=>t.classList.remove('on'),2600)}
@@ -935,13 +1094,15 @@ const COLORS=['#ff6a00','#e8336b','#2f7dff','#7a4dff','#11a37f','#c98f00','#ff4b
 const REASONS=['スパム','嫌がらせ・攻撃的な内容','不適切・有害な内容','なりすまし','個人情報の公開','著作権の侵害','その他'];
 const ANNK={info:'お知らせ',maint:'メンテナンス',outage:'障害情報',important:'重要なお知らせ',terms:'利用規約の変更',update:'アップデート',warn:'運営からの警告'};
 const NK={like:'いいね',repost:'リポスト',reply:'返信',quote:'引用',mention:'メンション',follow:'フォロー',ann:'お知らせ'};
-const S={db:null,user:null,assets:null,dl:null,me:null,admin:false,ro:false,loaded:false,
+const S={badges:{},site:{signup:true,maintenance:false,ngwords:[],maint_msg:''},adminsList:[],db:null,user:null,assets:null,dl:null,me:null,admin:false,ro:false,loaded:false,
  posts:[],likes:[],reposts:[],follows:[],profiles:{},names:{},hidden:{},susp:{},blocks:{},ann:[],reports:[],rstat:{},modlog:[],privPosts:[],
- priv:{lists:[],showNsfw:false,bookmarks:[],mutes:[],muteWords:[],seen:0,history:[],drafts:[],notifOff:[],dismissed:[],dm:'all',dmAccepted:[],dmHidden:{}},dms:[],dmc:{text:'',file:null,url:''},votes:{},freqs:[],comms:[],members:[],reveal:new Set(),trx:{},ef:{from:'',to:'',type:'all',user:'',likes:0,replies:true},cq:'',sched:null,adminInfo:null,
+ priv:{lists:[],showNsfw:false,bookmarks:[],mutes:[],muteWords:[],seen:0,history:[],drafts:[],notifOff:[],dismissed:[],dm:'all',dmAccepted:[],dmHidden:{},dmHideMsg:[]},dms:[],dmc:{text:'',file:null,url:''},votes:{},freqs:[],comms:[],members:[],reveal:new Set(),trx:{},ef:{from:'',to:'',type:'all',user:'',likes:0,replies:true},cq:'',sched:null,adminInfo:null,
  route:'home',arg:null,tab:{comm:'posts',list:'posts',messages:'inbox',home:'rec',profile:'posts',notifications:'all',explore:'posts',admin:'stats',bookmarks:'new'},
  q:'',esort:'new',limit:PAGE,menu:null,modal:null,who:null,edit:null,adm:{},lastPost:0,likeT:[],followT:[],homeSeen:0,pending:false,hc:null};
 const hash32=s=>{let h=2166136261;for(const c of String(s)){h^=c.charCodeAt(0);h=Math.imul(h,16777619)}return h>>>0};
 const prof=u=>S.profiles[u]||{};
+const BADGE={verified:'認証済みアカウント',official:'公式アカウント'};
+const bdg=u=>{const b=S.badges[u];return b&&BADGE[b]?`<svg class="bdg ${b}" role="img" aria-label="${BADGE[b]}"><title>${BADGE[b]}</title><use href="#i-badge"/></svg>`:''};
 const dname=u=>prof(u).name||S.names[u]||'だれか';
 const handle=u=>prof(u).handle||('u'+hash32(u).toString(36));
 const ucolor=u=>/^#[0-9a-f]{6}$/i.test(prof(u).color||'')?prof(u).color:COLORS[hash32(u)%COLORS.length];
@@ -1084,7 +1245,7 @@ function card(p,o={}){const id=p.id;
  if(p.private)h+=`<div class="ctx">自分だけに公開</div>`;
  if(p.aud==='followers')h+=`<div class="ctx"><svg><use href="#i-lock"/></svg>フォロワー限定</div>`;
  if(p.comm&&!o.incomm){const cm=commOf(p.comm);if(cm)h+=`<div class="ctx"><svg><use href="#i-users"/></svg><a class="cml" href="#c-${esc(cm.id)}" data-ugc>${esc(cm.name)}</a></div>`}
- h+=`<div class="row">${ulink(p.author,av(p.author))}<div><div class="head">${ulink(p.author,`<b class="nm">${esc(dname(p.author))}</b>`)}${prof(p.author).locked?'<svg class="lk" role="img" aria-label="鍵アカウント"><use href="#i-lock"/></svg>':''}<span class="hd">@${esc(handle(p.author))}</span>`;
+ h+=`<div class="row">${ulink(p.author,av(p.author))}<div><div class="head">${ulink(p.author,`<b class="nm">${esc(dname(p.author))}</b>`)}${bdg(p.author)}${prof(p.author).locked?'<svg class="lk" role="img" aria-label="鍵アカウント"><use href="#i-lock"/></svg>':''}<span class="hd">@${esc(handle(p.author))}</span>`;
  h+=`<a class="tm" href="#post-${esc(id)}" title="${esc(full(p.at))}">· ${ago(p.at)}</a>${p.editedAt?'<span class="tm">· 編集済み</span>':''}`;
  h+=`<button class="act more-btn" data-act="menu" aria-label="その他の操作" aria-expanded="${S.menu===id}"><svg><use href="#i-dots"/></svg></button>${S.menu===id?menuHTML(p):''}</div>`;
  if(p.replyTo&&!o.thread){const par=D.byId[p.replyTo];h+=`<div class="rto">返信先: ${par?ulink(par.author,'@'+esc(handle(par.author))):'削除された投稿'}</div>`}
@@ -1102,7 +1263,7 @@ function card(p,o={}){const id=p.id;
  else if(o.main||true)h+=`<div class="acts"><button class="act${bm?' bmd':''}" data-act="bm" aria-label="ブックマーク"><svg fill="none"><use href="#i-bm"/></svg></button></div>`;
  return h+`</div></div></article>`}
 function urow(u,extra=''){const me=u===S.me,fol=following(S.me).has(u),fb=following(u).has(S.me);
- return`<div class="urow" data-u="${esc(u)}">${ulink(u,av(u))}<div>${ulink(u,`<b>${esc(dname(u))}</b>`)} ${fb&&!me?'<span class="pill">フォローされています</span>':''}${isSusp(u)?' <span class="pill">凍結中</span>':''}<div class="hd">@${esc(handle(u))}</div>${prof(u).bio?`<div class="bio">${esc(prof(u).bio)}</div>`:''}</div>
+ return`<div class="urow" data-u="${esc(u)}">${ulink(u,av(u))}<div>${ulink(u,`<b>${esc(dname(u))}</b>${bdg(u)}`)} ${fb&&!me?'<span class="pill">フォローされています</span>':''}${isSusp(u)?' <span class="pill">凍結中</span>':''}<div class="hd">@${esc(handle(u))}</div>${prof(u).bio?`<div class="bio">${esc(prof(u).bio)}</div>`:''}</div>
  <div class="acts2">${extra}${me||!S.me?'':followBtn(u,fol)}</div></div>`}
 const followBtn=(u,fol)=>!iBlock(u)&&!fol&&prof(u).locked?(S.freqs.some(f=>f.from===S.me&&f.to===u)?`<button class="btn sm" data-act="freqcancel" data-u="${esc(u)}">リクエスト済み</button>`:`<button class="btn sm pri" data-act="freq" data-u="${esc(u)}" ${S.ro||blocksMe(u)?'disabled':''}><svg class="i" style="width:15px;height:15px"><use href="#i-lock"/></svg>フォローリクエスト</button>`):iBlock(u)?`<button class="btn sm dan" data-act="unblock" data-u="${esc(u)}">ブロック中</button>`:`<button class="btn sm ${fol?'':'pri'}" data-act="follow" data-u="${esc(u)}" ${S.ro||blocksMe(u)?'disabled':''}>${fol?'フォロー中':'フォロー'}</button>`;
 const empty=(t,s)=>`<div class="empty"><svg viewBox="0 0 48 48"><use href="#logo"/></svg><b>${t}</b>${s||''}</div>`;
@@ -1138,7 +1299,7 @@ function renderTop(){const r=S.route;
  if(r==='explore'&&S.q)tb=tabs('explore',[['posts','投稿'],['users','ユーザー'],['tags','ハッシュタグ']]);
  if(r==='messages'){const cs=convs(),rq=cs.filter(c=>c.req).length;tb=tabs('messages',[['inbox','受信箱'],['requests',rq?`リクエスト（${rq}）`:'リクエスト']])}
  if(r==='notifications')tb=tabs('notifications',[['all','すべて'],['mention','メンション'],['reply','返信'],['like','いいね'],['repost','リポスト'],['follow','フォロー'],['ann','お知らせ']]);
- if(r==='admin')tb=tabs('admin',[['stats','統計'],['reports','通報'],['posts','投稿管理'],['users','ユーザー管理'],['ann','お知らせ'],['log','操作履歴']]);
+ if(r==='admin')tb=tabs('admin',[['stats','統計'],['reports','通報'],['posts','投稿管理'],['users','ユーザー管理'],['comms','コミュニティ'],['ann','お知らせ'],['site','サイト設定'],['log','操作履歴']]);
  const full=!!tb||r==='home';
  $('#top').className=tb?'wt':'';
  $('#top').innerHTML=`<div class="hero">${SKY}<div class="tt">${back}${!back&&S.me?`<a class="mav" href="#u-${hex(S.me)}" aria-label="自分のプロフィール">${av(S.me,'s')}</a>`:''}<div><h1>${esc(title)}</h1>${subH||(sub?`<div class="sub">${esc(sub)}</div>`:'')}</div><svg class="mlogo" aria-hidden="true"><use href="#logo"/></svg></div></div>`+
@@ -1211,7 +1372,7 @@ function vNotif(){const t=S.tab.notifications;let list=notifs();if(t!=='all')lis
  const icon={like:'i-heart',repost:'i-rp',reply:'i-reply',quote:'i-rp',mention:'i-reply',follow:'i-user',ann:'i-mega'};
  return h+paged(list.map(p=>({p,...p})),n=>{const p=n.pid?D.byId[n.pid]:null;let msg='',ex='';
   if(n.k==='ann'){msg=`<b>${esc(ANNK[n.a.kind]||'お知らせ')}</b>`;ex=esc(n.a.text)}
-  else{const who=`<b>${esc(dname(n.u))}</b>`;msg={like:`${who}さんがあなたの投稿にいいねしました`,repost:`${who}さんがあなたの投稿をリポストしました`,reply:`${who}さんが返信しました`,quote:`${who}さんがあなたの投稿を引用しました`,mention:`${who}さんがあなたをメンションしました`,follow:`${who}さんにフォローされました`}[n.k];
+  else{const who=`<b>${esc(dname(n.u))}</b>${bdg(n.u)}`;msg={like:`${who}さんがあなたの投稿にいいねしました`,repost:`${who}さんがあなたの投稿をリポストしました`,reply:`${who}さんが返信しました`,quote:`${who}さんがあなたの投稿を引用しました`,mention:`${who}さんがあなたをメンションしました`,follow:`${who}さんにフォローされました`}[n.k];
    if(n.k==='like'||n.k==='repost')ex=p?esc(p.text.slice(0,120)):'';else if(p)ex=esc(p.text.slice(0,200))}
   const href=n.k==='follow'?`#u-${hex(n.u)}`:p?`#post-${esc(p.id)}`:'';
   return`<div class="nt${n.at>S.seenAtOpen?' unread':''}" data-href="${href}"><svg class="ic ${n.k}"${n.k==='like'?' fill="currentColor"':' fill="none"'}><use href="#${icon[n.k]}"/></svg><div>${n.u?av(n.u,'s'):''}<div style="margin-top:4px">${msg}</div>${ex?`<div class="ex">${ex}</div>`:''}<div class="tm">${ago(n.at)}</div></div><button class="act" data-act="dismiss" data-k="${esc(n.key)}" aria-label="この通知を削除"><svg><use href="#i-x"/></svg></button></div>`})}
@@ -1270,6 +1431,7 @@ function vPrefs(){if(!S.me)return empty('サインインが必要です');
  h+=`<div class="sec"><h2>ステータス</h2><p class="hint" style="margin-top:0">あなたの状態は、メッセージやプロフィールで相手に表示されます。</p>${[['auto','自動（アプリを開いている間はオンライン）'],['busy','取り込み中'],['offline','オフラインで表示（最終オンライン時刻も非表示）']].map(([k,l])=>`<label class="radio"><input type="radio" name="stset" value="${k}" ${S.priv.status===k?'checked':''}>${l}</label>`).join('')}</div>`;
  h+=`<div class="sec"><h2>メッセージ（DM）</h2><p class="hint" style="margin-top:0">メッセージを送ってこられる相手を選べます。すでにやり取りしている相手からは引き続き届きます。</p>${[['all','全員から受け取る'],['following','フォローしている人からだけ受け取る'],['none','受け取らない']].map(([k,l])=>`<label class="radio"><input type="radio" name="dmset" value="${k}" ${S.priv.dm===k?'checked':''}>${l}</label>`).join('')}</div>`;
  h+=`<div class="sec"><h2>通知設定</h2>${Object.entries(NK).map(([k,l])=>`<label class="ck"><input type="checkbox" data-nk="${k}" ${S.priv.notifOff.includes(k)?'':'checked'}>${l}の通知を受け取る</label>`).join('')}</div>`;
+  h+=pushSec();
  h+=`<div class="sec"><h2>予約中の投稿</h2>${S.sched?S.sched.length?S.sched.map(x=>`<div class="inline" style="align-items:center;padding:8px 0;border-bottom:1px solid var(--line)"><span style="flex:1;overflow-wrap:anywhere"><span class="pill"><svg class="i" style="width:13px;height:13px;vertical-align:-2px"><use href="#i-sched"/></svg> ${esc(full(x.at))}</span><br><span data-ugc>${esc(x.text.slice(0,80))}</span>${x.poll?' <span class="pill">投票</span>':''}${x.media?` <span class="pill">画像${x.media}</span>`:''}</span><button class="btn sm dan" data-act="scheddel" data-id="${esc(x.id)}">取り消す</button></div>`).join(''):'<span class="hint">予約中の投稿はありません</span>':'<span class="hint">読み込み中…</span>'}</div>`;
  h+=`<div class="sec"><h2>センシティブな内容</h2><label class="ck"><input type="checkbox" id="shownsfw"${S.priv.showNsfw?' checked':''}>センシティブな内容をぼかさずに表示する</label><p class="hint" style="margin:4px 0 0">18歳未満の方はオンにしないでください。#R18・#NSFW などのタグが付いた投稿や、投稿者・運営が「センシティブ」に設定した投稿の画像がぼかされます。</p></div>`;
  h+=`<div class="sec"><h2>下書き</h2>${S.priv.drafts.length?S.priv.drafts.slice().reverse().map(d=>`<div class="inline" style="align-items:center;padding:8px 0;border-bottom:1px solid var(--line)"><span style="flex:1;overflow-wrap:anywhere">${esc(d.text.slice(0,80))||'（画像なし・本文なし）'}<br><span class="tm">${ago(d.at)}</span></span><button class="btn sm" data-act="dopen" data-d="${esc(d.id)}">開く</button><button class="btn sm dan" data-act="ddel" data-d="${esc(d.id)}">削除</button></div>`).join(''):'<span class="hint">下書きはありません</span>'}</div>`;
@@ -1279,12 +1441,87 @@ function vPrefs(){if(!S.me)return empty('サインインが必要です');
  <form id="cpf" class="fld" style="margin-bottom:18px"><span class="lbl">パスワードを変更</span><input name="old" type="password" placeholder="現在のパスワード" autocomplete="current-password" required><input name="password" type="password" placeholder="新しいパスワード（8文字以上・英字と数字）" autocomplete="new-password" required><button class="btn sm" style="justify-self:start">変更する</button></form>
  <div class="lbl">ログイン中の端末</div>${S.sessions?S.sessions.map(x=>`<div class="inline" style="align-items:center;padding:10px 0;border-bottom:1px solid var(--line)"><span style="flex:1;font-size:14px">${esc(uaName(x.ua))}${x.current?' <span class="pill">この端末</span>':''}<br><span class="tm">最終アクセス ${esc(full(x.lastSeen))} ・ ログイン ${esc(full(x.createdAt))}</span></span>${x.current?'':`<button class="btn sm" data-act="revoke" data-s="${esc(x.sid)}">ログアウト</button>`}</div>`).join(''):'<p class="hint">読み込み中…</p>'}
  <div class="inline" style="flex-wrap:wrap;margin-top:14px"><button class="btn sm" data-act="revokeothers">他の端末すべてからログアウト</button><button class="btn sm" data-act="logout">ログアウト</button></div></div>`;
- h+=`<div class="sec"><h2>表示</h2><div class="fld"><label for="langsel">表示言語 / Language</label><select id="langsel" class="inp" data-ugc style="max-width:260px">${[['ja','日本語'],['en','English'],['ko','한국어'],['zh-CN','简体中文'],['zh-TW','繁體中文']].map(([v,l])=>`<option value="${v}"${KODAMA.lang===v?' selected':''}>${l}</option>`).join('')}</select><span class="hint">韓国語・中国語の一部の文言は Google 翻訳による自動翻訳です。</span></div><p class="hint" style="margin:0">夜をイメージしたダークデザインで表示しています。</p></div>`;
+ h+=`<div class="sec"><h2>表示</h2><div class="fld"><label for="langsel">表示言語 / Language</label><select id="langsel" class="inp" data-ugc style="max-width:260px">${[['ja','日本語'],['en','English'],['ko','한국어'],['zh-CN','简体中文'],['zh-TW','繁體中文']].map(([v,l])=>`<option value="${v}"${KODAMA.lang===v?' selected':''}>${l}</option>`).join('')}</select><span class="hint">韓国語・中国語の一部の文言は Google 翻訳による自動翻訳です。</span></div><div class="fld" style="margin-bottom:0"><label for="themesel">テーマ</label><select id="themesel" class="inp" style="max-width:260px">${[['dark','ダーク（夜空）'],['light','ライト'],['auto','端末の設定に合わせる']].map(([v,l])=>`<option value="${v}"${KODAMA.theme()===v?' selected':''}>${l}</option>`).join('')}</select></div></div>`;
  h+=`<div class="sec"><h2>データとアカウント</h2><p class="hint">自分の投稿・いいね・フォロー・設定をJSONファイルで書き出せます。</p><div class="inline" style="flex-wrap:wrap"><button class="btn" data-act="export">データを書き出す</button><button class="btn dan" data-act="delacct">アカウントを削除</button></div></div>`;
  h+=`<div class="sec" style="border:0"><div class="inline" style="flex-wrap:wrap"><button class="btn sm" data-act="terms">利用規約</button><button class="btn sm" data-act="privacy">プライバシーポリシー</button><button class="btn sm" data-act="guide">コミュニティガイドライン</button></div><p class="hint">画面のバージョン: ${esc(KODAMA.VER)}</p></div>`;
  return h}
 function uaName(ua){ua=String(ua||'');const os=/iPhone|iPad/.test(ua)?'iPhone/iPad':/Android/.test(ua)?'Android':/Mac OS/.test(ua)?'Mac':/Windows/.test(ua)?'Windows':/Linux/.test(ua)?'Linux':'不明な端末';const br=/Edg[/]/.test(ua)?'Edge':/Chrome[/]/.test(ua)?'Chrome':/Firefox[/]/.test(ua)?'Firefox':/Safari[/]/.test(ua)?'Safari':'ブラウザ';return os+' ・ '+br}
-function vAdmin(){if(!S.admin)return empty('管理者だけが開けます');const t=S.tab.admin,now=Date.now();let h='';
+// ===================== 管理画面（ユーザー・コミュニティ・サイト設定） =====================
+function vAdmin(){if(!S.admin)return empty('管理者だけが開けます');const t=S.tab.admin;
+ if(t==='users')return admUsers();if(t==='comms')return admComms();if(t==='site')return admSite();return vAdmin0()}
+const xfmt=t=>t?full(t):'—';
+function admUsers(){const A=S.adm,q=(A.uq||'').toLowerCase().replace(/^@/,''),f=A.uf||'all';
+ let us=allUsers();
+ if(q)us=us.filter(u=>dname(u).toLowerCase().includes(q)||handle(u).toLowerCase().includes(q)||u===q);
+ if(f==='admin')us=us.filter(u=>S.adminsList.includes(u));if(f==='susp')us=us.filter(isSusp);if(f==='badge')us=us.filter(u=>S.badges[u]);
+ us.sort((a,b)=>(prof(b).at||0)-(prof(a).at||0));
+ let h=`<form class="srch" id="auform"><svg class="i"><use href="#i-search"/></svg><input id="auq" placeholder="名前・ユーザーIDで検索" value="${esc(A.uq||'')}" autocomplete="off"></form>`;
+ h+=`<div class="xchips">${[['all','すべて'],['admin','管理者'],['susp','凍結中'],['badge','バッジあり']].map(([k,l])=>`<button class="xchip${f===k?' on':''}" data-act="xauf" data-k="${k}">${l}</button>`).join('')}<span class="small">${us.length}人</span></div>`;
+ if(A.user)h+=admUserDetail(A.user);
+ h+=us.slice(0,300).map(u=>urow(u,`${S.adminsList.includes(u)?'<span class="pill">管理者</span>':''}<button class="btn sm" data-act="xaudet" data-u="${esc(u)}">管理</button>`)).join('')||empty('該当するユーザーはいません');
+ return h}
+function admUserDetail(u){const A=S.adm,i=(A.info||{})[u],p=prof(u),b=S.badges[u]||'',isA=S.adminsList.includes(u),me=u===S.me;
+ if(!i&&A.loading!==u){A.loading=u;KODAMA.run({op:'adminUser',user:u}).then(x=>{A.info={...(A.info||{}),[u]:x||{gone:true}};A.loading=null;if(S.route==='admin')renderView()}).catch(e=>{A.loading=null;A.info={...(A.info||{}),[u]:{err:e.message}};renderView()})}
+ const row=(l,v)=>`<div><dt>${l}</dt><dd>${v}</dd></div>`;
+ const lockd=i&&i.lockedUntil>Date.now();
+ let h=`<div class="sec xadm" id="xadm"><div class="xah">${ulink(u,av(u))}<div style="flex:1;min-width:0"><b>${esc(dname(u))}</b>${bdg(u)}<div class="hd">@${esc(handle(u))}</div></div><button class="btn sm" data-act="xaclose">閉じる</button></div>`;
+ if(!i)h+='<p class="hint">読み込み中…</p>';
+ else if(i.err)h+=`<p class="hint">${esc(i.err)}</p>`;
+ else if(i.gone)h+='<p class="hint">このユーザーは削除されています。</p>';
+ else h+=`<dl class="xdl">${row('メールアドレス',`<span data-ugc>${esc(i.email||'')}</span>`)}${row('登録日',esc(xfmt(i.created)))}${row('最終ログイン',esc(xfmt(i.lastSignIn)))}${row('メール確認',i.confirmed?'済み':'まだ')}${row('投稿数',i.posts)}${row('送ったメッセージ',i.dms)}${row('信頼済みの端末',i.devices)}${row('プッシュ通知の端末',i.push)}${row('ログイン',lockd?`ロック中（${esc(full(i.lockedUntil))}まで）`:i.fails?`失敗 ${i.fails}回`:'正常')}${row('状態',isSusp(u)?'凍結中':'利用中')}</dl>`;
+ h+=`<h3>権限とバッジ</h3><div class="inline" style="flex-wrap:wrap;align-items:center">${me?'<span class="pill">あなた（管理者）</span>':isA?`<button class="btn sm" data-act="xasetadmin" data-u="${esc(u)}" data-on="0">管理者から外す</button>`:`<button class="btn sm" data-act="xasetadmin" data-u="${esc(u)}" data-on="1">管理者にする</button>`}
+  <label class="small" for="xbadge">バッジ</label><select id="xbadge" class="inp" data-u="${esc(u)}" style="max-width:200px"><option value=""${!b?' selected':''}>なし</option><option value="verified"${b==='verified'?' selected':''}>認証済み（青）</option><option value="official"${b==='official'?' selected':''}>公式（金）</option></select></div>`;
+ h+=`<h3>アカウント</h3><div class="inline" style="flex-wrap:wrap">${me?'':`<button class="btn sm" data-act="warn" data-u="${esc(u)}">警告を送る</button>${isSusp(u)?`<button class="btn sm" data-act="asusp" data-u="${esc(u)}">凍結を解除</button>`:`<button class="btn sm dan" data-act="asusp" data-u="${esc(u)}">凍結する</button>`}`}<button class="btn sm" data-act="xaunlock" data-u="${esc(u)}"${lockd||(i&&i.fails)?'':' disabled'}>ログインのロックを解除</button><button class="btn sm" data-act="xaforget" data-u="${esc(u)}">信頼済みの端末をすべて解除</button></div>`;
+ h+=`<h3>プロフィールの修正</h3><p class="hint" style="margin-top:0">不適切な内容を初期状態に戻します。</p><div class="xchecks">${[['name','表示名'],['bio','自己紹介'],['avatar','アイコン'],['header','ヘッダー画像'],['link','リンク']].map(([k,l])=>`<label class="ck"><input type="checkbox" data-xrs="${k}">${l}</label>`).join('')}</div><button class="btn sm" data-act="xareset" data-u="${esc(u)}">選んだ項目を初期化</button>
+  <div class="inline" style="flex-wrap:wrap;margin-top:10px"><input id="xhandle" class="inp" placeholder="新しいユーザーID" maxlength="20" style="max-width:220px" autocomplete="off"><button class="btn sm" data-act="xahandle" data-u="${esc(u)}">ユーザーIDを変更</button></div>`;
+ if(!me&&!isA)h+=`<h3>削除</h3><div class="inline" style="flex-wrap:wrap"><button class="btn sm dan" data-act="xadelposts" data-u="${esc(u)}">投稿をすべて削除</button><button class="btn sm dan" data-act="xadeluser" data-u="${esc(u)}">アカウントを削除</button></div>`;
+ return h+'</div>'}
+function admComms(){const q=(S.adm.cq||'').toLowerCase();const cs=S.comms.filter(c=>!q||c.name.toLowerCase().includes(q)).sort((a,b)=>b.at-a.at);
+ let h=`<form class="srch" id="acform"><svg class="i"><use href="#i-search"/></svg><input id="acq" placeholder="コミュニティ名で検索" value="${esc(S.adm.cq||'')}" autocomplete="off"></form>`;
+ h+=cs.map(c=>{const n=S.members.filter(m=>m.comm===c.id).length,pc=S.posts.filter(p=>p.comm===c.id).length;
+  return`<div class="sec"><div class="inline" style="align-items:center;flex-wrap:wrap;gap:8px"><a href="#c-${esc(c.id)}"><b data-ugc>${esc(c.name)}</b></a><span class="small">作成者: ${esc(dname(c.owner))} @${esc(handle(c.owner))} ・ メンバー ${n}人 ・ 投稿 ${pc}件 ・ ${esc(ago(c.at))}</span></div>${c.desc?`<div class="small" data-ugc style="margin-top:4px">${esc(c.desc)}</div>`:''}
+  <div class="inline" style="flex-wrap:wrap;margin-top:8px"><input class="inp" data-xco="${esc(c.id)}" placeholder="新しい作成者のユーザーID" style="max-width:220px" autocomplete="off"><button class="btn sm" data-act="xacowner" data-id="${esc(c.id)}">作成者を変更</button><button class="btn sm dan" data-act="xacdel" data-id="${esc(c.id)}">削除</button></div></div>`}).join('')||empty('コミュニティはまだありません');
+ return h}
+function admSite(){const st=S.site,e=S.adm.site??={ng:(st.ngwords||[]).join('\n'),msg:st.maint_msg||''};
+ return`<div class="sec"><h2>新規登録</h2><label class="ck"><input type="checkbox" id="xsignup" ${st.signup!==false?'checked':''}>新規登録を受け付ける</label><p class="hint" style="margin:0">オフにすると、新しいアカウントを作れなくなります（荒らし対策や、招待した人だけで使いたいときに）。</p></div>
+ <div class="sec"><h2>メンテナンスモード</h2><label class="ck"><input type="checkbox" id="xmaint" ${st.maintenance?'checked':''}>メンテナンス中にする（管理者以外は閲覧のみ）</label><div class="fld"><label for="xmmsg">利用者に表示するメッセージ</label><input id="xmmsg" class="inp" maxlength="200" value="${esc(e.msg)}" placeholder="例：22時〜23時はメンテナンスのため投稿できません"></div><button class="btn sm" data-act="xmsgsave">メッセージを保存</button></div>
+ <div class="sec"><h2>NGワード</h2><p class="hint" style="margin-top:0">ここに書いた語句を含む投稿・メッセージ・プロフィール・コミュニティ名は保存できなくなります。1行に1つ入力してください（大文字・小文字は区別しません。管理者は対象外）。</p><textarea id="xng" class="inp" rows="6" placeholder="例：宣伝URL">${esc(e.ng)}</textarea><div style="margin-top:8px"><button class="btn sm pri" data-act="xngsave">保存</button></div></div>
+ <div class="sec"><h2>管理者</h2>${S.adminsList.map(u=>urow(u,u===S.me?'<span class="pill">あなた</span>':`<button class="btn sm" data-act="xasetadmin" data-u="${esc(u)}" data-on="0">外す</button>`)).join('')}<p class="hint">管理者を増やすときは「ユーザー管理」でユーザーの「管理」を押し、「管理者にする」を選びます。</p></div>`}
+async function xrun(req,okMsg,log){try{const r=await KODAMA.run(req);if(okMsg)toast(okMsg);if(log)modlog(log[0],log[1]||'');KODAMA.refresh();return r||true}catch(x){toast(x.message||'操作できませんでした');return null}}
+const xset=async(key,value,msg,log)=>{try{await S.db.doc('siteSettings/'+key).set({value,at:Date.now()});toast(msg);modlog(log||'サイト設定を変更',key)}catch(x){toast(x.message||'保存できませんでした')}};
+document.addEventListener('click',async e=>{const b=e.target.closest&&e.target.closest('[data-act^="x"]');if(!b||!S.admin&&!b.dataset.act.startsWith('xpush'))return;const act=b.dataset.act,u=b.dataset.u,A=S.adm;
+ switch(act){
+ case'xauf':A.uf=b.dataset.k;renderView();break;
+ case'xaudet':A.user=u;if(A.info)delete A.info[u];renderView();setTimeout(()=>{const d=$('#xadm');d&&d.scrollIntoView({block:'start',behavior:'smooth'})},50);break;
+ case'xaclose':A.user=null;renderView();break;
+ case'xasetadmin':{const on=b.dataset.on==='1';confirmAct(on?`@${handle(u)} を管理者にしますか？`:`@${handle(u)} を管理者から外しますか？`,on?'管理者は、通報の対応・凍結・投稿の削除・サイト設定など、すべての管理機能を使えるようになります。':'',on?'管理者にする':'外す',async()=>{if(await xrun({op:'adminSetAdmin',user:u,on},on?'管理者にしました':'管理者から外しました',[on?'管理者に任命':'管理者から解任','@'+handle(u)])){if(A.info)delete A.info[u];renderView()}});break}
+ case'xaunlock':if(await xrun({op:'adminUnlock',user:u},'ログインのロックを解除しました',['ログインのロックを解除','@'+handle(u)])){if(A.info)delete A.info[u];renderView()}break;
+ case'xaforget':confirmAct('信頼済みの端末をすべて解除しますか？','このユーザーは、次にログインするときにメールの確認コードが必要になります。パスワードだけでログインしている端末はログアウトされます。','解除する',async()=>{if(await xrun({op:'adminForget',user:u},'信頼済みの端末を解除しました',['信頼済みの端末を解除','@'+handle(u)])){if(A.info)delete A.info[u];renderView()}});break;
+ case'xareset':{const ks=[...document.querySelectorAll('[data-xrs]:checked')].map(x=>x.dataset.xrs);if(!ks.length){toast('初期化する項目を選んでください');break}
+  const upd={};for(const k of ks)upd[k]=k==='name'?handle(u):'';confirmAct('選んだ項目を初期化しますか？','','初期化する',async()=>{try{await S.db.doc('profiles/'+u).update(upd);modlog('プロフィールを初期化','@'+handle(u)+' '+ks.join(','));toast('初期化しました')}catch(x){toast(x.message||'初期化できませんでした')}});break}
+ case'xahandle':{const v=($('#xhandle')?.value||'').trim().replace(/^@/,'');if(!/^[A-Za-z0-9_]{3,20}$/.test(v)){toast('ユーザーIDは3〜20文字の英数字と _ で指定してください');break}
+  const old=handle(u);try{await S.db.doc('profiles/'+u).update({handle:v});modlog('ユーザーIDを変更','@'+old+' → @'+v);toast('ユーザーIDを変更しました')}catch(x){toast(x.message||'変更できませんでした')}break}
+ case'xadelposts':confirmAct(`@${handle(u)} の投稿をすべて削除しますか？`,'元に戻せません。','すべて削除',async()=>{const r=await xrun({op:'adminDelPosts',user:u},null,['投稿をすべて削除','@'+handle(u)]);if(r){toast(`${r.n||0}件の投稿を削除しました`);if(A.info)delete A.info[u];renderView()}});break;
+ case'xadeluser':confirmAct(`@${handle(u)} のアカウントを削除しますか？`,'投稿・画像・メッセージなど、このユーザーのデータがすべて削除され、元に戻せません。','削除する',async()=>{const h0=handle(u);if(await xrun({op:'adminDelUser',user:u},'アカウントを削除しました',['アカウントを削除','@'+h0])){A.user=null;renderView()}});break;
+ case'xacowner':{const id=b.dataset.id,inp=document.querySelector(`[data-xco="${CSS.escape(id)}"]`),h=(inp?.value||'').trim().replace(/^@/,''),t=byHandle(h);if(!t){toast('ユーザーが見つかりません');break}
+  const cm=commOf(id);confirmAct(`作成者を @${handle(t)} に変更しますか？`,'','変更する',()=>xrun({op:'adminCommOwner',id,user:t},'作成者を変更しました',['コミュニティの作成者を変更',(cm?cm.name:id)+' → @'+handle(t)]));break}
+ case'xacdel':{const id=b.dataset.id,cm=commOf(id);confirmAct('このコミュニティを削除しますか？','メンバーとコミュニティ内の投稿もすべて削除され、元に戻せません。','削除する',()=>xrun({op:'commDelete',id},'コミュニティを削除しました',['コミュニティを削除',cm?cm.name:id]));break}
+ case'xmsgsave':{const v=($('#xmmsg')?.value||'').trim().slice(0,200);A.site={...(A.site||{}),msg:v};await xset('maint_msg',v,'メッセージを保存しました');break}
+ case'xngsave':{const raw=$('#xng')?.value||'';const list=[...new Set(raw.split('\n').map(x=>x.trim()).filter(Boolean))].slice(0,500);A.site={...(A.site||{}),ng:list.join('\n')};await xset('ngwords',list,'NGワードを保存しました（'+list.length+'件）','NGワードを変更');break}
+ case'xpushon':case'xpushoff':b.disabled=true;try{S.pushSt=await (act==='xpushon'?KODAMA.push.enable():KODAMA.push.disable());toast(act==='xpushon'?'この端末で通知を受け取ります':'この端末の通知をオフにしました')}catch(x){toast(x.message||'設定できませんでした')}b.disabled=false;renderView();break}});
+document.addEventListener('change',async e=>{const t=e.target;
+ if(t.id==='themesel'){KODAMA.setTheme(t.value);return}
+ if(!S.admin)return;
+ if(t.id==='xbadge'){const u=t.dataset.u,v=t.value;try{if(v)await S.db.doc('badges/'+u).set({kind:v,at:Date.now()});else await S.db.doc('badges/'+u).delete();modlog(v?'バッジを付与':'バッジを外す','@'+handle(u)+(v?' '+(v==='official'?'公式':'認証済み'):''));toast(v?'バッジを付けました':'バッジを外しました')}catch(x){toast(x.message||'変更できませんでした')}}
+ if(t.id==='xsignup')await xset('signup',t.checked,t.checked?'新規登録を受け付けます':'新規登録を停止しました',t.checked?'新規登録を再開':'新規登録を停止');
+ if(t.id==='xmaint')await xset('maintenance',t.checked,t.checked?'メンテナンスモードにしました':'メンテナンスモードを解除しました',t.checked?'メンテナンスモードを開始':'メンテナンスモードを終了')});
+document.addEventListener('submit',e=>{const f=e.target;if(f.id==='auform'){e.preventDefault();S.adm.uq=$('#auq').value.trim();renderView()}if(f.id==='acform'){e.preventDefault();S.adm.cq=$('#acq').value.trim();renderView()}});
+// ===================== 設定：プッシュ通知 =====================
+function pushSec(){const st=S.pushSt;if(st===undefined){S.pushSt=null;KODAMA.push.status().then(v=>{S.pushSt=v;if(S.route==='prefs'&&!editing())renderView()}).catch(()=>{S.pushSt='unsupported';renderView()})}
+ const dmOn=!S.priv.notifOff.includes('dm');
+ const body=st==null?'<p class="hint">確認中…</p>':st==='on'?'<p class="hint" style="margin-top:0">この端末で通知を受け取っています。</p><button class="btn sm" data-act="xpushoff">この端末の通知をオフにする</button>':st==='off'?'<p class="hint" style="margin-top:0">アプリを閉じていても、いいね・返信・フォロー・メッセージなどをこの端末に通知します。</p><button class="btn sm pri" data-act="xpushon">この端末で通知を受け取る</button>':st==='denied'?'<p class="hint" style="margin-top:0">ブラウザで通知がブロックされています。ブラウザ（またはスマホ）の設定で Orbit の通知を許可してください。</p>':st==='install'?'<p class="hint" style="margin-top:0">iPhone・iPad では、Safari の共有ボタン →「ホーム画面に追加」で Orbit を追加し、ホーム画面から開くと通知を受け取れます。</p>':'<p class="hint" style="margin-top:0">このブラウザはプッシュ通知に対応していません。</p>';
+ return`<div class="sec"><h2>プッシュ通知</h2>${body}<label class="ck" style="margin-top:8px"><input type="checkbox" data-nk="dm" ${dmOn?'checked':''}>メッセージ（DM）の通知を受け取る</label><p class="hint" style="margin:0">いいね・返信などの種類ごとのオン・オフは「通知設定」と共通です。</p></div>`}
+function vAdmin0(){if(!S.admin)return empty('管理者だけが開けます');const t=S.tab.admin,now=Date.now();let h='';
  if(t==='stats'){const ai=S.adminInfo;h+=`<div class="sec"><h2>バックアップと自動実行</h2>${ai?`<p class="hint" style="margin-top:0">バックアップはSupabaseが毎日自動で作成しています（Supabase の Database → Backups）<br>予約投稿の自動実行: ${ai.sched?'設定済み':'未設定（Supabase で pg_cron を有効にして schema.sql を再実行）'} ・ 予約中: ${ai.pending}件</p>`:'<p class="hint">読み込み中…</p>'}</div>`;}
  if(t==='stats'){const users=allUsers(),act=(d)=>new Set([...S.posts.filter(p=>now-p.at<d).map(p=>p.author),...S.likes.filter(l=>now-l.at<d).map(l=>l.user),...S.reposts.filter(r=>now-r.at<d).map(r=>r.user)]).size;
   const rp=S.reports.filter(r=>(S.rstat[r.id]?.status||'open')!=='done').length;
@@ -1305,14 +1542,15 @@ function vAdmin(){if(!S.admin)return empty('管理者だけが開けます');con
  if(t==='users'){h+=allUsers().map(u=>{const s=S.susp[u];return urow(u,`<span class="small">${S.posts.filter(p=>p.author===u).length}投稿</span><button class="btn sm" data-act="warn" data-u="${esc(u)}">警告</button>${isSusp(u)?`<button class="btn sm" data-act="asusp" data-u="${esc(u)}">凍結解除${s.kind==='temp'?'（'+new Date(s.until).toLocaleDateString('ja-JP')+'まで）':''}</button>`:`<button class="btn sm dan" data-act="asusp" data-u="${esc(u)}">凍結</button>`}`)}).join('')||empty('ユーザーはまだいません')}
  if(t==='ann'){h+=`<div class="sec"><h2>全ユーザーへのお知らせ</h2><div class="fld"><select class="inp" id="ak">${Object.entries(ANNK).filter(([k])=>k!=='warn').map(([k,l])=>`<option value="${k}">${l}</option>`).join('')}</select></div><div class="fld"><textarea class="inp" id="at" rows="3" maxlength="500" placeholder="お知らせの本文"></textarea></div><button class="btn pri" data-act="annpost">配信する</button></div>`;
   h+=S.ann.map(a=>`<div class="sec"><div class="top2" style="display:flex;gap:8px;align-items:center;flex-wrap:wrap"><span class="st open">${esc(ANNK[a.kind]||'お知らせ')}</span>${a.to?`<span class="small">宛先: ${esc(dname(a.to))}</span>`:''}<span class="tm">${ago(a.at)}</span><span class="sp" style="flex:1"></span><button class="btn sm dan" data-act="anndel" data-id="${esc(a.id)}">削除</button></div><div class="txt">${esc(a.text)}</div></div>`).join('')}
- if(t==='log')h+='<div class="sec">'+(S.modlog.map(l=>`<div class="log"><b>${esc(dname(l.by))}</b> ${esc(l.action)} <span class="small">${esc(l.note||'')}</span><div class="tm">${esc(full(l.at))}</div></div>`).join('')||'<span class="hint">操作履歴はまだありません</span>')+'</div>';
+ if(t==='log')h+='<div class="sec">'+(S.modlog.map(l=>`<div class="log"><b>${esc(dname(l.by))}</b>${bdg(l.by)} ${esc(l.action)} <span class="small">${esc(l.note||'')}</span><div class="tm">${esc(full(l.at))}</div></div>`).join('')||'<span class="hint">操作履歴はまだありません</span>')+'</div>';
  return h}
 
 function renderView(){S.pending=false;const r=S.route,v=$('#view');const nearB=innerHeight+scrollY>=document.documentElement.scrollHeight-160;
- if(!S.loaded){v.innerHTML='<div class="empty">読み込み中…</div>';return}
- v.innerHTML={communities:vCommunities,comm:vComm,lists:vLists,list:vList,messages:vMessages,dm:vDm,home:vHome,post:vPost,profile:vProfile,notifications:vNotif,bookmarks:vBookmarks,explore:vExplore,prefs:vPrefs,admin:vAdmin}[r]();
+ if(!S.loaded){v.innerHTML='<div class="empty">読み込み中…</div>';v.__h=null;return}
+ const html={communities:vCommunities,comm:vComm,lists:vLists,list:vList,messages:vMessages,dm:vDm,home:vHome,post:vPost,profile:vProfile,notifications:vNotif,bookmarks:vBookmarks,explore:vExplore,prefs:vPrefs,admin:vAdmin}[r]();
+ const changed=v.__h!==html||v.__r!==r+'|'+S.arg||KODAMA.lang!==v.__l;if(changed){v.innerHTML=html;v.__h=html;v.__r=r+'|'+S.arg;v.__l=KODAMA.lang}
  if(r!=='home')$('#newpill').hidden=true;
- if(r==='dm'&&S.loaded){if(S.dmJump||nearB){S.dmJump=false;requestAnimationFrame(()=>scrollTo(0,document.documentElement.scrollHeight))}dmMarkRead()}
+ if(r==='dm'&&S.loaded){if(S.dmJump||(nearB&&changed)){S.dmJump=false;requestAnimationFrame(()=>scrollTo(0,document.documentElement.scrollHeight))}dmMarkRead()}
  const s=$('#sent');if(s){io.disconnect();io.observe(s)}}
 const io=new IntersectionObserver(es=>{if(es.some(e=>e.isIntersecting)){S.limit+=PAGE;renderView()}},{rootMargin:'400px'});
 function spark(t){const now=Date.now(),c=[0,0,0,0,0,0,0];for(const p of S.posts){const d=Math.floor((now-p.at)/DAY);if(d<7&&tagsOf(p.text).includes(t))c[6-d]++}const mx=Math.max(1,...c);
@@ -1321,15 +1559,15 @@ function renderSide(){const tr=trends().slice(0,5),ru=recUsers(3);
  const ann=S.ann.find(a=>!a.to);
  $('#side').innerHTML=`<form class="srch" id="sideq" style="margin:0" role="search"><svg class="i"><use href="#i-search"/></svg><input placeholder="ユーザー・投稿を検索…" aria-label="検索"></form>
  <div class="box"><h2><svg><use href="#i-trend"/></svg>トレンド<a href="#explore">もっと見る ›</a></h2>${tr.length?tr.map((x,i)=>`<button class="trend" data-tag="${esc(x.t)}"><span class="rk">${i+1}</span><div><b>#${esc(x.t)}</b><span>${x.n.toLocaleString()}件の投稿${x.up?'<i class="up">急上昇</i>':''}</span></div>${spark(x.t)}</button>`).join(''):'<p class="small" style="margin:0 0 6px">#ハッシュタグ をつけて投稿すると、ここに並びます。</p>'}</div>
- ${ru.length?`<div class="box"><h2>おすすめユーザー<a href="#explore">もっと見る ›</a></h2>${ru.map(u=>`<div class="ru">${ulink(u,av(u,'s'))}<div>${ulink(u,`<b>${esc(dname(u))}</b>`)}<div class="hd">@${esc(handle(u))}</div></div><button class="btn sm" data-act="follow" data-u="${esc(u)}" ${S.ro||blocksMe(u)?'disabled':''}>フォローする</button></div>`).join('')}</div>`:''}
+ ${ru.length?`<div class="box"><h2>おすすめユーザー<a href="#explore">もっと見る ›</a></h2>${ru.map(u=>`<div class="ru">${ulink(u,av(u,'s'))}<div>${ulink(u,`<b>${esc(dname(u))}</b>${bdg(u)}`)}<div class="hd">@${esc(handle(u))}</div></div><button class="btn sm" data-act="follow" data-u="${esc(u)}" ${S.ro||blocksMe(u)?'disabled':''}>フォローする</button></div>`).join('')}</div>`:''}
  ${ann?`<div class="box"><h2 style="font-size:16px">運営からのお知らせ<button data-act="annlist">一覧を見る ›</button></h2><div class="annb"><svg class="mg"><use href="#i-mega"/></svg><div><div class="k">${esc(ANNK[ann.kind])}</div><p>${esc(ann.text)}</p><span class="tm">${ago(ann.at)}</span></div></div></div>`:''}
  <div class="foot small"><button data-act="terms">利用規約</button><button data-act="privacy">プライバシーポリシー</button><button data-act="guide">コミュニティガイドライン</button><span>${allUsers().length}人 · ${S.posts.length}件の投稿</span></div>`;
  const n=S.me?notifs().filter(x=>x.at>S.priv.seen).length+S.freqs.filter(f=>f.to===S.me).length:0;$$('.badge.nb').forEach(b=>{b.hidden=!n;b.textContent=n>99?'99+':n});const dn=S.me?dmBadge():0;$$('.badge.db').forEach(b=>{b.hidden=!dn;b.textContent=dn>99?'99+':dn});
- if(S.me){$('#meBox').innerHTML=`${avp(S.me,'s')}<div class="wh"><b>${esc(dname(S.me))}</b><div class="hd">@${esc(handle(S.me))}</div></div><svg class="i dots"><use href="#i-dots"/></svg>`;$('#meBox').href=$('#navMe').href=$('#navMe2').href=`#u-${hex(S.me)}`}
+ if(S.me){$('#meBox').innerHTML=`${avp(S.me,'s')}<div class="wh"><b>${esc(dname(S.me))}</b>${bdg(S.me)}<div class="hd">@${esc(handle(S.me))}</div></div><svg class="i dots"><use href="#i-dots"/></svg>`;$('#meBox').href=$('#navMe').href=$('#navMe2').href=`#u-${hex(S.me)}`}
  $('#navAdmin').hidden=!S.admin;const mv=$('.mav');if(mv&&S.me)mv.innerHTML=av(S.me,'s');const ha=$('#homeC .cmp>.av');if(ha&&S.me)ha.outerHTML=av(S.me);
  const ban=S.ann.find(a=>!a.to&&['important','maint','outage','terms'].includes(a.kind)&&Date.now()-a.at<7*DAY&&!S.priv.dismissed.includes('a'+a.id));
  const sus=S.me&&isSusp(S.me);
- $('#banner').innerHTML=(sus?`<div class="note warn"><b>アカウントが凍結されています。</b>${S.susp[S.me].kind==='temp'?esc(new Date(S.susp[S.me].until).toLocaleDateString('ja-JP'))+'まで':''}投稿や反応はできません。</div>`:'')+(ban&&S.route==='home'?`<div class="note"><svg class="i" style="color:var(--acc2)"><use href="#i-mega"/></svg><div><b>${esc(ANNK[ban.kind])}</b><br>${esc(ban.text)}</div><button class="x" data-act="dismiss" data-k="a${esc(ban.id)}" aria-label="閉じる">×</button></div>`:'')+(S.note?`<div class="note">${S.note}</div>`:'')}
+ $('#banner').innerHTML=(S.site.maintenance?`<div class="note warn"><b>メンテナンス中です。</b>${esc(S.site.maint_msg||'現在は閲覧のみできます。')}${S.admin?' （管理者は通常どおり操作できます）':''}</div>`:'')+(sus?`<div class="note warn"><b>アカウントが凍結されています。</b>${S.susp[S.me].kind==='temp'?esc(new Date(S.susp[S.me].until).toLocaleDateString('ja-JP'))+'まで':''}投稿や反応はできません。</div>`:'')+(ban&&S.route==='home'?`<div class="note"><svg class="i" style="color:var(--acc2)"><use href="#i-mega"/></svg><div><b>${esc(ANNK[ban.kind])}</b><br>${esc(ban.text)}</div><button class="x" data-act="dismiss" data-k="a${esc(ban.id)}" aria-label="閉じる">×</button></div>`:'')+(S.note?`<div class="note">${S.note}</div>`:'')}
 let raf=0;function schedule(){if(raf)return;raf=requestAnimationFrame(()=>{raf=0;derive();renderSide();if(['profile','post','dm','messages','comm','list'].includes(S.route)&&!($('#top').contains(document.activeElement)))renderTop();if(editing())S.pending=true;else renderView()})}
 const editing=()=>{const a=document.activeElement;return!!a&&$('#view').contains(a)&&a.matches('input,textarea,select')};
 document.addEventListener('focusout',()=>setTimeout(()=>{if(S.pending&&!editing())renderView()},250));
@@ -1540,28 +1778,41 @@ function vMessages(){const t=S.tab.messages,all=convs(),list=all.filter(c=>t==='
  return h+list.map(c=>`<a class="cv${c.unread?' unread':''}" href="#dm-${hex(c.other)}">${avp(c.other)}<div class="cvb"><div class="head" style="padding:0"><b class="nm">${esc(dname(c.other))}</b><span class="hd">@${esc(handle(c.other))}</span><span class="tm">· ${ago(c.last.at)}</span></div><div class="ex">${c.last.from===S.me?'<span class="you">あなた: </span>':''}${esc(c.last.text||(c.last.media.length?'画像':''))}</div></div>${c.unread?`<span class="ub" aria-label="未読 ${c.unread}件">${c.unread}</span>`:''}</a>`).join('')}
 function vDm(){const u=S.arg;if(!u||u===S.me)return empty('会話が見つかりません');const cv=[S.me,u].sort().join('__');
  const c=convs().find(x=>x.conv===cv),hid=S.priv.dmHidden[cv]||0,ms=S.dms.filter(m=>m.conv===cv&&m.at>hid).sort((a,b)=>a.at-b.at);let h='';
- if(c&&c.req)h+=`<div class="note"><div><b>${esc(dname(u))}</b>さんからのメッセージリクエストです。承諾すると既読が付き、通常どおりやり取りできます。<div class="inline" style="flex-wrap:wrap;margin-top:10px"><button class="btn sm pri" data-act="dmaccept" data-u="${esc(u)}">承諾する</button><button class="btn sm" data-act="dmhide" data-u="${esc(u)}">削除する</button><button class="btn sm dan" data-act="blocku" data-u="${esc(u)}">ブロックする</button></div></div></div>`;
+ if(c&&c.req)h+=`<div class="note"><div><b>${esc(dname(u))}</b>${bdg(u)}さんからのメッセージリクエストです。承諾すると既読が付き、通常どおりやり取りできます。<div class="inline" style="flex-wrap:wrap;margin-top:10px"><button class="btn sm pri" data-act="dmaccept" data-u="${esc(u)}">承諾する</button><button class="btn sm" data-act="dmhide" data-u="${esc(u)}">削除する</button><button class="btn sm dan" data-act="blocku" data-u="${esc(u)}">ブロックする</button></div></div></div>`;
  if(iBlock(u)||blocksMe(u))h+=`<div class="note warn"><div>このユーザーとはメッセージをやり取りできません。</div></div>`;
  if(!ms.length)h+=`<div class="dmhead">${ulink(u,avp(u,'xl'))}<h2>${esc(dname(u))}</h2><div class="hd">@${esc(handle(u))}</div><div style="margin-top:6px">${pchip(u)}</div><p class="hint">まだメッセージはありません。最初のメッセージを送ってみましょう。</p></div>`;
- let lastDay='';const lastMine=[...ms].reverse().find(m=>m.from===S.me);
- h+='<div class="msgs">'+ms.map(m=>{const d=dayLabel(m.at),mine=m.from===S.me;let s='';if(d!==lastDay){lastDay=d;s+=`<div class="day"><span>${esc(d)}</span></div>`}
-  s+=`<div class="msg${mine?' me':''}" data-mid="${esc(m.id)}">${mine?'':ulink(m.from,av(m.from,'s'))}<div class="mc"><div class="bub">${m.text?`<div class="mt">${fmt(m.text)}</div>`+trBlock('dm',m.id,m.text):''}${m.media.map(x=>`<button class="mi" data-act="dmzoom" data-mid="${esc(m.id)}" aria-label="画像を拡大"><img src="${esc(blob(x.id))}" alt="${esc(x.alt||'')}" loading="lazy"></button>`).join('')}</div>${(()=>{const rx=Object.entries(m.reacts||{}).filter(([e,l])=>l.length);return rx.length?`<div class="rx">${rx.map(([e,l])=>`<button class="rc${l.includes(S.me)?' mine':''}" data-act="react" data-mid="${esc(m.id)}" data-e="${esc(e)}" data-ugc title="${esc(l.map(x=>x===S.me?KODAMA.tr('あなた'):dname(x)).join(', '))}" aria-pressed="${l.includes(S.me)}">${esc(e)}${l.length>1?`<b>${l.length}</b>`:''}</button>`).join('')}</div>`:''})()}
-  <div class="mm"><span class="tm">${esc(hm(m.at))}</span>${mine&&m===lastMine&&m.readAt?'<span class="tm rd">既読</span>':''}<span style="position:relative"><button class="act" data-act="rmenu" aria-label="リアクション" aria-expanded="${S.menu==='r:'+m.id}"><svg><use href="#i-smile"/></svg></button>${S.menu==='r:'+m.id?`<div class="menu rpick" style="${mine?'right:0':'left:0'}">${REACTS.map(e=>`<button data-act="react" data-mid="${esc(m.id)}" data-e="${e}" aria-label="${e}">${e}</button>`).join('')}</div>`:''}</span><span style="position:relative"><button class="act" data-act="mmenu" aria-label="メッセージの操作"><svg><use href="#i-dots"/></svg></button>${S.menu==='m:'+m.id?`<div class="menu" style="${mine?'right:0':'left:0'}">${m.text?`<button data-act="mcopy" data-mid="${esc(m.id)}">テキストをコピー</button>`:''}${mine?`<button class="dan" data-act="mdel" data-mid="${esc(m.id)}">メッセージを削除</button>`:`<button class="dan" data-act="mreport" data-mid="${esc(m.id)}">メッセージを通報</button>`}</div>`:''}</span></div></div></div>`;return s}).join('')+'</div>';
+ let lastDay='';const lastMine=[...ms].reverse().find(m=>m.from===S.me);const hideM=new Set(S.priv.dmHideMsg||[]);const vis=ms.filter(m=>!hideM.has(m.id));
+ const same=(a,b)=>a&&b&&a.from===b.from&&hm(a.at)===hm(b.at)&&dayLabel(a.at)===dayLabel(b.at)&&b.at-a.at<120000;
+ const media1=(m,x)=>x.type==='video'?`<video class="mv" src="${esc(blob(x.id))}" controls playsinline preload="metadata"></video>`:`<button class="mi" data-act="dmzoom" data-mid="${esc(m.id)}" aria-label="画像を拡大"><img src="${esc(blob(x.id))}" alt="${esc(x.alt||'')}" loading="lazy"></button>`;
+ const quote=m=>{if(!m.replyTo)return'';const o=S.dms.find(x=>x.id===m.replyTo);if(!o)return`<div class="mq gone">元のメッセージは削除されました</div>`;
+  return`<button class="mq" data-act="mjump" data-mid="${esc(o.id)}"><b>${esc(o.from===S.me?KODAMA.tr('あなた'):dname(o.from))}</b><span data-ugc>${esc(o.text?[...o.text].slice(0,80).join(''):(o.media[0]?.type==='video'?'🎬 '+KODAMA.tr('動画'):'🖼 '+KODAMA.tr('画像')))}</span></button>`};
+ h+='<div class="msgs">'+vis.map((m,i)=>{const d=dayLabel(m.at),mine=m.from===S.me,prev=vis[i-1],next=vis[i+1];let s='';if(d!==lastDay){lastDay=d;s+=`<div class="day"><span>${esc(d)}</span></div>`}
+  const top=!same(prev,m),end=!same(m,next),sel=S.msel===m.id||S.menu==='m:'+m.id||S.menu==='r:'+m.id;
+  s+=`<div class="msg${mine?' me':''}${top?'':' cont'}${end?'':' mid'}${sel?' sel':''}" data-mid="${esc(m.id)}" id="m-${esc(m.id)}">${mine?'':(end?ulink(m.from,av(m.from,'s')):'<span class="avsp"></span>')}<div class="mc"><div class="bub" data-act="msel" data-mid="${esc(m.id)}">${quote(m)}${m.text?`<div class="mt">${fmt(m.text)}</div>`+trBlock('dm',m.id,m.text):''}${m.media.map(x=>media1(m,x)).join('')}${m.editedAt?'<span class="ed">編集済み</span>':''}</div>${(()=>{const rx=Object.entries(m.reacts||{}).filter(([e,l])=>l.length);return rx.length?`<div class="rx">${rx.map(([e,l])=>`<button class="rc${l.includes(S.me)?' mine':''}" data-act="react" data-mid="${esc(m.id)}" data-e="${esc(e)}" data-ugc title="${esc(l.map(x=>x===S.me?KODAMA.tr('あなた'):dname(x)).join(', '))}" aria-pressed="${l.includes(S.me)}">${esc(e)}${l.length>1?`<b>${l.length}</b>`:''}</button>`).join('')}</div>`:''})()}
+  <div class="mm">${end||sel?`<span class="tm">${esc(hm(m.at))}</span>`:''}${mine&&m===lastMine&&m.readAt?'<span class="tm rd">既読</span>':''}<span style="position:relative"><button class="act" data-act="mreply" data-mid="${esc(m.id)}" aria-label="返信"><svg><use href="#i-reply"/></svg></button></span><span style="position:relative"><button class="act" data-act="rmenu" aria-label="リアクション" aria-expanded="${S.menu==='r:'+m.id}"><svg><use href="#i-smile"/></svg></button>${S.menu==='r:'+m.id?`<div class="menu rpick" style="${mine?'right:0':'left:0'}">${REACTS.map(e=>`<button data-act="react" data-mid="${esc(m.id)}" data-e="${e}" aria-label="${e}">${e}</button>`).join('')}</div>`:''}</span><span style="position:relative"><button class="act" data-act="mmenu" aria-label="メッセージの操作"><svg><use href="#i-dots"/></svg></button>${S.menu==='m:'+m.id?`<div class="menu" style="${mine?'right:0':'left:0'}"><button data-act="mreply" data-mid="${esc(m.id)}">引用して返信</button>${m.text?`<button data-act="mcopy" data-mid="${esc(m.id)}">テキストをコピー</button>`:''}${mine?`${m.text?`<button data-act="medit" data-mid="${esc(m.id)}">メッセージを編集</button>`:''}<button class="dan" data-act="mdel" data-mid="${esc(m.id)}">メッセージを削除（相手からも消えます）</button>`:`<button data-act="mhide" data-mid="${esc(m.id)}">自分の画面から削除</button><button class="dan" data-act="mreport" data-mid="${esc(m.id)}">メッセージを通報</button>`}</div>`:''}</span></div></div></div>`;return s}).join('')+'</div>';
  return h}
 function dmMarkRead(){if(S.route!=='dm'||!S.arg||S.dmReading||document.hidden)return;const cv=[S.me,S.arg].sort().join('__'),c=convs().find(x=>x.conv===cv);
  if(!c||!c.unread||c.req)return;S.dmReading=true;KODAMA.run({op:'dmRead',conv:cv}).then(()=>KODAMA.refresh()).catch(()=>{}).finally(()=>{S.dmReading=false})}
 function mountDm(){const box=$('#dmC');if(!box)return;const c=S.dmc,u=S.arg,blocked=!u||iBlock(u)||blocksMe(u)||isSusp(S.me);
- box.innerHTML=blocked?'':`<div class="dmbar">${c.url?`<div class="dmprev"><img src="${esc(c.url)}" alt=""><button class="x" data-act="dmfdel" aria-label="画像を外す">×</button></div>`:''}<div class="dmrow"><label class="tool" title="画像を添付"><input type="file" id="dmfile" accept="image/png,image/jpeg,image/gif,image/webp" hidden><svg class="i"><use href="#i-img"/></svg></label><textarea id="dmtext" rows="1" maxlength="1000" placeholder="メッセージを入力" aria-label="メッセージ">${esc(c.text)}</textarea><button class="send dmsend" data-act="dmsend" aria-label="送信"${c.busy?' disabled':''}>${c.busy?'<span class="spin" aria-hidden="true"></span>':'<svg class="i"><use href="#i-send"/></svg>'}</button></div></div>`;dmUpd()}
+ const rm=c.reply&&S.dms.find(x=>x.id===c.reply),em=c.edit&&S.dms.find(x=>x.id===c.edit);
+ const ctx=em?`<div class="dmctx"><svg class="i"><use href="#i-pen"/></svg><span><b>メッセージを編集</b></span><button class="x" data-act="dmcancel" aria-label="編集をやめる">×</button></div>`
+  :rm?`<div class="dmctx"><svg class="i"><use href="#i-reply"/></svg><span><span>返信先</span><b data-ugc>${esc(rm.from===S.me?KODAMA.tr('あなた'):dname(rm.from))}</b><small data-ugc>${esc([...(rm.text||'')].slice(0,60).join('')||(rm.media[0]?.type==='video'?KODAMA.tr('動画'):KODAMA.tr('画像')))}</small></span><button class="x" data-act="dmcancel" aria-label="返信をやめる">×</button></div>`:'';
+ const prev=c.url?`<div class="dmprev">${c.isVideo?`<video src="${esc(c.url)}" muted playsinline></video>`:`<img src="${esc(c.url)}" alt="">`}<button class="x" data-act="dmfdel" aria-label="添付を外す">×</button></div>`:'';
+ box.innerHTML=blocked?'':`<div class="dmbar">${ctx}${prev}<div class="dmrow">${em?'':`<label class="tool" title="画像・GIF・動画を添付"><input type="file" id="dmfile" accept="image/png,image/jpeg,image/gif,image/webp,video/mp4,video/webm,video/quicktime" hidden><svg class="i"><use href="#i-img"/></svg></label>`}<textarea id="dmtext" rows="1" maxlength="1000" placeholder="${em?'メッセージを編集':'メッセージを入力'}" aria-label="メッセージ">${esc(c.text)}</textarea><button class="send dmsend" data-act="dmsend" aria-label="${em?'保存':'送信'}"${c.busy?' disabled':''}>${c.busy?'<span class="spin" aria-hidden="true"></span>':em?'<svg class="i"><use href="#i-check"/></svg>':'<svg class="i"><use href="#i-send"/></svg>'}</button></div></div>`;dmUpd()}
 function dmUpd(){const t=$('#dmtext'),b=$('.dmsend');if(!t||!b)return;t.style.height='auto';t.style.height=Math.min(160,t.scrollHeight)+'px';b.disabled=S.dmc.busy||(!S.dmc.text.trim()&&!S.dmc.file)}
-async function dmSend(){const c=S.dmc,u=S.arg;if(c.busy||!u||(!c.text.trim()&&!c.file))return;c.busy=true;mountDm();
- try{let media=[];if(c.file){if(!S.assets)throw{message:'画像をアップロードする権限がありません'};const r=await S.assets.upload(await compress(c.file));media=[{id:r.id,alt:''}]}
-  await KODAMA.run({op:'dmSend',to:u,text:c.text.trim(),media});if(c.url)URL.revokeObjectURL(c.url);S.dmc={text:'',file:null,url:''};
+async function dmSend(){const c=S.dmc,u=S.arg;if(c.busy||!u)return;
+ if(c.edit){const m=S.dms.find(x=>x.id===c.edit);if(!m)return;if(!c.text.trim()&&!m.media.length)return;c.busy=true;mountDm();
+  try{await KODAMA.run({op:'dmEdit',id:c.edit,text:c.text.trim()});S.dms=S.dms.map(x=>x.id===c.edit?{...x,text:c.text.trim(),editedAt:Date.now()}:x);S.dmc={text:'',file:null,url:''};KODAMA.refresh();renderView()}
+  catch(x){toast(x?.message||'保存できませんでした')}S.dmc.busy=false;mountDm();return}
+ if(!c.text.trim()&&!c.file)return;c.busy=true;mountDm();
+ try{let media=[];if(c.file){if(!S.assets)throw{message:'画像をアップロードする権限がありません'};const isV=/^video[/]/.test(c.file.type);const r=await S.assets.upload(isV?c.file:await compress(c.file));media=[{id:r.id,type:isV?'video':'image',alt:''}]}
+  await KODAMA.run({op:'dmSend',to:u,text:c.text.trim(),media,reply:c.reply||null});if(c.url)URL.revokeObjectURL(c.url);S.dmc={text:'',file:null,url:''};
   if(!S.priv.dmAccepted.includes(u)){S.priv.dmAccepted=[...S.priv.dmAccepted,u];savePriv()}S.dmJump=true;KODAMA.refresh()}
  catch(x){c.busy=false;toast(x?.message||'送信できませんでした')}
  S.dmc.busy=false;mountDm();$('#dmtext')?.focus()}
 function dmList(){const el=$('#dml');if(!el)return;const q=(S.modal?.q||'').trim().toLowerCase().replace(/^@/,''),f=following(S.me);
  const us=allUsers().filter(u=>u!==S.me&&!iBlock(u)&&!blocksMe(u)&&!isSusp(u)&&(!q||dname(u).toLowerCase().includes(q)||handle(u).toLowerCase().includes(q))).sort((a,b)=>(f.has(b)?1:0)-(f.has(a)?1:0)).slice(0,30);
- el.innerHTML=us.map(u=>`<button class="pick" data-act="dmto" data-u="${esc(u)}">${av(u,'s')}<span><b>${esc(dname(u))}</b><span class="hd">@${esc(handle(u))}</span></span>${f.has(u)?'<span class="pill">フォロー中</span>':''}</button>`).join('')||'<p class="hint">見つかりませんでした</p>'}
+ el.innerHTML=us.map(u=>`<button class="pick" data-act="dmto" data-u="${esc(u)}">${av(u,'s')}<span><b>${esc(dname(u))}</b>${bdg(u)}<span class="hd">@${esc(handle(u))}</span></span>${f.has(u)?'<span class="pill">フォロー中</span>':''}</button>`).join('')||'<p class="hint">見つかりませんでした</p>'}
 
 // ===== ルーティング =====
 function parseHash(){const h=location.hash.slice(1);if(h.startsWith('dm-'))return['dm',unhex(h.slice(3))];if(h.startsWith('c-'))return['comm',h.slice(2)];if(h.startsWith('l-'))return['list',h.slice(2)];if(h.startsWith('post-'))return['post',h.slice(5)];if(h.startsWith('u-'))return['profile',unhex(h.slice(2))];
@@ -1628,7 +1879,13 @@ document.addEventListener('click',async e=>{const t=e.target;
  case'dmnew':openModal({kind:'dmnew'});break;
  case'dmto':closeModal();location.hash='dm-'+hex(b.dataset.u);break;
  case'dmsend':await dmSend();break;
- case'dmfdel':if(S.dmc.url)URL.revokeObjectURL(S.dmc.url);S.dmc.file=null;S.dmc.url='';mountDm();break;
+ case'dmfdel':if(S.dmc.url)URL.revokeObjectURL(S.dmc.url);S.dmc.file=null;S.dmc.url='';S.dmc.isVideo=false;mountDm();break;
+ case'dmcancel':S.dmc={text:S.dmc.edit?'':S.dmc.text,file:S.dmc.file,url:S.dmc.url,isVideo:S.dmc.isVideo};mountDm();break;
+ case'mreply':{S.menu=null;if(S.dmc.edit)S.dmc={text:'',file:null,url:''};S.dmc.reply=b.dataset.mid;renderView();mountDm();$('#dmtext')?.focus();break}
+ case'medit':{const m=S.dms.find(x=>x.id===b.dataset.mid);if(!m||m.from!==S.me)break;S.menu=null;if(S.dmc.url)URL.revokeObjectURL(S.dmc.url);S.dmc={text:m.text,file:null,url:'',edit:m.id};renderView();mountDm();const t=$('#dmtext');if(t){t.focus();t.setSelectionRange(t.value.length,t.value.length)}break}
+ case'mhide':{S.menu=null;S.priv.dmHideMsg=[...(S.priv.dmHideMsg||[]),b.dataset.mid].slice(-2000);savePriv();renderView();toast('自分の画面から削除しました');break}
+ case'mjump':{const el=document.getElementById('m-'+b.dataset.mid);if(el){el.scrollIntoView({behavior:'smooth',block:'center'});el.classList.remove('flash');void el.offsetWidth;el.classList.add('flash')}else toast('元のメッセージは表示範囲にありません');break}
+ case'msel':{S.msel=S.msel===b.dataset.mid?null:b.dataset.mid;renderView();break}
  case'dmaccept':S.priv.dmAccepted=[...new Set([...S.priv.dmAccepted,b.dataset.u])];savePriv();toast('リクエストを承諾しました');break;
  case'dmhide':{const cv=[S.me,b.dataset.u].sort().join('__');S.priv.dmHidden={...S.priv.dmHidden,[cv]:Date.now()};savePriv();toast('会話を一覧から削除しました');location.hash='messages';break}
  case'rmenu':{const mid=b.closest('[data-mid]').dataset.mid;S.menu=S.menu==='r:'+mid?null:'r:'+mid;renderView();break}
@@ -1732,7 +1989,7 @@ document.addEventListener('change',async e=>{const t=e.target;
  if(t.id==='stsel'||t.name==='stset'){setStatus(t.value);return}
  if(t.id==='langsel'){KODAMA.setLang(t.value);S.priv.lang=t.value;savePriv();return}
  if(t.name==='dmset'){S.priv.dm=t.value;savePriv();toast('メッセージの受信設定を変更しました');return}
- if(t.id==='dmfile'&&t.files[0]){const f=t.files[0];t.value='';if(!/^image[/](png|jpeg|gif|webp)$/.test(f.type)||f.size>20*1048576){toast('20MBまでの画像を選んでください');return}if(S.dmc.url)URL.revokeObjectURL(S.dmc.url);S.dmc.file=f;S.dmc.url=URL.createObjectURL(f);mountDm();return}});
+ if(t.id==='dmfile'&&t.files[0]){const f=t.files[0];t.value='';if(!/^(image[/](png|jpeg|gif|webp)|video[/](mp4|webm|quicktime))$/.test(f.type)||f.size>20*1048576){toast('20MBまでの画像・GIF・動画を選んでください');return}if(S.dmc.url)URL.revokeObjectURL(S.dmc.url);S.dmc.file=f;S.dmc.url=URL.createObjectURL(f);S.dmc.isVideo=/^video[/]/.test(f.type);mountDm();return}});
 document.addEventListener('submit',async e=>{e.preventDefault();const f=e.target;const fid=f.getAttribute('id');
  if(fid==='sform'){const q=S.q.trim();if(q){S.priv.history=[q,...S.priv.history.filter(x=>x!==q)].slice(0,10);savePriv()}$('#q')?.blur()}
  if(fid==='sideq'){const q=f.querySelector('input').value.trim();if(!q)return;S.q=q;S.priv.history=[q,...S.priv.history.filter(x=>x!==q)].slice(0,10);savePriv();if(location.hash==='#explore')go();else location.hash='explore'}
@@ -1787,15 +2044,18 @@ go();
  sub(db.collection('communities'),s=>{S.comms=s.docs.map(d=>{const x=d.data()||{};return{id:d.id,name:str(x.name).slice(0,40),desc:str(x.desc).slice(0,300),owner:str(x.owner),color:/^#[0-9a-f]{6}$/i.test(str(x.color))?x.color:'',at:num(x.at)}});syncHomeC()});
  sub(db.collection('members'),s=>{S.members=s.docs.map(d=>{const x=d.data()||{};return{comm:str(x.comm),user:str(x.user),role:str(x.role)}});syncHomeC()});
  sub(db.collection('hidden').limit(1000),s=>{S.hidden=Object.fromEntries(s.docs.map(d=>[d.id,d.data()||{}]))});
+ sub(db.collection('badges').limit(10000),s=>{S.badges=Object.fromEntries(s.docs.map(d=>[d.id,(d.data()||{}).kind==='official'?'official':'verified']))});
+ sub(db.collection('siteSettings'),s=>{const o={signup:true,maintenance:false,ngwords:[],maint_msg:''};for(const d of s.docs){const v=(d.data()||{}).value;if(d.id==='signup')o.signup=v!==false;if(d.id==='maintenance')o.maintenance=v===true;if(d.id==='ngwords'&&Array.isArray(v))o.ngwords=v.map(String);if(d.id==='maint_msg')o.maint_msg=str(v)}S.site=o});
+ sub(db.collection('admins'),s=>{S.adminsList=s.docs.map(d=>d.id)});
  sub(db.collection('suspended').limit(1000),s=>{S.susp=Object.fromEntries(s.docs.map(d=>{const x=d.data()||{};return[d.id,{kind:x.kind==='perm'?'perm':'temp',until:num(x.until),reason:str(x.reason)}]}))});
  sub(db.collection('blocks').limit(1000),s=>{S.blocks=Object.fromEntries(s.docs.map(d=>[d.id,Array.isArray(d.data()?.list)?d.data().list.map(String):[]]))});
  sub(db.collection('announcements').orderBy('at','desc').limit(100),s=>{S.ann=s.docs.map(d=>{const x=d.data()||{};return{id:d.id,text:str(x.text),kind:ANNK[x.kind]?x.kind:'info',at:num(x.at),to:str(x.to)||null}})});
  if(S.me){
   sub(db.doc(`data/users/${S.me}/state`),d=>{if(d.metadata.hasPendingWrites)return;const x=d.exists?d.data():{};const arr=k=>Array.isArray(x[k])?x[k]:[];
-   S.priv={bookmarks:arr('bookmarks').map(String),mutes:arr('mutes').map(String),muteWords:arr('muteWords').map(String),seen:num(x.seen),history:arr('history').map(String).slice(0,10),drafts:arr('drafts').filter(d=>d&&typeof d.text==='string').map(d=>({id:str(d.id),text:d.text,at:num(d.at)})),notifOff:arr('notifOff').map(String),dismissed:arr('dismissed').map(String),dm:['all','following','none'].includes(x.dm)?x.dm:'all',lang:['ja','en','ko','zh-CN','zh-TW'].includes(x.lang)?x.lang:'',status:['auto','busy','offline'].includes(x.status)?x.status:'auto',showNsfw:x.showNsfw===true,lists:arr('lists').filter(l=>l&&typeof l.name==='string').slice(0,50).map(l=>({id:str(l.id),name:str(l.name).slice(0,40),members:Array.isArray(l.members)?l.members.map(String).slice(0,500):[]})),dmAccepted:arr('dmAccepted').map(String),dmHidden:x.dmHidden&&typeof x.dmHidden==='object'&&!Array.isArray(x.dmHidden)?Object.fromEntries(Object.entries(x.dmHidden).map(([k,v])=>[k,num(v)])):{}};
+   S.priv={bookmarks:arr('bookmarks').map(String),mutes:arr('mutes').map(String),muteWords:arr('muteWords').map(String),seen:num(x.seen),history:arr('history').map(String).slice(0,10),drafts:arr('drafts').filter(d=>d&&typeof d.text==='string').map(d=>({id:str(d.id),text:d.text,at:num(d.at)})),notifOff:arr('notifOff').map(String),dismissed:arr('dismissed').map(String),dm:['all','following','none'].includes(x.dm)?x.dm:'all',lang:['ja','en','ko','zh-CN','zh-TW'].includes(x.lang)?x.lang:'',status:['auto','busy','offline'].includes(x.status)?x.status:'auto',showNsfw:x.showNsfw===true,lists:arr('lists').filter(l=>l&&typeof l.name==='string').slice(0,50).map(l=>({id:str(l.id),name:str(l.name).slice(0,40),members:Array.isArray(l.members)?l.members.map(String).slice(0,500):[]})),dmAccepted:arr('dmAccepted').map(String),dmHideMsg:arr('dmHideMsg').map(String).slice(-2000),dmHidden:x.dmHidden&&typeof x.dmHidden==='object'&&!Array.isArray(x.dmHidden)?Object.fromEntries(Object.entries(x.dmHidden).map(([k,v])=>[k,num(v)])):{}};
    KODAMA.status=S.priv.status;
    if(!S.privLoaded){S.privLoaded=true;KODAMA.refresh();if(S.priv.lang&&S.priv.lang!==KODAMA.lang)KODAMA.setLang(S.priv.lang);if(S.route==='notifications'){S.seenAtOpen=S.priv.seen;S.priv.seen=Date.now();savePriv()}}});
-  sub(db.collection('dms'),s=>{S.dms=s.docs.map(d=>{const x=d.data()||{};return{id:d.id,conv:str(x.conv),from:str(x.from),to:str(x.to),text:str(x.text).slice(0,2000),at:num(x.at),readAt:num(x.readAt),media:Array.isArray(x.media)?x.media.slice(0,1).map(m=>({id:str(m?.id),alt:str(m?.alt)})).filter(m=>m.id):[],reacts:x.reacts&&typeof x.reacts==='object'&&!Array.isArray(x.reacts)?Object.fromEntries(Object.entries(x.reacts).filter(([e,l])=>REACTS.includes(e)&&Array.isArray(l)).map(([e,l])=>[e,l.map(String)])):{}}}).filter(m=>m.conv)});
+  sub(db.collection('dms'),s=>{S.dms=s.docs.map(d=>{const x=d.data()||{};return{id:d.id,conv:str(x.conv),from:str(x.from),to:str(x.to),text:str(x.text).slice(0,2000),at:num(x.at),readAt:num(x.readAt),media:Array.isArray(x.media)?x.media.slice(0,1).map(m=>({id:str(m?.id),type:m?.type==='video'?'video':'image',alt:str(m?.alt)})).filter(m=>m.id):[],replyTo:str(x.replyTo),editedAt:num(x.editedAt),reacts:x.reacts&&typeof x.reacts==='object'&&!Array.isArray(x.reacts)?Object.fromEntries(Object.entries(x.reacts).filter(([e,l])=>REACTS.includes(e)&&Array.isArray(l)).map(([e,l])=>[e,l.map(String)])):{}}}).filter(m=>m.conv)});
   sub(db.collection('data/users/'+S.me).limit(500),s=>{S.privPosts=s.docs.filter(d=>d.id.startsWith('p_')).map(d=>normPost(d,true))});
  }
  if(S.admin){

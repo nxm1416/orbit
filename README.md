@@ -110,9 +110,44 @@ Orbit を開いて「新しくアカウントを作る」から登録します�
 
 あわせて **Authentication → Sign In / Providers → Email** で、**Email OTP Expiration** を `600`（10分）、**Email OTP Length** を `6` にしてください。
 
-## 管理者を増やす・変える
+## 管理者の機能
 
-Supabase の **Table Editor → admins** に、管理者にしたい人のユーザーID（`profiles` テーブルの `id`）を追加します。
+左のメニューの **管理** から使えます（管理者にだけ表示されます）。
+
+- **統計**：ユーザー数・アクティブ数・投稿数など
+- **通報**：通報の確認と対応状況の記録、投稿の非表示、ユーザーの凍結
+- **投稿管理**：全投稿の検索・非表示・削除
+- **ユーザー管理**：検索・絞り込み、メールアドレスや登録日・最終ログインの確認、管理者の追加／解除、**認証バッジ**（認証済み・公式）の付与、警告・凍結、ログインのロック解除、信頼済み端末の解除、プロフィールの初期化、投稿の一括削除、アカウント削除
+- **コミュニティ**：一覧・作成者の変更・削除
+- **お知らせ**：全員または特定の人へのお知らせ
+- **サイト設定**：新規登録の受付オン／オフ、メンテナンスモード（管理者以外は閲覧のみ）、NGワード
+- **操作履歴**：管理者の操作の記録
+
+最初に登録した人が管理者です。ほかの人を管理者にするときは、ユーザー管理の「管理者にする」を押してください。
+
+## ロボット対策（Cloudflare Turnstile）
+
+スパム業者のプログラムによる大量登録を防ぎます。利用者にはほとんど何も表示されません。
+
+1. [Cloudflare](https://dash.cloudflare.com/sign-up) に無料登録し、左メニューの **Turnstile** → **Add widget** を押します
+2. Widget name：`Orbit`、Hostname：Orbit のアドレス（例：`orbit-omega-drab.vercel.app`）、Widget Mode：**Managed** にして作成します
+3. 表示された **Site Key** を `config.js` の `TURNSTILE_SITE_KEY` に入れて保存し、Vercel に反映されるのを待ちます（1分ほど）
+4. そのあとで、Supabase の **Authentication → Attack Protection** で **Enable CAPTCHA protection** をオンにし、Provider を **Turnstile**、**Secret Key** に Cloudflare の Secret Key を入れて保存します
+
+> 必ず **3 → 4 の順番** で行ってください。先に 4 をすると、サイトキーの入っていない Orbit からはログインできなくなります。
+
+## プッシュ通知
+
+いいね・返信・メンション・フォロー・メッセージなどを、アプリを閉じていても通知します。
+
+1. `supabase/schema.sql` を SQL Editor でもう一度実行します（通知の仕組みが追加されます）
+   - 「pg_net を有効にできませんでした」と出たら、**Database → Extensions** で `pg_net` を有効にして、もう一度実行してください
+2. Supabase の **Edge Functions → Deploy a new function → Via Editor** を開き、名前を `push` にして、`supabase/functions/push/index.ts` の中身をすべて貼り付けて **Deploy** します
+3. 作った `push` 関数の設定（Details / Settings）で **Verify JWT（Enforce JWT verification）をオフ** にして保存します
+4. Orbit の **設定 → プッシュ通知** で「オンにする」を押します
+
+- iPhone・iPad は、Safari で Orbit を開き、共有ボタン →「ホーム画面に追加」で追加したアプリから設定してください（iOS 16.4 以降）
+- 通知の種類ごとのオン／オフは、設定の「通知」から変えられます。ミュートしている人からの通知は届きません
 
 ## バックアップ
 
@@ -125,6 +160,7 @@ Supabase が毎日自動でバックアップを作成しています（**Databa
 | 機能 | 状態 |
 | --- | --- |
 | リンクのプレビュー（URLのカード表示） | 準備中（Supabase Edge Function で対応予定） |
+| 表示テーマ | 設定から ダーク（夜空）／ライト／端末に合わせる を選べます |
 | 投稿・DMの翻訳ボタン | 使えます（Google の翻訳サービスを直接利用） |
 | 韓国語・中国語の自動翻訳 | 主要な文言は手作業で翻訳済み。残りは初回表示時に自動翻訳 |
 | 独自ドメイン | Vercel の **Settings → Domains** から追加できます |
