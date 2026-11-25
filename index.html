@@ -312,6 +312,19 @@ input.invalid{border-color:var(--like)!important;box-shadow:0 0 0 3px rgba(255,9
  .fab svg{width:26px;height:26px}#ovl{padding:0;align-items:stretch}.dlg{border-radius:0;min-height:100%;border:0}.zoom{min-height:auto;align-self:center}}
 @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 .nav[hidden]{display:none!important}
+
+#accm{position:fixed;z-index:70;background:linear-gradient(180deg,#13204a,#0e1834);border:1px solid var(--line2);border-radius:18px;padding:8px;box-shadow:0 18px 50px rgba(0,0,0,.55);max-height:80vh;overflow:auto}
+#accm .acch{font-size:12px;color:var(--mut);padding:6px 10px 4px}
+#accm .acci{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:10px;align-items:center;width:100%;padding:8px 10px;border-radius:12px;text-align:left}
+#accm .acci:hover,#accm .acco:hover{background:var(--soft)}
+#accm .acci.cur{background:rgba(61,123,255,.10)}
+#accm .acci .i{color:var(--acc2);width:20px;height:20px}
+#accm .acct{display:flex;flex-direction:column;min-width:0}#accm .acct b,#accm .acct small{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}#accm .acct small{color:var(--mut);font-size:13px}
+#accm .aav{width:38px;height:38px;border-radius:50%;display:grid;place-items:center;font-weight:700;color:#fff;overflow:hidden;flex:none}#accm .aav img{width:100%;height:100%;object-fit:cover}
+#accm .accs{height:1px;background:var(--line);margin:6px 4px}
+#accm .acco{display:block;width:100%;padding:11px 12px;border-radius:12px;text-align:left;font-size:15px}
+#accm .acco.dan{color:var(--like)}#accm p.acco{margin:0;color:var(--mut);font-size:13px}
+.mav{cursor:pointer}
 </style>
 </head>
 <body>
@@ -350,7 +363,7 @@ input.invalid{border-color:var(--like)!important;box-shadow:0 0 0 3px rgba(255,9
 <symbol id="i-rp" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 4 4 7l3 3M4 7h12a4 4 0 0 1 4 4v1M17 20l3-3-3-3M20 17H8a4 4 0 0 1-4-4v-1"/></symbol>
 <symbol id="i-heart" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M12 20s-7.5-4.6-9-9.3C2 7.4 4.2 4.5 7.3 4.5c2 0 3.6 1.1 4.7 2.8 1.1-1.7 2.7-2.8 4.7-2.8 3.1 0 5.3 2.9 4.3 6.2-1.5 4.7-9 9.3-9 9.3z"/></symbol>
 <symbol id="i-share" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v13M7 8l5-5 5 5M5 14v6h14v-6"/></symbol>
-<symbol id="i-dots" viewBox="0 0 24 24" fill="currentColor"><circle cx="5" cy="12" r="1.8"/><circle cx="12" cy="12" r="1.8"/><circle cx="19" cy="12" r="1.8"/></symbol>
+<symbol id="i-check" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></symbol><symbol id="i-dots" viewBox="0 0 24 24" fill="currentColor"><circle cx="5" cy="12" r="1.8"/><circle cx="12" cy="12" r="1.8"/><circle cx="19" cy="12" r="1.8"/></symbol>
 <symbol id="i-img" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="3"/><circle cx="9" cy="10" r="2"/><path d="m21 16-5-5-9 9"/></symbol>
 <symbol id="i-draft" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M6 3h9l4 4v14H6z"/><path d="M14 3v5h5M9 13h6M9 17h4"/></symbol>
 <symbol id="i-pin" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 3h6l-1 6 4 4H6l4-4zM12 13v8"/></symbol>
@@ -412,12 +425,13 @@ const CONF=window.ORBIT_CONFIG||{};
 const SB_URL=String(CONF.SUPABASE_URL||'').replace(/\/+$/,''),SB_KEY=String(CONF.SUPABASE_ANON_KEY||'');
 const SB_OK=!!(window.supabase&&/^https?:\/\/\S+$/.test(SB_URL)&&SB_KEY.length>20);
 const urlHash=location.hash,recovering=/type=recovery/.test(urlHash),urlErr=/error_code=|error=/.test(urlHash)?decodeURIComponent((urlHash.match(/error_description=([^&]*)/)||[])[1]||'').replace(/\+/g,' '):'';
-const sb=SB_OK?window.supabase.createClient(SB_URL,SB_KEY,{auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:true}}):null;
+const sb=SB_OK?window.supabase.createClient(SB_URL,SB_KEY,{auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:true,storageKey:'orbit-auth'}}):null;
 const MEDIA=SB_URL+'/storage/v1/object/public/media/';
 const E=(code,message)=>({code,message});
 const CODES=/^(invalid_argument|permission_denied|already_exists|resource_exhausted|unauthenticated|unavailable|internal|timeout)$/;
 function norm(e){if(!e)return E('unavailable','通信に失敗しました。もう一度お試しください');if(CODES.test(e.code||''))return e;
  const m=String(e.message||e.error_description||e.msg||e||''),c=String(e.code||'');
+ if(c==='P0001'&&m==='もう一度ログインしてください')return E('unauthenticated',m);
  if(c==='P0001')return E(/多すぎ|短時間/.test(m)?'resource_exhausted':/許可|できません|凍結/.test(m)?'permission_denied':'invalid_argument',m);
  if(c==='42501'||/row-level security|permission denied/i.test(m))return E('permission_denied','この操作は許可されていません');
  if(c==='23505'||/duplicate key/i.test(m))return E('already_exists','すでに登録されています');
@@ -427,6 +441,9 @@ function norm(e){if(!e)return E('unavailable','通信に失敗しました。も
  return E('internal',m||'エラーが発生しました')}
 const q=async p=>{const{data,error}=await p;if(error)throw norm(error);return data};
 const site=()=>location.origin+location.pathname;
+const devToken=()=>{let t='';try{t=localStorage.getItem('orbit-device')||''}catch(e){}if(t.length<40){const a=new Uint8Array(24);crypto.getRandomValues(a);t=[...a].map(b=>b.toString(16).padStart(2,'0')).join('');try{localStorage.setItem('orbit-device',t)}catch(e){}}return t};
+const devLabel=()=>{const u=navigator.userAgent;return(/iPhone|iPad/.test(u)?'iPhone/iPad':/Android/.test(u)?'Android':/Mac/.test(u)?'Mac':/Windows/.test(u)?'Windows':'その他')+' · '+(/Edg\//.test(u)?'Edge':/Chrome\//.test(u)?'Chrome':/Safari\//.test(u)?'Safari':/Firefox\//.test(u)?'Firefox':'ブラウザ')};
+const mask=e=>{const m=String(e||'').match(/^(.)(.*)(@.*)$/);return m?m[1]+'•'.repeat(Math.min(6,Math.max(2,m[2].length)))+m[3]:''};
 const rid=()=>Date.now().toString(36)+Math.random().toString(36).slice(2,8);
 // ----- テーブルと画面のデータの対応 -----
 const ms=v=>Number(v)||0,s0=v=>v==null?'':String(v);
@@ -501,10 +518,10 @@ async function gtx(text,tl){const k=tl+'\u0000'+text;if(trCache.has(k))return tr
  if(!r.ok)throw E('unavailable','翻訳できませんでした。しばらくしてからお試しください');const j=await r.json();const out=(j&&j[0]||[]).map(x=>x&&x[0]||'').join('');trCache.set(k,out);return out}
 // ----- パスワードの確認（本人確認） -----
 async function checkPw(pw,msg){const email=K.me&&K.me.email;if(!email)throw E('unauthenticated','もう一度ログインしてください');
- const{error}=await sb.auth.signInWithPassword({email,password:String(pw||'')});if(error)throw/Invalid login/i.test(error.message)?E('invalid_argument',msg):norm(error)}
+ const r=await q(sb.rpc('login_resolve',{p_id:email,p_pw:String(pw||'')}));if(!r||!r.ok)throw E(r&&r.locked?'resource_exhausted':'invalid_argument',r&&r.locked?r.error:msg)}
 function pwRule(pw){pw=String(pw||'');if(pw.length<8)throw E('invalid_argument','パスワードは8文字以上にしてください');if(!/[A-Za-z]/.test(pw)||!/[0-9]/.test(pw))throw E('invalid_argument','パスワードには英字と数字を両方含めてください')}
 const authErr=e=>{const m=String(e&&e.message||'');
- if(/Invalid login credentials/i.test(m))return E('invalid_argument','メールアドレスかパスワードが違います');
+ if(/Invalid login credentials/i.test(m))return E('invalid_argument','メールアドレス（またはユーザーID）かパスワードが違います');
  if(/already registered|already been registered|User already/i.test(m))return E('already_exists','このメールアドレスは登録済みです');
  if(/Token has expired|invalid|otp/i.test(m)&&/token|otp/i.test(m))return E('invalid_argument','コードが正しくないか、有効期限が切れています');
  if(/rate limit|security purposes|too many/i.test(m)||e.status===429)return E('resource_exhausted','メールの送信が多すぎます。しばらく待ってからお試しください');
@@ -524,7 +541,7 @@ const OPS={
   return[{sid:'this-device',createdAt:Date.parse(u.last_sign_in_at||'')||Date.now(),lastSeen:Date.now(),ua:navigator.userAgent.slice(0,150),current:true}]},
  revoke:async()=>{throw E('invalid_argument','個別のログアウトはできません。「他の端末からログアウト」を使ってください')},
  revokeOthers:async()=>{await A_(sb.auth.signOut({scope:'others'}));return{ok:true}},
- changePass:async r=>{await checkPw(r.old,'現在のパスワードが違います');pwRule(r.password);await A_(sb.auth.updateUser({password:r.password}));await sb.auth.signOut({scope:'others'}).catch(()=>{});return{ok:true}},
+ changePass:async r=>{await checkPw(r.old,'現在のパスワードが違います');pwRule(r.password);await A_(sb.auth.updateUser({password:r.password}));await sb.auth.signOut({scope:'others'}).catch(()=>{});await sb.rpc('devices_forget').then(()=>sb.rpc('device_trust',{p_token:devToken(),p_label:devLabel()})).catch(()=>{});return{ok:true}},
  changeEmail:async r=>{const em=String(r.email||'').trim().toLowerCase();if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(em))throw E('invalid_argument','メールアドレスの形式が正しくありません');
   await checkPw(r.password,'パスワードが違います');await A_(sb.auth.updateUser({email:em},{emailRedirectTo:site()}));return{email:K.me.email,pending:true}},
  deleteAccount:async r=>{await checkPw(r.password,'パスワードが違います');const me=K.me.uid;
@@ -557,10 +574,19 @@ const OPS={
    await Promise.all(chunks.slice(i,i+4).map(async c=>{try{const out=(await gtx(c.join('\n'),r.lang)).split('\n');if(out.length===c.length)c.forEach((k,j)=>{if(out[j].trim())dict[k]=out[j].trim()});else partial=true}catch(e){partial=true}}))}
   return{dict,partial}},
  // ----- ログイン・登録 -----
- login:async r=>{const email=String(r.id||'').trim().toLowerCase();if(!email.includes('@'))throw E('invalid_argument','メールアドレスを入力してください（ユーザーIDではログインできません）');
-  const{error}=await sb.auth.signInWithPassword({email,password:String(r.password||'')});
-  if(error){if(/not confirmed/i.test(error.message)){await sb.auth.resend({type:'signup',email,options:{emailRedirectTo:site()}}).catch(()=>{});return{needVerify:true,email}}throw authErr(error)}
-  return{token:'sb'}},
+ login:async r=>{const id=String(r.id||'').trim(),pw=String(r.password||'');
+  const res=await q(sb.rpc('login_resolve',{p_id:id,p_pw:pw}));
+  if(!res||!res.ok)throw E(res&&res.locked?'resource_exhausted':'invalid_argument',res&&res.error||'メールアドレス（またはユーザーID）かパスワードが違います');
+  const email=res.email;
+  if(!res.confirmed){await sb.auth.resend({type:'signup',email,options:{emailRedirectTo:site()}}).catch(()=>{});return{needVerify:true,email}}
+  await A_(sb.auth.signInWithPassword({email,password:pw}));
+  let trusted=false;try{trusted=await q(sb.rpc('device_check',{p_token:devToken()}))}catch(e){}
+  if(trusted)return{token:'sb'};
+  await sb.auth.signOut({scope:'local'}).catch(()=>{});
+  await A_(sb.auth.signInWithOtp({email,options:{shouldCreateUser:false}}));
+  return{need2fa:true,email}},
+ verify2fa:async r=>{await A_(sb.auth.verifyOtp({email:r.email,token:String(r.code||'').trim(),type:'email'}));try{if(r.trust===false)sessionStorage.setItem('orbit-notrust','1');else sessionStorage.removeItem('orbit-notrust')}catch(e){}return{token:'sb'}},
+ resend2fa:async r=>{await A_(sb.auth.signInWithOtp({email:r.email,options:{shouldCreateUser:false}}));return{ok:true}},
  register:async r=>{const handle=String(r.handle||'').trim(),email=String(r.email||'').trim().toLowerCase();pwRule(r.password);
   if(!/^[A-Za-z0-9_]{3,20}$/.test(handle))throw E('invalid_argument','ユーザーIDは3〜20文字の英数字と _ で指定してください');
   if(!await q(sb.rpc('handle_available',{h:handle})))throw E('already_exists','このユーザーIDは使われています');
@@ -639,15 +665,44 @@ const assets={upload:async b=>{const ext=EXT[b&&b.type];if(!ext)throw E('invalid
 const downloads={save:async({filename,data})=>{const b=data instanceof Blob?data:new Blob([data],{type:'application/json'});const a=document.createElement('a');a.href=URL.createObjectURL(b);a.download=filename;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(a.href),4000)}};
 let ready;const readyP=new Promise(r=>ready=r);
 window.claude={use:async n=>{await readyP;return({db,user,assets,downloads})[n]||null}};
+// ----- 複数アカウント：ログイン中のアカウントを端末に覚えておき、切り替えられるようにする -----
+const ACC='orbit-accounts',ACC_MAX=5;
+const accLoad=()=>{try{const l=JSON.parse(localStorage.getItem(ACC)||'[]');return Array.isArray(l)?l.filter(a=>a&&a.uid&&a.rt):[]}catch(e){return[]}};
+const accSave=l=>{try{localStorage.setItem(ACC,JSON.stringify(l.slice(0,ACC_MAX)))}catch(e){}};
+const accDrop=uid=>accSave(accLoad().filter(a=>a.uid!==uid));
+function accInfo(uid){const p=(cache.profiles||[]).find(x=>x.id===uid),d=p&&p.data||{};return{handle:d.handle||(K.me&&K.me.uid===uid?K.me.handle:'')||'',name:d.name||'',avatar:d.avatar||'',color:d.color||''}}
+async function accRemember(){if(!K.me)return;const{data}=await sb.auth.getSession();const ss=data&&data.session;if(!ss||ss.user.id!==K.me.uid)return;
+ const l=accLoad(),old=l.find(a=>a.uid===K.me.uid)||{},i=accInfo(K.me.uid);
+ const rec=Object.assign({},old,{uid:K.me.uid,handle:i.handle||old.handle||'',name:i.name||old.name||'',avatar:i.avatar||old.avatar||'',color:i.color||old.color||'',at:ss.access_token,rt:ss.refresh_token,last:Date.now()});
+ accSave([rec,...l.filter(a=>a.uid!==K.me.uid)])}
+let switching=false;
+async function accSwitch(uid,msg){if(switching)return;switching=true;
+ try{if(K.me)await accRemember();const a=accLoad().find(x=>x.uid===uid);if(!a){switching=false;return}
+  try{localStorage.removeItem('orbit-auth')}catch(e){}
+  const{data,error}=await sb.auth.setSession({access_token:a.at,refresh_token:a.rt});
+  if(error||!data||!data.session){accDrop(uid);try{localStorage.removeItem('orbit-auth')}catch(e){}try{sessionStorage.setItem('orbit-msg','@'+(a.handle||'')+' のログインが切れました。もう一度ログインしてください')}catch(e){}location.href=site();return}
+  try{if(msg)sessionStorage.setItem('orbit-msg',msg)}catch(e){}location.href=site()}catch(e){switching=false;showErr('アカウントを切り替えられませんでした: '+(e.message||e))}}
+async function accAdd(){if(accLoad().length>=ACC_MAX&&!accLoad().every(a=>a.uid!==(K.me&&K.me.uid))){alert(K.tr('追加できるアカウントは5つまでです'));return}
+ await accRemember();try{localStorage.removeItem('orbit-auth');sessionStorage.setItem('orbit-adding','1')}catch(e){}location.href=site()}
+K.accounts=()=>accLoad();K.mask=mask;K.switchTo=accSwitch;K.addAccount=accAdd;
 let started=false;
-K.start=async()=>{try{K.me=await run({op:'me'})}catch(e){throw{message:'ログイン後の読み込みに失敗しました: '+(e.message||e.code)}}trace('main '+(window.__kodamaMain?'起動済み':'未起動'));if(started){location.reload();return}started=true;ready();realtime();loop();
+K.start=async()=>{try{K.me=await run({op:'me'})}catch(e){if(e&&e.code==='unauthenticated'){try{await sb.auth.signOut({scope:'local'})}catch(_){}}throw{code:e&&e.code,message:'ログイン後の読み込みに失敗しました: '+(e.message||e.code)}}
+ trace('main '+(window.__kodamaMain?'起動済み':'未起動'));if(started){location.reload();return}started=true;
+ try{if(sessionStorage.getItem('orbit-notrust')!=='1')sb.rpc('device_trust',{p_token:devToken(),p_label:devLabel()}).then(()=>{},()=>{});sessionStorage.removeItem('orbit-adding')}catch(e){}
+ accRemember().catch(()=>{});setTimeout(()=>accRemember().catch(()=>{}),8000);
+ try{const m=sessionStorage.getItem('orbit-msg');if(m){sessionStorage.removeItem('orbit-msg');setTimeout(()=>accToast(m),1200)}}catch(e){}
+ ready();realtime();loop();
  setTimeout(()=>{if(!window.__kodamaMain)showErr('画面のプログラム（2つ目のscript）が起動していません。index.html の内容が途中で切れている可能性があります。\n'+steps.join('\n'));else if(!K.synced)showErr('15秒たってもデータが届きません。\n'+steps.join('\n'))},15000)};
-K.leave=async()=>{try{await sb.auth.signOut({scope:'local'})}catch(e){}location.href=site()};
+// ログアウト：このアカウントだけログアウトし、ほかにログイン中のアカウントがあればそちらに切り替える
+K.leave=async()=>{const me=K.me&&K.me.uid;switching=true;try{await sb.auth.signOut({scope:'local'})}catch(e){}if(me)accDrop(me);try{localStorage.removeItem('orbit-auth')}catch(e){}
+ switching=false;const next=accLoad()[0];if(next){K.me=null;await accSwitch(next.uid,'ログアウトしました');return}location.href=site()};
 K.logout=async()=>{K.leave()};
-K.expire=msg=>{if(K.expiring)return;K.expiring=true;try{sb.auth.signOut({scope:'local'})}catch(e){}showAuth('login',msg||'もう一度ログインしてください')};
+K.expire=msg=>{if(K.expiring)return;K.expiring=true;const me=K.me&&K.me.uid;if(me)accDrop(me);try{sb.auth.signOut({scope:'local'})}catch(e){}showAuth('login',msg||'もう一度ログインしてください')};
 if(sb)sb.auth.onAuthStateChange((ev,session)=>{trace('認証 '+ev);
  if(ev==='SIGNED_IN'&&session&&!K.me&&!started){const a=document.getElementById('auth');if(a&&!a.hidden&&typeof A!=='undefined'&&A.mode==='verify'){K.start().then(()=>{a.hidden=true}).catch(()=>{})}}
- if(ev==='SIGNED_OUT'&&K.me&&!K.expiring)K.expire('ログアウトしました')});
+ if(K.me&&!switching&&session&&session.user&&session.user.id!==K.me.uid){location.reload();return}
+ if((ev==='TOKEN_REFRESHED'||ev==='SIGNED_IN')&&K.me&&session&&session.user.id===K.me.uid&&accLoad().some(a=>a.uid===K.me.uid))accRemember().catch(()=>{});
+ if(ev==='SIGNED_OUT'&&K.me&&!K.expiring&&!switching)K.expire('ログアウトしました')});
 
 // ===== 多言語対応（日本語・英語） =====
 const MON=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
@@ -707,6 +762,14 @@ PAT.push([/^(\S+) に確認メールを送りました。[\s\S]*$/,"We sent a co
 PATX.ko.push([/^(\S+) に確認メールを送りました。[\s\S]*$/,'$1(으)로 확인 메일을 보냈습니다. 메일의 링크를 열거나 메일에 적힌 코드를 입력하세요. 메일이 없으면 스팸함도 확인하세요.'],[/^(\S+) に届いたメールのリンクを開くか、[\s\S]*$/,'$1(으)로 받은 메일의 링크를 열거나, 메일의 코드와 새 비밀번호를 입력하세요.']);
 PATX['zh-CN'].push([/^(\S+) に確認メールを送りました。[\s\S]*$/,'已向 $1 发送确认邮件。请打开邮件中的链接，或输入邮件中的验证码。如未收到，请检查垃圾邮件。'],[/^(\S+) に届いたメールのリンクを開くか、[\s\S]*$/,'请打开发送到 $1 的邮件中的链接，或输入邮件中的验证码和新密码。']);
 PATX['zh-TW'].push([/^(\S+) に確認メールを送りました。[\s\S]*$/,'已寄送確認郵件到 $1。請開啟郵件中的連結，或輸入郵件中的驗證碼。若沒收到，請檢查垃圾郵件。'],[/^(\S+) に届いたメールのリンクを開くか、[\s\S]*$/,'請開啟寄到 $1 的郵件中的連結，或輸入郵件中的驗證碼與新密碼。']);
+Object.assign(EN,{"ログインの確認": "Confirm sign-in", "この端末を信頼する（30日間はコードなしでログイン）": "Trust this device (no code for 30 days)", "確認コードを再送しました。メールを確認してください": "We sent the code again. Please check your email.", "ログイン中のアカウントに戻る": "Back to my signed-in account", "追加するアカウントでログインしてください": "Sign in with the account you want to add", "アカウントを切り替え": "Switch account", "既存のアカウントを追加": "Add an existing account", "プロフィールを見る": "View profile", "追加できるアカウントは5つまでです": "You can add up to 5 accounts", "使用中": "Current", "ログアウトしました": "Signed out", "メールアドレス（またはユーザーID）かパスワードが違います": "Incorrect email (or user ID) or password"});
+Object.assign(OVR["ko"]=OVR["ko"]||{},{"ログインの確認": "로그인 확인", "この端末を信頼する（30日間はコードなしでログイン）": "이 기기를 신뢰 (30일 동안 코드 없이 로그인)", "確認コードを再送しました。メールを確認してください": "확인 코드를 다시 보냈습니다. 메일을 확인하세요", "ログイン中のアカウントに戻る": "로그인된 계정으로 돌아가기", "追加するアカウントでログインしてください": "추가할 계정으로 로그인하세요", "アカウントを切り替え": "계정 전환", "既存のアカウントを追加": "기존 계정 추가", "プロフィールを見る": "프로필 보기", "追加できるアカウントは5つまでです": "계정은 최대 5개까지 추가할 수 있습니다", "使用中": "사용 중", "ログアウトしました": "로그아웃했습니다", "メールアドレス（またはユーザーID）かパスワードが違います": "이메일(또는 사용자 ID) 또는 비밀번호가 올바르지 않습니다"});
+Object.assign(OVR["zh-CN"]=OVR["zh-CN"]||{},{"ログインの確認": "确认登录", "この端末を信頼する（30日間はコードなしでログイン）": "信任此设备（30 天内无需验证码）", "確認コードを再送しました。メールを確認してください": "已重新发送验证码，请查收邮件", "ログイン中のアカウントに戻る": "返回已登录的账号", "追加するアカウントでログインしてください": "请登录要添加的账号", "アカウントを切り替え": "切换账号", "既存のアカウントを追加": "添加已有账号", "プロフィールを見る": "查看个人资料", "追加できるアカウントは5つまでです": "最多可添加 5 个账号", "使用中": "当前", "ログアウトしました": "已退出登录", "メールアドレス（またはユーザーID）かパスワードが違います": "邮箱（或用户 ID）或密码错误"});
+Object.assign(OVR["zh-TW"]=OVR["zh-TW"]||{},{"ログインの確認": "確認登入", "この端末を信頼する（30日間はコードなしでログイン）": "信任此裝置（30 天內無需驗證碼）", "確認コードを再送しました。メールを確認してください": "已重新寄送驗證碼，請查看郵件", "ログイン中のアカウントに戻る": "返回已登入的帳號", "追加するアカウントでログインしてください": "請登入要新增的帳號", "アカウントを切り替え": "切換帳號", "既存のアカウントを追加": "新增現有帳號", "プロフィールを見る": "查看個人檔案", "追加できるアカウントは5つまでです": "最多可新增 5 個帳號", "使用中": "使用中", "ログアウトしました": "已登出", "メールアドレス（またはユーザーID）かパスワードが違います": "電子郵件（或使用者 ID）或密碼錯誤"});
+PAT.push([/^(\S+) にログイン用の確認コードを送りました。[\s\S]*$/,'We sent a sign-in code to $1. Enter the 6-digit code from the email.'],[/^@(\S*) からログアウト$/,'Sign out of @$1'],[/^@(\S*) に切り替えました$/,'Switched to @$1'],[/^@(\S*) のログインが切れました。[\s\S]*$/,'@$1 was signed out. Please sign in again.']);
+PATX.ko.push([/^(\S+) にログイン用の確認コードを送りました。[\s\S]*$/,'$1(으)로 로그인 확인 코드를 보냈습니다. 메일의 6자리 코드를 입력하세요.'],[/^@(\S*) からログアウト$/,'@$1 에서 로그아웃'],[/^@(\S*) に切り替えました$/,'@$1(으)로 전환했습니다'],[/^@(\S*) のログインが切れました。[\s\S]*$/,'@$1 의 로그인이 만료되었습니다. 다시 로그인하세요.']);
+PATX['zh-CN'].push([/^(\S+) にログイン用の確認コードを送りました。[\s\S]*$/,'已向 $1 发送登录验证码。请输入邮件中的 6 位验证码。'],[/^@(\S*) からログアウト$/,'退出 @$1'],[/^@(\S*) に切り替えました$/,'已切换到 @$1'],[/^@(\S*) のログインが切れました。[\s\S]*$/,'@$1 的登录已失效，请重新登录。']);
+PATX['zh-TW'].push([/^(\S+) にログイン用の確認コードを送りました。[\s\S]*$/,'已寄送登入驗證碼到 $1。請輸入郵件中的 6 位數驗證碼。'],[/^@(\S*) からログアウト$/,'登出 @$1'],[/^@(\S*) に切り替えました$/,'已切換到 @$1'],[/^@(\S*) のログインが切れました。[\s\S]*$/,'@$1 的登入已失效，請重新登入。']);
 const LANGS=['ja','en','ko','zh-CN','zh-TW'];K.LANGS=LANGS;K.dicts={};
 K.lang=(()=>{try{const l=localStorage.getItem('orbit-lang');if(LANGS.includes(l))return l}catch(e){}const n=String(navigator.language||'ja');return /^ja/i.test(n)?'ja':/^ko/i.test(n)?'ko':/^zh-(TW|HK|MO|Hant)/i.test(n)?'zh-TW':/^zh/i.test(n)?'zh-CN':'en'})();
 try{const c=JSON.parse(localStorage.getItem('orbit-dict-'+K.lang)||'null');if(c&&c.d)K.dicts[K.lang]=c.d}catch(e){}
@@ -748,23 +811,52 @@ const e_=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&g
 const A={mode:'login',email:'',info:''};
 const F=(n,l,t='text',x='')=>`<div class="fld"><label for="a-${n}">${l}</label><input id="a-${n}" name="${n}" type="${t}" aria-describedby="e-${n}" ${x}><p class="ferr" id="e-${n}"></p></div>`;
 const FORMS={
- login:()=>`<h1>ログイン</h1>${F('login','メールアドレス','email','autocomplete="email" autocapitalize="off" spellcheck="false"')}${F('password','パスワード','password','autocomplete="current-password"')}<button class="btn pri wide" type="submit">ログイン</button><div class="alinks"><button type="button" data-am="register">新しくアカウントを作る</button><button type="button" data-am="reset">パスワードを忘れた方</button></div>`,
+ login:()=>`<h1>ログイン</h1>${F('login','メールアドレス または ユーザーID','text','autocomplete="username" autocapitalize="off" spellcheck="false"')}${F('password','パスワード','password','autocomplete="current-password"')}<button class="btn pri wide" type="submit">ログイン</button><div class="alinks"><button type="button" data-am="register">新しくアカウントを作る</button><button type="button" data-am="reset">パスワードを忘れた方</button></div>${K.accounts().length?`<div class="alinks"><button type="button" data-am="accback">ログイン中のアカウントに戻る</button></div>`:''}`,
  register:()=>`<h1>アカウント作成</h1>${F('name','表示名','text','maxlength="40"')}${F('handle','ユーザーID（@の後ろ・英数字と_）','text','maxlength="21" autocomplete="username" autocapitalize="off" spellcheck="false"')}${F('email','メールアドレス','email','autocomplete="email" autocapitalize="off"')}${F('password','パスワード（8文字以上・英字と数字を含む）','password','autocomplete="new-password"')}<label class="ck"><input type="checkbox" name="agree"> <span><button type="button" class="lnkb" data-am="terms">利用規約</button>・<button type="button" class="lnkb" data-am="privacy">プライバシーポリシー</button>・<button type="button" class="lnkb" data-am="guide">ガイドライン</button>に同意します</span></label><button class="btn pri wide" type="submit">登録する</button><div class="alinks"><button type="button" data-am="login">ログインはこちら</button></div>`,
  verify:()=>`<h1>メールアドレスの確認</h1><p class="hint">${e_(A.email)} に確認メールを送りました。メールのリンクを開くか、メールに書かれたコードを入力してください。届かない場合は迷惑メールフォルダも確認してください。</p>${F('code','確認コード','text','inputmode="numeric" maxlength="10" autocomplete="one-time-code"')}<button class="btn pri wide" type="submit">確認する</button><div class="alinks"><button type="button" data-am="resend">メールを再送する</button><button type="button" data-am="login">戻る</button></div>`,
  reset:()=>`<h1>パスワードの再設定</h1><p class="hint">登録したメールアドレスに、パスワード再設定用のメールを送ります。</p>${F('email','メールアドレス','email','autocomplete="email" autocapitalize="off"')}<button class="btn pri wide" type="submit">メールを送る</button><div class="alinks"><button type="button" data-am="login">戻る</button></div>`,
  reset2:()=>`<h1>新しいパスワード</h1><p class="hint">${e_(A.email)} に届いたメールのリンクを開くか、メールに書かれたコードと新しいパスワードを入力してください。</p>${F('code','確認コード','text','inputmode="numeric" maxlength="10" autocomplete="one-time-code"')}${F('password','新しいパスワード（8文字以上・英字と数字を含む）','password','autocomplete="new-password"')}<button class="btn pri wide" type="submit">再設定する</button><div class="alinks"><button type="button" data-am="login">戻る</button></div>`,
- newpw:()=>`<h1>新しいパスワード</h1><p class="hint">新しいパスワードを入力してください。</p>${F('password','新しいパスワード（8文字以上・英字と数字を含む）','password','autocomplete="new-password"')}<button class="btn pri wide" type="submit">再設定する</button>`};
-const BUSY={login:'ログイン中…',register:'登録しています…',verify:'確認しています…',reset:'送信しています…',reset2:'再設定しています…',newpw:'再設定しています…'};
+ newpw:()=>`<h1>新しいパスワード</h1><p class="hint">新しいパスワードを入力してください。</p>${F('password','新しいパスワード（8文字以上・英字と数字を含む）','password','autocomplete="new-password"')}<button class="btn pri wide" type="submit">再設定する</button>`,
+ '2fa':()=>`<h1>ログインの確認</h1><p class="hint">${e_(K.mask(A.email))} にログイン用の確認コードを送りました。メールに書かれた6桁のコードを入力してください。</p>${F('code','確認コード','text','inputmode="numeric" maxlength="10" autocomplete="one-time-code"')}<label class="ck"><input type="checkbox" name="trust" checked> <span>この端末を信頼する（30日間はコードなしでログイン）</span></label><button class="btn pri wide" type="submit">確認する</button><div class="alinks"><button type="button" data-am="resend2">コードを再送する</button><button type="button" data-am="login">戻る</button></div>`};
+const BUSY={'2fa':'確認しています…',login:'ログイン中…',register:'登録しています…',verify:'確認しています…',reset:'送信しています…',reset2:'再設定しています…',newpw:'再設定しています…'};
 function showAuth(mode,info){A.mode=mode;if(info!==undefined)A.info=info;$a('#auth').hidden=false;
  $a('#acard').innerHTML=`<form id="af" novalidate><div class="aerr" id="aerr" role="alert" hidden><svg aria-hidden="true"><use href="#i-alert"/></svg><span></span></div>${A.info?`<p class="ainfo" role="status">${e_(A.info)}</p>`:''}${FORMS[mode]()}<p class="aslow" id="aslow" hidden>サーバーの応答を待っています…（混み合っていると10秒ほどかかることがあります）</p></form>`;
  A.info='';setTimeout(()=>{const i=$a('#acard input');i&&i.focus()},30)}
+// ===== アカウントの切り替えメニュー =====
+const hx=s=>[...new TextEncoder().encode(String(s))].map(b=>b.toString(16).padStart(2,'0')).join('');
+function accToast(m){const t=document.getElementById('toast');if(!t)return;t.textContent=K.tr(m);t.classList.add('on');clearTimeout(accToast.t);accToast.t=setTimeout(()=>t.classList.remove('on'),2600)}
+function accAv(a){const c=/^#[0-9a-fA-F]{6}$/.test(a.color||'')?a.color:'#3d7bff';const src=a.avatar?K.media(a.avatar):'';
+ return src?`<span class="aav"><img src="${e_(src)}" alt=""></span>`:`<span class="aav" style="background:${c}">${e_(Array.from(a.name||a.handle||'?')[0]||'?')}</span>`}
+function accClose(){const m=document.getElementById('accm');if(m)m.remove()}
+function accOpen(anchor){accClose();if(!K.me)return;
+ const cur=K.me.uid,list=K.accounts().map(a=>{const i=accInfo(a.uid);return Object.assign({},a,Object.fromEntries(Object.entries(i).filter(([k,v])=>v)))});if(!list.some(a=>a.uid===cur))list.unshift(Object.assign({uid:cur},accInfo(cur)));
+ const me=list.find(a=>a.uid===cur)||{};
+ const m=document.createElement('div');m.id='accm';m.setAttribute('role','menu');
+ m.innerHTML=`<div class="acch">アカウントを切り替え</div>`+list.map(a=>`<button type="button" role="menuitem" class="acci${a.uid===cur?' cur':''}" data-acc="${e_(a.uid)}">${accAv(a)}<span class="acct"><b data-ugc>${e_(a.name||a.handle)}</b><small data-ugc>@${e_(a.handle)}</small></span>${a.uid===cur?'<svg class="i" aria-label="使用中"><use href="#i-check"/></svg>':''}</button>`).join('')
+  +`<div class="accs"></div>`+(list.length<ACC_MAX?`<button type="button" role="menuitem" class="acco" data-accx="add">既存のアカウントを追加</button>`:`<p class="acco hint">追加できるアカウントは5つまでです</p>`)
+  +`<a role="menuitem" class="acco" href="#u-${hx(cur)}" data-accx="prof">プロフィールを見る</a><button type="button" role="menuitem" class="acco dan" data-accx="out">@${e_(me.handle||'')} からログアウト</button>`;
+ document.body.appendChild(m);
+ const r=anchor.getBoundingClientRect(),W=Math.min(320,innerWidth-16);m.style.width=W+'px';
+ if(r.top>innerHeight/2){m.style.left=Math.max(8,Math.min(r.left,innerWidth-W-8))+'px';m.style.bottom=(innerHeight-r.top+8)+'px'}
+ else{m.style.left=Math.max(8,Math.min(r.left,innerWidth-W-8))+'px';m.style.top=(r.bottom+8)+'px'}
+ const f=m.querySelector('.acci:not(.cur),.acco');f&&f.focus()}
+document.addEventListener('click',e=>{const t=e.target.closest&&e.target.closest('#meBox,.mav');
+ if(t&&K.me&&!e.target.closest('#accm')){e.preventDefault();e.stopPropagation();if(document.getElementById('accm'))accClose();else accOpen(t);return}
+ const m=document.getElementById('accm');if(!m)return;
+ const it=e.target.closest('#accm [data-acc],#accm [data-accx]');
+ if(!it){if(!e.target.closest('#accm'))accClose();return}
+ if(it.dataset.acc){e.preventDefault();e.stopPropagation();if(it.dataset.acc!==K.me.uid){accClose();K.switchTo(it.dataset.acc,'@'+(K.accounts().find(a=>a.uid===it.dataset.acc)||{}).handle+' に切り替えました')}else accClose();return}
+ const x=it.dataset.accx;if(x==='prof'){accClose();return}
+ e.preventDefault();e.stopPropagation();accClose();if(x==='add')K.addAccount();if(x==='out')K.logout()},true);
+document.addEventListener('keydown',e=>{if(e.key==='Escape')accClose()});
+addEventListener('hashchange',accClose);
 K.showAuth=showAuth;
 document.querySelectorAll('.langsel').forEach(x=>x.value=K.lang);
 document.addEventListener('change',e=>{if(e.target.classList.contains('langsel')){K.setLang(e.target.value);if(!$a('#auth').hidden)showAuth(A.mode)}});
 function aErr(msg){const b=$a('#aerr');if(!b)return;if(!msg){b.hidden=true;return}b.querySelector('span').textContent=msg;b.hidden=false;b.classList.remove('shake');void b.offsetWidth;b.classList.add('shake')}
 function fErr(n,msg){const i=$a('#a-'+n),p=$a('#e-'+n);if(!i)return;if(p)p.textContent=msg||'';i.classList.toggle('invalid',!!msg);i.setAttribute('aria-invalid',msg?'true':'false')}
 const RULES={
- login:v=>/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v)?'':'メールアドレスを入力してください（ユーザーIDではログインできません）',
+ login:v=>v?'':'メールアドレスかユーザーIDを入力してください',
  password:v=>!v?'パスワードを入力してください':A.mode==='login'?'':v.length<8?'8文字以上にしてください':(!/[A-Za-z]/.test(v)||!/[0-9]/.test(v))?'英字と数字を両方含めてください':'',
  name:v=>v?'':'表示名を入力してください',
  handle:v=>/^[A-Za-z0-9_]{3,20}$/.test(v.replace(/^@/,''))?'':'3〜20文字の英数字と _ で入力してください',
@@ -783,6 +875,8 @@ function setBusy(f,on){const btn=f.querySelector('[type=submit]');if(!btn)return
 document.addEventListener('click',async e=>{
  const eye=e.target.closest('.eye');if(eye){const i=eye.parentNode.querySelector('input');const show=i.type==='password';i.type=show?'text':'password';eye.setAttribute('aria-pressed',String(show));eye.setAttribute('aria-label',show?'パスワードを隠す':'パスワードを表示');eye.querySelector('use').setAttribute('href',show?'#i-eyeoff':'#i-eye');i.focus();try{const n=i.value.length;i.setSelectionRange(n,n)}catch(_){}return}
  const b=e.target.closest('#auth [data-am]');if(!b)return;const m=b.dataset.am;
+ if(m==='resend2'){b.disabled=true;try{await run({op:'resend2fa',email:A.email});showAuth('2fa','確認コードを再送しました。メールを確認してください')}catch(x){aErr(friendly(x));b.disabled=false}return}
+ if(m==='accback'){const a=K.accounts()[0];if(a)K.switchTo(a.uid);return}
  if(m==='guide'||m==='terms'||m==='privacy'){const g=document.querySelector(`[data-act=${m}]`);g&&g.click();return}
  if(m==='resend'){b.disabled=true;try{await run({op:'resend',email:A.email});showAuth('verify','確認メールを再送しました。メールを確認してください')}catch(x){aErr(friendly(x));b.disabled=false}return}
  showAuth(m)});
@@ -799,6 +893,8 @@ document.addEventListener('submit',async e=>{const f=e.target;if(f.getAttribute(
  setBusy(f,true);
  try{let r;
   if(A.mode==='login')r=await run({op:'login',id:v('login'),password:pw()});
+  if(A.mode==='2fa'){const t=f.querySelector('[name=trust]');r=await run({op:'verify2fa',email:A.email,code:v('code'),trust:!t||t.checked})}
+  if(r&&r.need2fa){A.email=r.email;setBusy(f,false);showAuth('2fa');return}
   if(A.mode==='register')r=await run({op:'register',name:v('name'),handle:v('handle').replace(/^@/,''),email:v('email'),password:pw()});
   if(A.mode==='verify')r=await run({op:'verify',email:A.email,code:v('code')});
   if(A.mode==='reset'){await run({op:'resetReq',email:v('email')});A.email=v('email');showAuth('reset2','再設定用のメールを送りました（登録済みのアドレスの場合のみ届きます）');return}
@@ -821,6 +917,8 @@ document.addEventListener('submit',async e=>{const f=e.target;if(f.getAttribute(
  const p=new URLSearchParams(location.search).get('p');if(p&&/^[\w-]+$/.test(p)){history.replaceState(null,'',location.pathname+'#post-'+p)}
  if(recovering&&session){showAuth('newpw');return}
  if(session){try{await K.start();return}catch(e){trace(e.message)}}
+ let msg0;try{msg0=sessionStorage.getItem('orbit-msg')||undefined;sessionStorage.removeItem('orbit-msg');if(!msg0&&sessionStorage.getItem('orbit-adding'))msg0='追加するアカウントでログインしてください'}catch(e){}
+ if(msg0&&!urlErr){showAuth('login',msg0);return}
  showAuth('login',urlErr?(/expired|invalid/i.test(urlErr)?'メールのリンクの有効期限が切れているか、すでに使われています。もう一度お試しください':urlErr):undefined);
 })();
 })();
