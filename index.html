@@ -11,7 +11,7 @@
 <link rel="manifest" href="manifest.webmanifest">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="Orbit">
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2" crossorigin="anonymous"></script>
 <script src="config.js"></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;800&family=Zen+Kaku+Gothic+New:wght@400;500;700&display=swap" rel="stylesheet">
@@ -588,7 +588,11 @@ html[data-theme=light] .btn.pri,html[data-theme=light] .send,html[data-theme=lig
 // ===== サーバー接続（Supabase） =====
 (()=>{
 const showErr=msg=>{let d=document.getElementById('dbg');if(!d){d=document.createElement('div');d.id='dbg';d.setAttribute('role','alert');d.style.cssText='position:fixed;left:12px;right:12px;bottom:12px;z-index:99;background:#2a0b18;color:#fff;border:1px solid #ff5c8a;border-radius:14px;padding:12px 14px;font:13px/1.6 system-ui,sans-serif;white-space:pre-wrap;max-height:45vh;overflow:auto;box-shadow:0 10px 30px rgba(0,0,0,.5)';d.innerHTML='<b>問題が発生しました</b>（この内容をそのまま伝えてください）\n画面のバージョン: '+VER+'\n';document.body.appendChild(d)}d.appendChild(document.createTextNode(msg+'\n'))};
-window.addEventListener('error',e=>showErr('画面のエラー: '+(e.message||'')+' （'+(e.lineno||'?')+'行目）'));
+window.addEventListener('error',e=>{const m=String(e.message||'');
+ // 外部のプログラム（ロボット確認など）のエラーは中身が分からず、Orbit の動作にも関係しないので表示しない
+ if(!e.lineno&&(/^Script error\.?$/i.test(m)||!m)){try{KODAMA.steps&&KODAMA.steps.push('外部スクリプトのエラー（表示しない）')}catch(_){}return}
+ if(e.filename&&!e.filename.startsWith(location.origin)&&!/^blob:/.test(e.filename))return;
+ showErr('画面のエラー: '+m+' （'+(e.lineno||'?')+'行目）')});
 window.addEventListener('unhandledrejection',e=>{const r=e.reason||{};showErr('処理のエラー: '+(r.message||r.code||String(r)))});
 const VER='2026-11-25-sb1',steps=[];const trace=m=>{steps.push(new Date().toLocaleTimeString('ja-JP')+'  '+m);if(steps.length>40)steps.shift()};
 const CONF=window.ORBIT_CONFIG||{};
